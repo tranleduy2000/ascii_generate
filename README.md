@@ -11,4 +11,6 @@ Get it in google play
 
 <img src="https://github.com/tranleduy2000/ascii_generate/blob/master/art/Screenshot_20170506-184205_framed.png"/>
 
+## Third party library
+
 Core library from http://www.figlet.org/
