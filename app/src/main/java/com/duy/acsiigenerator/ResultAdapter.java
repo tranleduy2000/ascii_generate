@@ -39,6 +39,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     private View emptyView;
     @Nullable
     private OnItemClickListener onItemClickListener;
+    private int color;
 
     public ResultAdapter(@NonNull Activity context, @Nullable View emptyView) {
         this.context = context;
@@ -46,6 +47,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.emptyView = emptyView;
         invalidateEmptyView();
+        this.color = context.getResources().getColor(android.R.color.primary_text_dark);
     }
 
     private void invalidateEmptyView() {
@@ -69,6 +71,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.txtContent.setTypeface(Typeface.MONOSPACE);
+        holder.txtContent.setTextColor(color);
         holder.txtContent.setText(objects.get(position));
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +134,10 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         this.objects.add(value);
         notifyItemInserted(objects.size() - 1);
         invalidateEmptyView();
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public interface OnItemClickListener {

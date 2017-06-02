@@ -30,6 +30,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.duy.acsiigenerator.core.FastConvert;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.github.angads25.filepicker.view.FilePickerDialog;
 
 import java.io.File;
@@ -56,6 +58,22 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
     private Handler handler = new Handler();
     private Dialog dialog;
     private ResultAdapter mAdapter;
+    private TextWatcher inputTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            handler.removeCallbacks(process);
+            handler.postDelayed(process, 300);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,25 +96,10 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         mAdapter = new ResultAdapter(MainActivity.this, findViewById(R.id.empty_view));
         mAdapter.setOnItemClickListener(MainActivity.this);
         mRecyclerView.setAdapter(mAdapter);
-
-        editIn.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                handler.removeCallbacks(process);
-                handler.postDelayed(process, 300);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+        editIn.addTextChangedListener(inputTextWatcher);
 
     }
+
 
     @Override
     protected void onResume() {
@@ -128,13 +131,26 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         switch (item.getItemId()) {
             case R.id.action_more_app:
                 moreApp();
-
                 return true;
             case R.id.action_rate:
                 goToPlayStore();
                 return true;
+            case R.id.action_text_color:
+                showDialogChooseColor();
+                return true;
         }
         return false;
+    }
+
+    private void showDialogChooseColor() {
+        AlertDialog build = ColorPickerDialogBuilder.with(this).setOnColorSelectedListener(new OnColorSelectedListener() {
+            @Override
+            public void onColorSelected(int i) {
+                mAdapter.setColor(i);
+            }
+        }).build();
+        this.dialog = build;
+        build.show();
     }
 
     private void generateResult() {
@@ -175,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
     @Override
     public void onSaveImage(final Bitmap bitmap) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Save image");
+        builder.setTitle(R.string.save_image);
         builder.setView(R.layout.dialog_save_file);
         this.dialog = builder.create();
         dialog.show();

@@ -15,4 +15,6 @@
     <string name="save">Save</string>
     <string name="file_name">File name</string>
     <string name="enter_file_name">Please enter file name!</string>
+    <string name="save_image">Save image</string>
+    <string name="text_color">Text color</string>
 </resources>

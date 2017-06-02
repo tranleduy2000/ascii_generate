@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/action_text_color"
+        android:icon="@drawable/ic_color_lens_white_24dp"
+        android:title="@string/text_color"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_rate"
         android:icon="@drawable/ic_star_white_24dp"
-        android:title="@string/rate_app" />
+        android:title="@string/rate_app"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_more_app"
-        android:title="@string/more_app_from_dev" />
+        android:icon="@drawable/ic_more_vert_white_24dp"
+        android:title="@string/more_app_from_dev"
+        app:showAsAction="ifRoom" />
 </menu>
