@@ -10,7 +10,11 @@ import java.util.HashMap;
  */
 
 public class FastConvert {
+    /**
+     * this maps wil be store {@link FigletFont} created
+     */
     private HashMap<String, FigletFont> caches = new HashMap<>();
+
     private AssetManager assetManager;
 
     public FastConvert(AssetManager assetManager) {

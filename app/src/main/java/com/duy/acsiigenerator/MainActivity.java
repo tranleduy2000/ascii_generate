@@ -1,15 +1,21 @@
 package com.duy.acsiigenerator;
 
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,23 +26,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.duy.acsiigenerator.core.FastConvert;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ResultAdapter.OnItemClickListener {
 
     private static final String TAG = "MainActivity";
     private EditText editIn;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private FastConvert fastConvert;
-    private ProgressBar progressBar;
+    private ProgressBar mProgressBar;
     private Runnable process = new Runnable() {
         @Override
         public void run() {
@@ -44,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     private Handler handler = new Handler();
+    private Dialog dialog;
+    private ResultAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
         fastConvert = new FastConvert(getAssets());
         editIn = (EditText) findViewById(R.id.edit_in);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        recyclerView = (RecyclerView) findViewById(R.id.listview);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.listview);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ResultAdapter(MainActivity.this, findViewById(R.id.empty_view));
+        mAdapter.setOnItemClickListener(MainActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+
         editIn.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,19 +98,25 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        Log.d(TAG, "onCreate: " + getFilesDir());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume() called");
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editIn.setText(sharedPreferences.getString("key_save", ""));
 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.edit().putString("key_save", editIn.getText().toString()).apply();
     }
@@ -119,46 +141,127 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class TaskGenerateData extends AsyncTask<String, Void, ArrayList<String>> {
+    @Override
+    public void onSaveImage(final Bitmap bitmap) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Save image");
+        builder.setView(R.layout.dialog_save_file);
+        this.dialog = builder.create();
+        dialog.show();
+
+        dialog.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeToStorage(bitmap, getFilesDir().getPath());
+                dialog.cancel();
+            }
+        });
+        dialog.findViewById(R.id.btn_save_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = writeToStorage(bitmap, getFilesDir().getPath());
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri));
+                intent.setType("image/*");
+                startActivity(Intent.createChooser(intent, "Share Image"));
+                dialog.cancel();
+            }
+        });
+    }
+
+    private String writeToStorage(Bitmap bitmap, String path) {
+        File file = new File(path, Integer.toHexString((int) System.currentTimeMillis()) + ".png");
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            bitmap.recycle();
+            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                return MediaStore.Images.Media.insertImage(getContentResolver(),
+                        file.getAbsolutePath(), file.getName(), file.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    //Add this method to show Dialog when the required permission has been granted to the app.
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    //Permission has not been granted. Notify the user.
+                    Toast.makeText(MainActivity.this, R.string.permission_msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
+    private class TaskGenerateData extends AsyncTask<String, String, Void> {
+        private static final float MAX_PROGRESS = 100;
+        private AtomicInteger count = new AtomicInteger(0);
+        private AtomicInteger current = new AtomicInteger(0);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setIndeterminate(true);
+            mProgressBar.setMax((int) MAX_PROGRESS);
+            mProgressBar.setProgress(0);
+            mAdapter.clear();
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
             String input = params[0];
-            ArrayList<String> result = new ArrayList<>();
             try {
-
-                if (input.isEmpty()) return result;
+                if (input.isEmpty()) return null;
                 AssetManager assets = getAssets();
                 String[] files = assets.list("fonts");
-                Log.d(TAG, "generateResult: " + Arrays.toString(files));
+                this.count.set(files.length);
                 for (String fontName : files) {
                     try {
                         String s1 = fastConvert.convert(fontName, input);
-                        //                    for (int i = s1.length() - 1; i >= 0; i--) {
-//                        if (copy.charAt(i) == ' ') {
-//                            copy.insert(i, ' ');
-//                        }
-//                    }
-                        result.add(s1);
+                        publishProgress(s1);
                     } catch (Exception ignored) {
                     }
                 }
             } catch (IOException ignored) {
             }
-            return result;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> strings) {
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            mAdapter.add(values[0]);
+            mProgressBar.setProgress((int) (MAX_PROGRESS / count.get() * current.incrementAndGet()));
+        }
+
+        @Override
+        protected void onPostExecute(Void strings) {
             super.onPostExecute(strings);
-            ResultAdapter adapter = new ResultAdapter(MainActivity.this, strings, findViewById(R.id.empty_view));
-            recyclerView.setAdapter(adapter);
-            progressBar.setIndeterminate(false);
+            Log.d(TAG, "onPostExecute() called with: strings = [" + strings + "]");
+
         }
     }
 

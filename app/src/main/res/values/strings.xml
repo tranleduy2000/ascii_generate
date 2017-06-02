@@ -5,4 +5,8 @@
     <string name="copy">copy</string>
     <string name="share">share</string>
     <string name="please_enter_your_text_and_wait">Please enter your text and wait...</string>
+    <string name="save_as_image">Save as image</string>
+    <string name="permission_msg">Permission is Required for getting list of files</string>
+    <string name="copied">Copied</string>
+    <string name="saved">Saved</string>
 </resources>
