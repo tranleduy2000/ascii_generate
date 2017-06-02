@@ -29,7 +29,7 @@
             style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save and share" />
+            android:text="@string/save_and_share" />
 
         <Button
             android:id="@+id/btn_save"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="Save" />
+            android:text="@string/save" />
     </LinearLayout>
 
 </LinearLayout>

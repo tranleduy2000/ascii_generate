@@ -9,4 +9,8 @@
     <string name="permission_msg">Permission is Required for getting list of files</string>
     <string name="copied">Copied</string>
     <string name="saved">Saved</string>
+    <string name="rate_app">Rate app</string>
+    <string name="more_app_from_dev">More app from Dev</string>
+    <string name="save_and_share">Save and share</string>
+    <string name="save">Save</string>
 </resources>

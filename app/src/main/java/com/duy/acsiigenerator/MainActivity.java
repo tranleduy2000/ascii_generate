@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -63,15 +64,11 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToPlayStore();
-            }
-        });
-
         fastConvert = new FastConvert(getAssets());
+        bindView();
+    }
+
+    private void bindView() {
         editIn = (EditText) findViewById(R.id.edit_in);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -99,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
             }
         });
 
-        Log.d(TAG, "onCreate: " + getFilesDir());
     }
 
     @Override
@@ -121,8 +117,43 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         sharedPreferences.edit().putString("key_save", editIn.getText().toString()).apply();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_more_app:
+                moreApp();
+
+                return true;
+            case R.id.action_rate:
+                goToPlayStore();
+                return true;
+        }
+        return false;
+    }
+
     private void generateResult() {
         new TaskGenerateData().execute(editIn.getText().toString());
+    }
+
+    private void moreApp() {
+        Uri uri = Uri.parse("market://search?q=pub:Trần Lê Duy");
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/search?q=pub:Trần Lê Duy")));
+        }
+
     }
 
     public void goToPlayStore() {

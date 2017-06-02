@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_rate"
+        android:icon="@drawable/ic_star_white_24dp"
+        android:title="@string/rate_app" />
+    <item
+        android:id="@+id/action_more_app"
+        android:title="@string/more_app_from_dev" />
+</menu>
