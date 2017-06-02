@@ -26,7 +26,9 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edit_in"
@@ -34,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/type_your_text"
                 android:maxLines="1"
+
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
         </android.support.design.widget.TextInputLayout>
 

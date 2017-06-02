@@ -8,13 +8,13 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="name">
+        android:layout_marginTop="8dp">
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="img1122312.png" />
+            android:hint="@string/file_name" />
     </android.support.design.widget.TextInputLayout>
 
 

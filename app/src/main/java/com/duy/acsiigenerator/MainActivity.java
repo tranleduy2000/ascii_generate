@@ -180,18 +180,30 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         this.dialog = builder.create();
         dialog.show();
 
+        final String fileName = Integer.toHexString((int) System.currentTimeMillis()) + ".png";
+        final EditText editName = (EditText) dialog.findViewById(R.id.edit_name);
+        editName.setText(fileName);
+
         dialog.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeToStorage(bitmap, getFilesDir().getPath());
+                if (editName.getText().toString().isEmpty()) {
+                    editName.setError(getString(R.string.enter_file_name));
+                    return;
+                }
+                writeToStorage(bitmap, getFilesDir().getPath(), editName.getText().toString());
                 dialog.cancel();
             }
         });
         dialog.findViewById(R.id.btn_save_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uri = writeToStorage(bitmap, getFilesDir().getPath());
+                if (editName.getText().toString().isEmpty()) {
+                    editName.setError(getString(R.string.enter_file_name));
+                    return;
+                }
 
+                String uri = writeToStorage(bitmap, getFilesDir().getPath(), editName.getText().toString());
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri));
                 intent.setType("image/*");
@@ -201,8 +213,8 @@ public class MainActivity extends AppCompatActivity implements ResultAdapter.OnI
         });
     }
 
-    private String writeToStorage(Bitmap bitmap, String path) {
-        File file = new File(path, Integer.toHexString((int) System.currentTimeMillis()) + ".png");
+    private String writeToStorage(Bitmap bitmap, String path, String fileName) {
+        File file = new File(path, fileName);
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);

@@ -13,4 +13,6 @@
     <string name="more_app_from_dev">More app from Dev</string>
     <string name="save_and_share">Save and share</string>
     <string name="save">Save</string>
+    <string name="file_name">File name</string>
+    <string name="enter_file_name">Please enter file name!</string>
 </resources>
