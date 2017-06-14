@@ -1,4 +1,4 @@
-package com.duy.acsiigenerator.core;
+package com.duy.acsiigenerator.figlet;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ import java.util.StringTokenizer;
  *         www.rigaut.com benoit@rigaut.com
  *         released with GPL the 13th of november 2000 (my birthday!)
  */
-public class FigletFont {
+public class ConvertModel {
     final public static int MAX_CHARS = 1024;
     public char hardblank;
     public int height = -1;
@@ -39,7 +39,7 @@ public class FigletFont {
      * @param stream
      * @throws IOException
      */
-    public FigletFont(InputStream stream) throws IOException {
+    public ConvertModel(InputStream stream) throws IOException {
         font = new char[MAX_CHARS][][];
         BufferedReader data = null;
         String dummyS;

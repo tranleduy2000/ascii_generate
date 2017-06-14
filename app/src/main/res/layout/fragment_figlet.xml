@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/fragment_figlet">
+    android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/edit_in"
@@ -19,8 +18,16 @@
             android:layout_height="wrap_content"
             android:hint="@string/type_your_text"
             android:maxLines="1"
+
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
     </android.support.design.widget.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -44,3 +51,4 @@
     </FrameLayout>
 
 </LinearLayout>
+

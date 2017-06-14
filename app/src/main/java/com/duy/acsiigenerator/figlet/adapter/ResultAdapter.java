@@ -1,7 +1,7 @@
-package com.duy.acsiigenerator;
+package com.duy.acsiigenerator.figlet.adapter;
 
 import android.Manifest;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.duy.acsiigenerator.ImageFactory;
 import com.duy.acsiigenerator.clipboard.ClipboardManagerCompat;
 import com.duy.acsiigenerator.clipboard.ClipboardManagerCompatFactory;
 
@@ -32,7 +33,7 @@ import imagetotext.duy.com.asciigenerator.R;
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final List<String> objects = new ArrayList<>();
-    private Activity context;
+    private Context context;
     private LayoutInflater inflater;
     private ClipboardManagerCompat clipboardManagerCompat;
     @Nullable
@@ -41,7 +42,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     private OnItemClickListener onItemClickListener;
     private int color;
 
-    public ResultAdapter(@NonNull Activity context, @Nullable View emptyView) {
+    public ResultAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
@@ -100,8 +101,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                                 ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
                                         != PackageManager.PERMISSION_GRANTED) {
                             Toast.makeText(context, "Permission denied, please enable permission", Toast.LENGTH_SHORT).show();
-                            context.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE}, 112);
+//                            context.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                                    Manifest.permission.READ_EXTERNAL_STORAGE}, 112);
                             return;
                         }
                     }
