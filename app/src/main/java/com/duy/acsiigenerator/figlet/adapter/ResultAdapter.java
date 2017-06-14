@@ -1,15 +1,11 @@
 package com.duy.acsiigenerator.figlet.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,17 +91,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED ||
-                                ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                                        != PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(context, "Permission denied, please enable permission", Toast.LENGTH_SHORT).show();
-//                            context.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                                    Manifest.permission.READ_EXTERNAL_STORAGE}, 112);
-                            return;
-                        }
-                    }
+
                     onItemClickListener.onSaveImage(ImageFactory.createImageFromView(holder.txtContent));
                 }
             }

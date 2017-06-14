@@ -7,13 +7,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.duy.acsiigenerator.figlet.ConvertContract;
 import com.duy.acsiigenerator.figlet.ConvertPresenter;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.github.angads25.filepicker.view.FilePickerDialog;
 
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private ConvertPresenter mConvertPresenter;
     private ViewPager mViewPager;
+    private SectionPageAdapter mPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +39,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         bindView();
-//        mConvertPresenter = new ConvertPresenter(getAssets());
+        mConvertPresenter = new ConvertPresenter(getAssets(), mPageAdapter.getConvertFragment());
     }
 
     private void bindView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        SectionPageAdapter pageAdapter = new SectionPageAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(pageAdapter);
+        mPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mPageAdapter);
+        mViewPager.setOffscreenPageLimit(mPageAdapter.getCount());
 
         int[] imageArray = new int[]{
                 R.drawable.img1, R.drawable.img2};
@@ -66,11 +72,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_rate:
                 goToPlayStore();
                 return true;
-//            case R.id.action_text_color:
-//                showDialogChooseColor();
-//                return true;
+            case R.id.action_text_color:
+                showDialogChooseColor();
+                return true;
         }
         return false;
+    }
+
+    private void showDialogChooseColor() {
+        AlertDialog build = ColorPickerDialogBuilder.with(this)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int i) {
+                        ConvertContract.View view = mConvertPresenter.getView();
+                        if (view != null) {
+                            view.setColor(i);
+                        }
+                    }
+                }).build();
+        build.show();
     }
 
 

@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,6 +54,11 @@ public class ConvertPresenter implements ConvertContract.Presenter {
         process.setInput(text);
         handler.postDelayed(process, 300);
     }
+@Nullable
+    public ConvertContract.View getView() {
+        return mView;
+    }
+
 
     public class ProcessData implements Runnable {
         private String input = "";

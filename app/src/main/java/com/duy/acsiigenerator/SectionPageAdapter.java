@@ -12,17 +12,29 @@ import com.duy.acsiigenerator.image.ImageToAsciiFragment;
  */
 
 public class SectionPageAdapter extends FragmentPagerAdapter {
+    private ConvertFragment convertFragment;
+    private ImageToAsciiFragment imageToAsciiFragment;
 
     public SectionPageAdapter(FragmentManager fm) {
         super(fm);
+        imageToAsciiFragment = ImageToAsciiFragment.newInstance();
+        convertFragment = ConvertFragment.newInstance();
+    }
+
+    public ConvertFragment getConvertFragment() {
+        return convertFragment;
+    }
+
+    public ImageToAsciiFragment getImageToAsciiFragment() {
+        return imageToAsciiFragment;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return ConvertFragment.newInstance();
+            return convertFragment;
         } else if (position == 1) {
-            return ImageToAsciiFragment.newInstance();
+            return imageToAsciiFragment;
         }
         return null;
     }
@@ -30,5 +42,15 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return "TEXT";
+        } else if (position == 1) {
+            return "IMAGE";
+        }
+        return super.getPageTitle(position);
     }
 }

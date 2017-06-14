@@ -22,6 +22,8 @@ public class ConvertContract {
         void setProgress(int process);
 
         int getMaxProgress();
+
+        void setColor(int color);
     }
 
     public interface Presenter {
