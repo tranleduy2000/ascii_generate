@@ -35,6 +35,8 @@ import java.util.ArrayList;
 
 import imagetotext.duy.com.asciigenerator.R;
 
+import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT;
+
 /**
  * Created by Duy on 15-Jun-17.
  */
@@ -164,7 +166,7 @@ public class ConvertFragment extends Fragment implements ConvertContract.View, R
                             != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getContext(), "Permission denied, please enable permission", Toast.LENGTH_SHORT).show();
                 getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE}, 112);
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_READ_PERMISSION_GRANT);
                 bitmap.recycle();
                 return;
             }

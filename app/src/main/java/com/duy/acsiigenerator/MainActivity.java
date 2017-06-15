@@ -18,7 +18,6 @@ import com.duy.acsiigenerator.figlet.ConvertContract;
 import com.duy.acsiigenerator.figlet.ConvertPresenter;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.github.angads25.filepicker.view.FilePickerDialog;
 
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 import imagetotext.duy.com.asciigenerator.BuildConfig;
@@ -26,6 +25,7 @@ import imagetotext.duy.com.asciigenerator.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
     private static final String TAG = "MainActivity";
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private ConvertPresenter mConvertPresenter;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+            case EXTERNAL_READ_PERMISSION_GRANT: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
                     //Permission has not been granted. Notify the user.
