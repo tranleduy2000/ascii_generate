@@ -1,10 +1,9 @@
 package com.duy.acsiigenerator.image.converter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -16,22 +15,15 @@ import static com.duy.acsiigenerator.image.converter.AsciiConverter.ColorType;
 import static com.duy.acsiigenerator.image.converter.AsciiConverter.Result;
 
 public class ProcessImageOperation {
-
+    private static final String TAG = "ProcessImageOperation";
     /**
      * Reads the image from the given URI, creates ASCII PNG and HTML files, and writes them to
      * a new directory under the AsciiCam directory in /sdcard. Returns the path to the PNG file.
      */
-    public String processImage(Context context, Uri uri) throws IOException {
-        // use current settings from preferences
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public static String processImage(Context context, Uri uri) throws IOException {
+        Log.d(TAG, "processImage() called with: context = [" + context + "], uri = [" + uri + "]");
+
         ColorType colorType = ColorType.ANSI_COLOR;
-        String colorTypeName = prefs.getString("colorType", null);
-        if (colorTypeName!=null) {
-            try {
-                colorType = ColorType.valueOf(colorTypeName);;
-            }
-            catch(Exception ignored) {}
-        }
 
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -51,8 +43,7 @@ public class ProcessImageOperation {
         final Result result = converter.computeResultForBitmap(bitmap,
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
-        AsciiImageWriter imageWriter = new AsciiImageWriter();
-        return imageWriter.saveImageAndThumbnail(renderer.createBitmap(result),
+        return AsciiImageWriter.saveImageAndThumbnail(renderer.createBitmap(result),
                 renderer.createThumbnailBitmap(result),
                 result);
     }
