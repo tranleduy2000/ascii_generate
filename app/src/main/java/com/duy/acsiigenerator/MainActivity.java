@@ -7,20 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.figlet.ConvertContract;
 import com.duy.acsiigenerator.figlet.TextConvertPresenter;
 import com.duy.acsiigenerator.figlet.TextFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
-import com.flask.colorpicker.OnColorSelectedListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -87,29 +83,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.action_text);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_more_app:
+                        moreApp();
+                        return true;
+                    case R.id.action_rate:
+                        goToPlayStore();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_more_app:
-                moreApp();
-                return true;
-            case R.id.action_rate:
-                goToPlayStore();
-                return true;
-            case R.id.action_text_color:
-                showDialogChooseColor();
-                return true;
-        }
-        return false;
-    }
+/*
 
     private void showDialogChooseColor() {
         AlertDialog build = ColorPickerDialogBuilder.with(this)
@@ -123,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).build();
         build.show();
-    }
+    }*/
 
 
     private void moreApp() {
