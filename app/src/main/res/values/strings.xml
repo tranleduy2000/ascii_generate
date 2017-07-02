@@ -16,4 +16,5 @@
     <string name="camera">Camera</string>
     <string name="text">Text</string>
     <string name="photo">Photo</string>
+    <string name="select_file">Select file</string>
 </resources>

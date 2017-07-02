@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.duy.acsiigenerator.figlet.ConvertContract;
@@ -20,6 +21,8 @@ import com.duy.acsiigenerator.figlet.TextFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
@@ -32,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     private TextFragment mTextFragment;
     private ImageToAsciiFragment mImageToAsciiFragment;
-
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideStatusBar();
         setContentView(R.layout.activity_main);
 
         mTextFragment = TextFragment.newInstance();
@@ -44,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
 
         bindView();
         mTextPresenter = new TextConvertPresenter(getAssets(), mTextFragment);
+
+        showAdView();
+    }
+
+    private void hideStatusBar() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    private void showAdView() {
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void bindView() {

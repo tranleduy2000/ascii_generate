@@ -3,6 +3,7 @@ package com.duy.acsiigenerator.image.converter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
@@ -22,10 +23,16 @@ public class ProcessImageOperation {
      * Reads the image from the given URI, creates ASCII PNG and HTML files, and writes them to
      * a new directory under the AsciiCam directory in /sdcard. Returns the path to the PNG file.
      */
-    public static Pair<String, String> processImage(Context context, Uri uri) throws IOException {
+    public static Pair<String, String> processImage(Context context, Uri uri,
+                                                    @Nullable ColorType type) throws IOException {
         Log.d(TAG, "processImage() called with: context = [" + context + "], uri = [" + uri + "]");
 
-        ColorType colorType = ColorType.ANSI_COLOR;
+        ColorType colorType;
+        if (type == null)
+            colorType = ColorType.NONE;
+        else {
+            colorType = type;
+        }
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

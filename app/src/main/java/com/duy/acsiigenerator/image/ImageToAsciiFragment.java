@@ -18,10 +18,13 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.duy.acsiigenerator.image.converter.AsciiConverter;
 import com.duy.acsiigenerator.image.converter.ProcessImageOperation;
 
 import java.io.File;
@@ -42,6 +45,8 @@ public class ImageToAsciiFragment extends Fragment {
     private ImageView mPreview;
     private FloatingActionButton mButtonSave;
     private ProgressBar mProgressBar;
+    private Spinner mSpinnerType;
+    private Uri mCurrentUri = null;
 
     public static ImageToAsciiFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,6 +69,20 @@ public class ImageToAsciiFragment extends Fragment {
         mButtonSave = view.findViewById(R.id.fab_save);
         mButtonSave.hide();
         mProgressBar = view.findViewById(R.id.progress_bar);
+        mSpinnerType = view.findViewById(R.id.spinner_type);
+        mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mCurrentUri != null) {
+                    convertImageToAsciiFromIntent(mCurrentUri);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         view.findViewById(R.id.btn_select).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +91,12 @@ public class ImageToAsciiFragment extends Fragment {
                 selectImage();
             }
         });
-        view.findViewById(R.id.btn_cam).setOnClickListener(new View.OnClickListener() {
+        /*view.findViewById(R.id.btn_cam).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 takePhoto();
             }
-        });
+        });*/
     }
 
     private void selectImage() {
@@ -121,7 +139,7 @@ public class ImageToAsciiFragment extends Fragment {
         switch (requestCode) {
             case PICK_IMAGE:
                 if (intent != null) {
-                    convertImageToAsciiFromIntent(intent);
+                    convertImageToAsciiFromIntent(intent.getData());
                     mButtonSave.hide();
                 }
                 break;
@@ -130,7 +148,7 @@ public class ImageToAsciiFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     if (intent.getData() != null) {
                         mButtonSave.hide();
-                        convertImageToAsciiFromIntent(intent);
+                        convertImageToAsciiFromIntent(intent.getData());
                     } else {
                         Toast.makeText(getContext(), "Capture failed", Toast.LENGTH_SHORT).show();
                     }
@@ -148,19 +166,32 @@ public class ImageToAsciiFragment extends Fragment {
     }
 
 
-    private void convertImageToAsciiFromIntent(Intent intent) {
-        new TaskConvertImageToAscii(getContext()).execute(intent);
+    private void convertImageToAsciiFromIntent(Uri uri) {
+        new TaskConvertImageToAscii(getContext(), getCurrentType()).execute(uri);
     }
 
-    private class TaskConvertImageToAscii extends AsyncTask<Intent, Void, Uri> {
+    private AsciiConverter.ColorType getCurrentType() {
+        switch (mSpinnerType.getSelectedItemPosition()) {
+            case 0:
+                return AsciiConverter.ColorType.ANSI_COLOR;
+            case 1:
+                return AsciiConverter.ColorType.FULL_COLOR;
+            case 2:
+                return AsciiConverter.ColorType.NONE;
+            default:
+                return AsciiConverter.ColorType.ANSI_COLOR;
+        }
+    }
+
+    private class TaskConvertImageToAscii extends AsyncTask<Uri, Void, Uri> {
         private String textPath;
         private String imagePath;
         private Context context;
+        private AsciiConverter.ColorType type;
 
-        public TaskConvertImageToAscii(Context context) {
-
-
+        public TaskConvertImageToAscii(Context context, AsciiConverter.ColorType type) {
             this.context = context;
+            this.type = type;
         }
 
         @Override
@@ -170,9 +201,10 @@ public class ImageToAsciiFragment extends Fragment {
         }
 
         @Override
-        protected Uri doInBackground(Intent... params) {
+        protected Uri doInBackground(Uri... params) {
             try {
-                Pair<String, String> output = ProcessImageOperation.processImage(context, params[0].getData());
+                Pair<String, String> output = ProcessImageOperation.processImage(context,
+                        params[0], type);
                 imagePath = output.first;
                 textPath = output.second;
                 addImageToGallery(context.getContentResolver(), new File(imagePath));

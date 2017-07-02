@@ -23,15 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/select_image"/>
+            android:gravity="center"
+            android:text="@string/select_file"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_cam"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/camera"/>
+        <android.support.v7.widget.AppCompatSpinner
+            android:entries="@array/color_type"
+            android:id="@+id/spinner_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 

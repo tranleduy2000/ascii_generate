@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="color_type">
+        <item>ASCII COLOR</item>
+        <item>FULL COLOR</item>
+        <item>BLACK/WHITE</item>
+    </string-array>
+</resources>
