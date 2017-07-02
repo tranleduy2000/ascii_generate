@@ -139,12 +139,16 @@ public class ImageToAsciiFragment extends Fragment {
         switch (requestCode) {
             case PICK_IMAGE:
                 if (intent != null) {
+                    this.mCurrentUri = intent.getData();
                     convertImageToAsciiFromIntent(intent.getData());
                     mButtonSave.hide();
+                } else {
+                    mCurrentUri = null;
                 }
                 break;
             case TAKE_PICTURE:
                 mButtonSave.hide();
+                this.mCurrentUri = intent.getData();
                 if (resultCode == Activity.RESULT_OK) {
                     if (intent.getData() != null) {
                         mButtonSave.hide();
