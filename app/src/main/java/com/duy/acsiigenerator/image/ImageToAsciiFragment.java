@@ -1,7 +1,6 @@
 package com.duy.acsiigenerator.image;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,16 +10,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.duy.acsiigenerator.image.converter.ProcessImageOperation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import imagetotext.duy.com.asciigenerator.R;
 
@@ -29,12 +31,12 @@ import imagetotext.duy.com.asciigenerator.R;
  */
 
 public class ImageToAsciiFragment extends Fragment {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PICK_IMAGE = 1231;
     private static final String TAG = "ImageToAsciiFragment";
     private static final int TAKE_PICTURE = 1;
     private ImageView mPreview;
     private FloatingActionButton mButtonSave;
+    private ProgressBar mProgressBar;
 
     public static ImageToAsciiFragment newInstance() {
 
@@ -57,6 +59,7 @@ public class ImageToAsciiFragment extends Fragment {
         mPreview = (ImageView) view.findViewById(R.id.image_preview);
         mButtonSave = (FloatingActionButton) view.findViewById(R.id.fab_save);
         mButtonSave.hide();
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
         view.findViewById(R.id.btn_select).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,26 +114,27 @@ public class ImageToAsciiFragment extends Fragment {
 
 
     private void convertImageToAsciiFromIntent(Intent intent) {
-        Log.d(TAG, "convertImageToAsciiFromIntent() called with: intent = [" + intent + "]");
         new TaskConvertImageToAscii().execute(intent);
     }
 
     private class TaskConvertImageToAscii extends AsyncTask<Intent, Void, Uri> {
-        private ProgressDialog mProgressDialog;
+        private String textPath;
+        private String imagePath;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(getContext());
-            mProgressDialog.setMessage("Converting...");
-            mProgressDialog.show();
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected Uri doInBackground(Intent... params) {
-            final String imagePath;
             try {
-                imagePath = ProcessImageOperation.processImage(getContext(), params[0].getData());
+                Pair<String, String> output = ProcessImageOperation.processImage(getContext(), params[0].getData());
+                imagePath = output.first;
+                textPath = output.second;
+                Log.d(TAG, "doInBackground() called with: params = [" + Arrays.toString(params) + "]");
+
                 return Uri.fromFile(new File(imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -156,7 +160,7 @@ public class ImageToAsciiFragment extends Fragment {
                     }
                 });
             }
-            mProgressDialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 }

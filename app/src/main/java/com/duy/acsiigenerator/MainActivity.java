@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import com.duy.acsiigenerator.figlet.ConvertPresenter;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
-import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
 
@@ -27,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
     private static final String TAG = "MainActivity";
-    private CoordinatorTabLayout mCoordinatorTabLayout;
     private ConvertPresenter mConvertPresenter;
     private ViewPager mViewPager;
     private SectionPageAdapter mPageAdapter;
@@ -36,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
         bindView();
         mConvertPresenter = new ConvertPresenter(getAssets(), mPageAdapter.getConvertFragment());
     }
@@ -47,14 +44,6 @@ public class MainActivity extends AppCompatActivity {
         mPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.setOffscreenPageLimit(mPageAdapter.getCount());
-
-        int[] imageArray = new int[]{
-                R.drawable.img1, R.drawable.img2};
-
-        mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.container);
-        mCoordinatorTabLayout.setTitle("Demo")
-                .setImageArray(imageArray)
-                .setupWithViewPager(mViewPager);
     }
 
     @Override

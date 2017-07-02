@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -16,16 +17,17 @@ import static com.duy.acsiigenerator.image.converter.AsciiConverter.Result;
 
 public class ProcessImageOperation {
     private static final String TAG = "ProcessImageOperation";
+
     /**
      * Reads the image from the given URI, creates ASCII PNG and HTML files, and writes them to
      * a new directory under the AsciiCam directory in /sdcard. Returns the path to the PNG file.
      */
-    public static String processImage(Context context, Uri uri) throws IOException {
+    public static Pair<String, String> processImage(Context context, Uri uri) throws IOException {
         Log.d(TAG, "processImage() called with: context = [" + context + "], uri = [" + uri + "]");
 
         ColorType colorType = ColorType.ANSI_COLOR;
 
-        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         // assume width is always larger
         int displayWidth = Math.max(display.getWidth(), display.getHeight());
@@ -34,8 +36,8 @@ public class ProcessImageOperation {
         final AsciiRenderer renderer = new AsciiRenderer();
         renderer.setMaximumImageSize(displayWidth, displayHeight);
 
-        int minWidth = Math.max(2*renderer.asciiColumns(), 480);
-        int minHeight = Math.max(2*renderer.asciiRows(), 320);
+        int minWidth = Math.max(2 * renderer.asciiColumns(), 480);
+        int minHeight = Math.max(2 * renderer.asciiRows(), 320);
         Bitmap bitmap = AndroidUtils.scaledBitmapFromURIWithMinimumSize(context, uri, minWidth, minHeight);
         renderer.setCameraImageSize(bitmap.getWidth(), bitmap.getHeight());
 
@@ -44,7 +46,6 @@ public class ProcessImageOperation {
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
         return AsciiImageWriter.saveImageAndThumbnail(renderer.createBitmap(result),
-                renderer.createThumbnailBitmap(result),
                 result);
     }
 }
