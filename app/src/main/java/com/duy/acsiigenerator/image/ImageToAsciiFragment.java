@@ -68,14 +68,14 @@ public class ImageToAsciiFragment extends Fragment {
         view.findViewById(R.id.btn_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mButtonSave.hide();
+
                 selectImage();
             }
         });
         view.findViewById(R.id.btn_cam).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mButtonSave.hide();
+
                 takePhoto();
             }
         });
@@ -122,11 +122,18 @@ public class ImageToAsciiFragment extends Fragment {
             case PICK_IMAGE:
                 if (intent != null) {
                     convertImageToAsciiFromIntent(intent);
+                    mButtonSave.hide();
                 }
                 break;
             case TAKE_PICTURE:
+                mButtonSave.hide();
                 if (resultCode == Activity.RESULT_OK) {
-                    convertImageToAsciiFromIntent(intent);
+                    if (intent.getData() != null) {
+                        mButtonSave.hide();
+                        convertImageToAsciiFromIntent(intent);
+                    } else {
+                        Toast.makeText(getContext(), "Capture failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
         }
@@ -136,7 +143,6 @@ public class ImageToAsciiFragment extends Fragment {
         if (!permissionGrated()) {
             return;
         }
-
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, TAKE_PICTURE);
     }

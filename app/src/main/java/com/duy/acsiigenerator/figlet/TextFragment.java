@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.duy.acsiigenerator.figlet.adapter.ResultAdapter;
@@ -43,7 +43,7 @@ import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT
 
 public class TextFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
+    private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
     private ResultAdapter mAdapter;
     @Nullable
@@ -118,7 +118,7 @@ public class TextFragment extends Fragment implements ConvertContract.View, Resu
 
     @Override
     public void hideProgress() {
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.hide();
     }
 
     @Nullable
@@ -131,7 +131,10 @@ public class TextFragment extends Fragment implements ConvertContract.View, Resu
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEditIn = view.findViewById(R.id.edit_in);
+
         mProgressBar = view.findViewById(R.id.progressBar);
+        mProgressBar.setIndeterminate(false);
+
         mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
