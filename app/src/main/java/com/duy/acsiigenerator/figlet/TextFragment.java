@@ -41,7 +41,7 @@ import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT
  * Created by Duy on 15-Jun-17.
  */
 
-public class ConvertFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
+public class TextFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private Dialog dialog;
@@ -67,11 +67,11 @@ public class ConvertFragment extends Fragment implements ConvertContract.View, R
         }
     };
 
-    public static ConvertFragment newInstance() {
+    public static TextFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ConvertFragment fragment = new ConvertFragment();
+        TextFragment fragment = new TextFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -111,6 +111,16 @@ public class ConvertFragment extends Fragment implements ConvertContract.View, R
         mAdapter.setColor(color);
     }
 
+    @Override
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -120,9 +130,9 @@ public class ConvertFragment extends Fragment implements ConvertContract.View, R
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEditIn = (EditText) view.findViewById(R.id.edit_in);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.listview);
+        mEditIn = view.findViewById(R.id.edit_in);
+        mProgressBar = view.findViewById(R.id.progressBar);
+        mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ResultAdapter(getActivity(), view.findViewById(R.id.empty_view));

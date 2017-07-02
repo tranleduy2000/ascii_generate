@@ -1,7 +1,9 @@
 package com.duy.acsiigenerator.image.converter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Pair;
 
 import java.io.File;
@@ -20,47 +22,36 @@ public class AsciiImageWriter {
 
     private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    private static final String basePictureDirectory = Environment.getExternalStorageDirectory() + File.separator + "AsciiArt";
 
-    public static String getBasePictureDirectory() {
-        return basePictureDirectory;
-    }
-
-
-    public static Pair<String, String> saveImageAndThumbnail(Bitmap image, AsciiConverter.Result asciiResult)
+    public static Pair<String, String> saveImage(Context context, Bitmap image, AsciiConverter.Result asciiResult)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
-        String dir = getBasePictureDirectory() + File.separator + datestr;
-        // make sure image and thumbnail directories exist
-        File file = new File(dir);
-        if (!file.exists()) file.mkdirs();
-        if (!file.isDirectory()) return null;
-        String pngPath = saveBitmap(image, dir, datestr);
-        String textPath = dir + File.separator + datestr + ".txt";
-        FileWriter textOutput = new FileWriter(textPath);
-        try {
-            writeText(asciiResult, textOutput);
-        } finally {
-            textOutput.close();
-        }
-        return new Pair<>(pngPath, textPath);
+        File imageFile = new File(context.getFilesDir(), datestr + ".png");
+        saveBitmap(image, imageFile);
+
+        File textFile = new File(context.getFilesDir(), datestr + ".txt");
+
+        FileWriter textOutput = new FileWriter(textFile);
+        writeText(asciiResult, textOutput);
+        textOutput.close();
+
+        return new Pair<>(imageFile.getPath(), textFile.getPath());
     }
 
-    public static String saveBitmap(Bitmap bitmap, String dir, String imageName) throws IOException {
-        String outputFilePath;
+    @Nullable
+    private static String saveBitmap(@NonNull Bitmap bitmap, @NonNull File fileToWrite) throws IOException {
         FileOutputStream output = null;
         try {
-            outputFilePath = dir + File.separator + imageName + ".png";
-            output = new FileOutputStream(outputFilePath);
+            output = new FileOutputStream(fileToWrite);
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
             output.close();
         } finally {
             if (output != null) output.close();
         }
-        return outputFilePath;
+        return fileToWrite.getPath();
     }
 
-    public static void writeText(AsciiConverter.Result result, Writer writer) throws IOException {
+    private static void writeText(AsciiConverter.Result result, Writer writer) throws IOException {
         for (int r = 0; r < result.rows; r++) {
             for (int c = 0; c < result.columns; c++) {
                 writer.write(result.stringAtRowColumn(r, c));

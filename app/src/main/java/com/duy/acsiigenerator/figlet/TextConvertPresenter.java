@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Duy on 06-May-17.
  */
 
-public class ConvertPresenter implements ConvertContract.Presenter {
+public class TextConvertPresenter implements ConvertContract.Presenter {
     /**
      * this maps wil be store {@link ConvertModel} created
      */
@@ -28,7 +28,7 @@ public class ConvertPresenter implements ConvertContract.Presenter {
     private TaskGenerateData mTaskGenerateData;
     private ProcessData process = new ProcessData();
 
-    public ConvertPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
+    public TextConvertPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
         this.assetManager = assetManager;
         this.mView = view;
         mView.setPresenter(this);
@@ -54,7 +54,8 @@ public class ConvertPresenter implements ConvertContract.Presenter {
         process.setInput(text);
         handler.postDelayed(process, 300);
     }
-@Nullable
+
+    @Nullable
     public ConvertContract.View getView() {
         return mView;
     }
@@ -81,6 +82,7 @@ public class ConvertPresenter implements ConvertContract.Presenter {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mView.showProgress();
             maxProgress = mView.getMaxProgress();
             mView.setProgress(0);
             mView.clearResult();
@@ -112,6 +114,12 @@ public class ConvertPresenter implements ConvertContract.Presenter {
             super.onProgressUpdate(values);
             mView.addResult(values[0]);
             mView.setProgress((int) (maxProgress / count.get() * current.incrementAndGet()));
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mView.hideProgress();
         }
     }
 

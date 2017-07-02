@@ -6,7 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.duy.acsiigenerator.figlet.ConvertContract;
-import com.duy.acsiigenerator.figlet.ConvertPresenter;
+import com.duy.acsiigenerator.figlet.TextConvertPresenter;
+import com.duy.acsiigenerator.figlet.TextFragment;
+import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
@@ -25,25 +28,48 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
     private static final String TAG = "MainActivity";
-    private ConvertPresenter mConvertPresenter;
-    private ViewPager mViewPager;
-    private SectionPageAdapter mPageAdapter;
+    private TextConvertPresenter mTextPresenter;
+
+    private TextFragment mTextFragment;
+    private ImageToAsciiFragment mImageToAsciiFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+
+        mTextFragment = TextFragment.newInstance();
+        mImageToAsciiFragment = ImageToAsciiFragment.newInstance();
+
         bindView();
-        mConvertPresenter = new ConvertPresenter(getAssets(), mPageAdapter.getConvertFragment());
+        mTextPresenter = new TextConvertPresenter(getAssets(), mTextFragment);
     }
 
     private void bindView() {
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPageAdapter);
-        mViewPager.setOffscreenPageLimit(mPageAdapter.getCount());
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_text: {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.content, mTextFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    }
+                    case R.id.action_image: {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.action_text);
     }
 
     @Override
@@ -73,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnColorSelectedListener(new OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int i) {
-                        ConvertContract.View view = mConvertPresenter.getView();
+                        ConvertContract.View view = mTextPresenter.getView();
                         if (view != null) {
                             view.setColor(i);
                         }

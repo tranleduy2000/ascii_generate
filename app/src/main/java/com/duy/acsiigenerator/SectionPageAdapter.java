@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.duy.acsiigenerator.figlet.ConvertFragment;
+import com.duy.acsiigenerator.figlet.TextFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 
 /**
@@ -12,17 +12,17 @@ import com.duy.acsiigenerator.image.ImageToAsciiFragment;
  */
 
 public class SectionPageAdapter extends FragmentPagerAdapter {
-    private ConvertFragment convertFragment;
+    private TextFragment textFragment;
     private ImageToAsciiFragment imageToAsciiFragment;
 
     public SectionPageAdapter(FragmentManager fm) {
         super(fm);
         imageToAsciiFragment = ImageToAsciiFragment.newInstance();
-        convertFragment = ConvertFragment.newInstance();
+        textFragment = TextFragment.newInstance();
     }
 
-    public ConvertFragment getConvertFragment() {
-        return convertFragment;
+    public TextFragment getTextFragment() {
+        return textFragment;
     }
 
     public ImageToAsciiFragment getImageToAsciiFragment() {
@@ -32,7 +32,7 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return convertFragment;
+            return textFragment;
         } else if (position == 1) {
             return imageToAsciiFragment;
         }

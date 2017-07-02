@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="false" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -25,9 +19,16 @@
             android:hint="@string/type_your_text"
             android:maxLines="1"
 
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
     </android.support.design.widget.TextInputLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -41,12 +42,12 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="@string/please_enter_your_text_and_wait"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </FrameLayout>
 

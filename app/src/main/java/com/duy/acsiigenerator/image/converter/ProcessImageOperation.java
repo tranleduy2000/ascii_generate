@@ -45,7 +45,6 @@ public class ProcessImageOperation {
         final Result result = converter.computeResultForBitmap(bitmap,
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
-        return AsciiImageWriter.saveImageAndThumbnail(renderer.createBitmap(result),
-                result);
+        return AsciiImageWriter.saveImage(context, renderer.createBitmap(result), result);
     }
 }

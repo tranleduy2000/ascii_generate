@@ -91,7 +91,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-
                     onItemClickListener.onSaveImage(ImageFactory.createImageFromView(holder.txtContent));
                 }
             }
