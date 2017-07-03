@@ -46,6 +46,11 @@ public class TextImageFragment extends Fragment implements EmoticonContract.View
         this.mPresenter = presenter;
     }
 
+    @Override
+    public void append(String value) {
+        mFacesAdapter.add(value);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

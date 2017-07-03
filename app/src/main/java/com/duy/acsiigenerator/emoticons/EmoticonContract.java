@@ -15,6 +15,8 @@ public class EmoticonContract {
         void display(ArrayList<String> list);
 
         void setPresenter(Presenter presenter);
+
+        void append(String value);
     }
 
     public interface Presenter {

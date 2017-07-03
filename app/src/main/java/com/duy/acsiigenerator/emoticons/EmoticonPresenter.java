@@ -8,8 +8,10 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 import static android.content.ContentValues.TAG;
+import static com.duy.acsiigenerator.emoticons.EmoticonManager.PATTERN;
 
 /**
  * Created by Duy on 03-Jul-17.
@@ -18,7 +20,7 @@ import static android.content.ContentValues.TAG;
 public class EmoticonPresenter implements EmoticonContract.Presenter {
     private final Context context;
     private final EmoticonContract.View view;
-    private AsyncTask<String, Void, ArrayList<String>> loadData;
+    private AsyncTask<String, String, ArrayList<String>> loadData;
 
     public EmoticonPresenter(Context context, EmoticonContract.View view) {
         this.context = context;
@@ -36,9 +38,8 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             @Override
             public void onResult(ArrayList<String> list) {
                 view.hideProgress();
-                view.display(list);
             }
-        });
+        }, view);
         switch (index) {
             case EmoticonFragment.INDEX:
                 loadData.execute("emoticons/faces.txt");
@@ -49,25 +50,44 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
         }
     }
 
-    private static class LoadDataTask extends AsyncTask<String, Void, ArrayList<String>> {
+    private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
         private Context context;
         private Callback callback;
+        private EmoticonContract.View view;
 
-        LoadDataTask(Context context, Callback callback) {
+        LoadDataTask(Context context, Callback callback, EmoticonContract.View view) {
             this.context = context;
             this.callback = callback;
+            this.view = view;
         }
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
             AssetManager assets = context.getAssets();
             try {
-                InputStream faces = assets.open(params[0]);
-                return EmoticonManager.readFaces(faces);
+                InputStream stream = assets.open(params[0]);
+                String string = FileUtil.streamToString(stream);
+                Matcher matcher = PATTERN.matcher(string);
+                ArrayList<String> result = new ArrayList<>();
+                while (matcher.find() && !isCancelled()) {
+                    publishProgress(matcher.group(2));
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return result;
             } catch (IOException e) {
                 e.printStackTrace();
                 return new ArrayList<>();
             }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            view.append(values[0]);
         }
 
         @Override

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 
 public class EmoticonManager {
-    private static final Pattern PATTERN = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
+    public static final Pattern PATTERN = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
     private static final String TAG = "EmoticonManager";
 
     public static ArrayList<String> readFaces(InputStream inputStream) throws IOException {
