@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.duy.acsiigenerator.emoticons.EmoticonFragment;
+import com.duy.acsiigenerator.emoticons.TextImageFragment;
+import com.duy.acsiigenerator.figlet.ConvertContract;
 import com.duy.acsiigenerator.figlet.TextConvertPresenter;
 import com.duy.acsiigenerator.figlet.TextFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
@@ -29,9 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private TextConvertPresenter mTextPresenter;
 
-    private TextFragment mTextFragment;
-    private ImageToAsciiFragment mImageToAsciiFragment;
     private AdView mAdView;
+
+
+    private Fragment mTextFragment;
+    private Fragment mImageToAsciiFragment;
+    private Fragment mEmoticonFragment;
+    private Fragment mTextImageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         mTextFragment = TextFragment.newInstance();
         mImageToAsciiFragment = ImageToAsciiFragment.newInstance();
+        mEmoticonFragment = new EmoticonFragment();
+        mTextImageFragment = new TextImageFragment();
 
         bindView();
-        mTextPresenter = new TextConvertPresenter(getAssets(), mTextFragment);
+        mTextPresenter = new TextConvertPresenter(getAssets(), (ConvertContract.View) mTextFragment);
 
         showAdView();
     }
@@ -55,8 +66,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAdView() {
         mAdView = (AdView) findViewById(R.id.ad_view);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+            }
+        }, 1000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAdView.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdView.destroy();
     }
 
     private void bindView() {
@@ -75,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_image: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    }
+                    case R.id.action_emoticon: {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.content, mEmoticonFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    }
+                    case R.id.action_text_image: {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.content, mTextImageFragment);
                         fragmentTransaction.commit();
                         return true;
                     }
