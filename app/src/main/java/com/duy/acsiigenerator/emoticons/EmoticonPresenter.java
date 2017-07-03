@@ -5,13 +5,15 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
+import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 import static android.content.ContentValues.TAG;
-import static com.duy.acsiigenerator.emoticons.EmoticonManager.PATTERN;
 
 /**
  * Created by Duy on 03-Jul-17.
@@ -50,6 +52,13 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
         }
     }
 
+    @Override
+    public void stop() {
+        if (loadData != null) {
+            loadData.cancel(true);
+        }
+    }
+
     private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
         private Context context;
         private Callback callback;
@@ -67,15 +76,10 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             try {
                 InputStream stream = assets.open(params[0]);
                 String string = FileUtil.streamToString(stream);
-                Matcher matcher = PATTERN.matcher(string);
+                Matcher matcher = EmoticonManager.PATTERN.matcher(string);
                 ArrayList<String> result = new ArrayList<>();
                 while (matcher.find() && !isCancelled()) {
                     publishProgress(matcher.group(2));
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
                 return result;
             } catch (IOException e) {

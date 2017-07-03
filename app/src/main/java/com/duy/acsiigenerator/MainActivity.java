@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.emoticons.EmoticonFragment;
-import com.duy.acsiigenerator.emoticons.TextImageFragment;
+import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
+import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
 import com.duy.acsiigenerator.figlet.ConvertContract;
 import com.duy.acsiigenerator.figlet.TextConvertPresenter;
 import com.duy.acsiigenerator.figlet.TextFragment;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 AdRequest adRequest = new AdRequest.Builder().build();
                 mAdView.loadAd(adRequest);
             }
-        }, 1000);
+        }, 3000);
     }
 
     @Override

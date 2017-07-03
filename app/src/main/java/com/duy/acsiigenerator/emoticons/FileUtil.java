@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
  */
 
 public class FileUtil {
+    private static final String TAG = "FileUtil";
+
     public static String streamToString(@NonNull InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder result = new StringBuilder();

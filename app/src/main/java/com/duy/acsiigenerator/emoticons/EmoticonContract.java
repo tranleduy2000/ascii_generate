@@ -21,6 +21,8 @@ public class EmoticonContract {
 
     public interface Presenter {
         void start(int index);
+
+        void stop();
     }
 
 }
