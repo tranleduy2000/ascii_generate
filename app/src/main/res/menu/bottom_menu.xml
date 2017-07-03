@@ -7,7 +7,7 @@
         android:title="@string/text"/>
     <item
         android:id="@+id/action_text_image"
-        android:icon="@drawable/ic_insert_emoticon_black_24dp"
+        android:icon="@drawable/ic_texture_black_24dp"
         android:title="@string/text_image"/>
     <item
         android:id="@+id/action_emoticon"
