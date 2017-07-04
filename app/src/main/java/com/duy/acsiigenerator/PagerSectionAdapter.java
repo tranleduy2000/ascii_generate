@@ -61,15 +61,15 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Figlet";
+                return "Text Art";
             case 1:
                 return "Ads";
             case 2:
-                return "Text Image";
-            case 3:
-                return "Emoticons";
-            case 4:
                 return "AsciiPhoto";
+            case 3:
+                return "Figlet";
+            case 4:
+                return "Emoticons";
             default:
                 return "";
         }
