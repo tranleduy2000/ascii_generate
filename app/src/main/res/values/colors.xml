@@ -19,5 +19,6 @@
     <color name="colorPrimary">#455a64</color>
     <color name="colorPrimaryDark">#263238</color>
     <color name="colorAccent">#1de9b6</color>
-    <color name="colorBackground">#3c4e58</color>
+    <color name="colorBackground">#161c20</color>
+    <color name="cardColorBackground">#2a383e</color>
 </resources>
