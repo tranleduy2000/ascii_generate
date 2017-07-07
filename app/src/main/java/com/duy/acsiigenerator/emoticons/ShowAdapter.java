@@ -43,7 +43,6 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private ClipboardManagerCompat clipboardManagerCompat;
-    private int color;
 
     public ShowAdapter(@NonNull Context context) {
         this.context = context;
@@ -95,10 +94,6 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
         notifyItemInserted(objects.size() - 1);
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
-
     public void addAll(ArrayList<String> list) {
         this.objects.clear();
         this.objects.addAll(list);
@@ -106,7 +101,6 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        //        View copy, share;
         TextView txtContent;
         View root;
 
@@ -114,8 +108,6 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
             root = itemView.findViewById(R.id.container);
-//            copy = itemView.findViewById(R.id.copy);
-//            share = itemView.findViewById(R.id.share);
         }
 
     }

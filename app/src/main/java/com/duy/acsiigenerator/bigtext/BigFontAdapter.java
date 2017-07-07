@@ -18,8 +18,6 @@ package com.duy.acsiigenerator.bigtext;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +40,6 @@ import imagetotext.duy.com.asciigenerator.R;
  */
 
 public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHolder> {
-    private static final String TAG = "ResultAdapter";
     private final List<String> objects = new ArrayList<>();
     private Context context;
     private LayoutInflater inflater;
@@ -72,25 +69,25 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_result, parent, false);
+        View view = inflater.inflate(R.layout.list_item_emiticon, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.txtContent.setTypeface(Typeface.MONOSPACE);
         holder.txtContent.setText(objects.get(position));
-        holder.share.setOnClickListener(new View.OnClickListener() {
+        holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_TEXT, holder.txtContent.getText().toString());
                 intent.setType("text/plain");
                 context.startActivity(intent);
+                return false;
             }
         });
 
-        holder.copy.setOnClickListener(new View.OnClickListener() {
+        holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clipboardManagerCompat.setText(holder.txtContent.getText().toString());
@@ -116,22 +113,14 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     }
 
 
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtContent;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtContent;
-        public View copy, share, saveImg;
-
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            txtContent = (TextView) itemView.findViewById(R.id.content);
-            copy = itemView.findViewById(R.id.copy);
-            share = itemView.findViewById(R.id.share);
-            saveImg = itemView.findViewById(R.id.img_save);
+            txtContent = itemView.findViewById(R.id.content);
         }
 
-        public void bind() {
-
-        }
     }
 }
 

@@ -107,7 +107,6 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
 
     @Override
     public void setColor(int color) {
-        mAdapter.setColor(color);
     }
 
     @Override
