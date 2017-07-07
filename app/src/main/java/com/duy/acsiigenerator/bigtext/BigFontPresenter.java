@@ -69,8 +69,12 @@ public class BigFontPresenter implements BigFontContract.Presenter {
         protected Void doInBackground(String... params) {
             int size = reader.getSize();
             for (int i = 0; i < size && !isCancelled(); i++) {
-                String convert = reader.convert(params[0], i);
-                view.addResult(convert);
+                try {
+                    String convert = reader.convert(params[0], i);
+                    view.addResult(convert);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             return null;
         }

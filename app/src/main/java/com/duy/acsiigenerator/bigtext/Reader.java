@@ -45,7 +45,7 @@ public class Reader {
             try {
                 Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
                 HashMap<Character, String> font = new HashMap<>();
-                for (int i = 'A'; i < 'Z' && matcher.find(); i++) {
+                for (int i = 'A'; i <= 'Z' && matcher.find(); i++) {
                     font.put((char) i, matcher.group(2));
                 }
                 if (matcher.find()) {

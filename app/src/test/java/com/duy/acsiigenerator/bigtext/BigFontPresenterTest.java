@@ -42,6 +42,12 @@ public class BigFontPresenterTest {
             String convert = cache.convert("HELLO EVERYONE", i);
             System.out.println(convert);
         }
+        for (int i = 0; i < size; i++) {
+            for (char j = 'a'; j <= 'z'; j++) {
+                String convert = cache.convert(String.valueOf(j), i);
+                System.out.println(convert);
+            }
+        }
     }
 
 }
