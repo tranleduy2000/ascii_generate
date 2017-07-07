@@ -129,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_rate:
                         goToPlayStore();
                         return true;
+                    case R.id.action_share:
+                        shareApp();
+                        return true;
                 }
                 return false;
             }
@@ -148,6 +151,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/search?q=pub:Trần Lê Duy")));
         }
+
+    }
+
+    private void shareApp() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
+        intent.setType("text/plain");
+        startActivity(intent);
 
     }
 
