@@ -39,7 +39,7 @@ public class BigFontPresenterTest {
         cache.loadAndClose(inputStreams);
         int size = cache.getSize();
         for (int i = 0; i < size; i++) {
-            String convert = cache.convert("HELLOEVERYONE", i);
+            String convert = cache.convert("HELLO EVERYONE", i);
             System.out.println(convert);
         }
     }

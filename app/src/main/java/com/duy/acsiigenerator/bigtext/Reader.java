@@ -48,6 +48,9 @@ public class Reader {
                 for (int i = 'A'; i < 'Z' && matcher.find(); i++) {
                     font.put((char) i, matcher.group(2));
                 }
+                if (matcher.find()) {
+                    font.put(' ', matcher.group(2));
+                }
                 fonts.add(font);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -67,9 +70,6 @@ public class Reader {
     }
 
     public String convert(String text, int position) {
-        if (text.trim().isEmpty()) {
-            return text;
-        }
 
         HashMap<Character, String> hashMap = fonts.get(position);
         ArrayList<String> chars = new ArrayList<>();
@@ -84,7 +84,6 @@ public class Reader {
         String[][] maps = new String[chars.size()][chars.get(0).split("\\n").length];
         for (int i = 0; i < chars.size(); i++) {
             maps[i] = chars.get(i).split("\\n");
-            System.out.println(maps[i]);
         }
 
         for (int j = 0; j < maps[0].length; j++) {
