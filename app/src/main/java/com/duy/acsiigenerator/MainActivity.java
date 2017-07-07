@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 new PagerSectionAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(pagerSectionAdapter);
         viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
+        viewPager.setCurrentItem(1); //big font
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_white_24dp);

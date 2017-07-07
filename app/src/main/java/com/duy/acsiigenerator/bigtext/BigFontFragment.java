@@ -138,6 +138,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new BigFontAdapter(getActivity(), view.findViewById(R.id.empty_view));
         mRecyclerView.setAdapter(mAdapter);
+
         mEditIn.addTextChangedListener(mInputTextWatcher);
 
         createPresenter();

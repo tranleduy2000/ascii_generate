@@ -81,7 +81,7 @@ public class BigFontPresenter implements BigFontContract.Presenter {
             for (int i = 0; i < size && !isCancelled(); i++) {
                 try {
                     String convert = cache.convert(params[0], i);
-                    view.addResult(convert);
+                    publishProgress(convert);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -50,6 +50,7 @@ public class AsciiImageWriter {
         FileWriter textOutput = new FileWriter(textFile);
         writeText(asciiResult, textOutput);
         textOutput.close();
+        image.recycle();
 
         return new Pair<>(imageFile.getPath(), textFile.getPath());
     }

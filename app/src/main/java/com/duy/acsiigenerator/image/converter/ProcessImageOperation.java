@@ -68,6 +68,8 @@ public class ProcessImageOperation {
         final Result result = converter.computeResultForBitmap(bitmap,
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
+        bitmap.recycle();
+
         return AsciiImageWriter.saveImage(context, renderer.createBitmap(result), result);
     }
 }
