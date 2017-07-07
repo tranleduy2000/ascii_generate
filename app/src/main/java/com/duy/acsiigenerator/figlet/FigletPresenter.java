@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Duy on 06-May-17.
  */
 
-public class TextConvertPresenter implements ConvertContract.Presenter {
+public class FigletPresenter implements ConvertContract.Presenter {
     /**
      * this maps wil be store {@link ConvertModel} created
      */
@@ -44,7 +44,7 @@ public class TextConvertPresenter implements ConvertContract.Presenter {
     private TaskGenerateData mTaskGenerateData;
     private ProcessData process = new ProcessData();
 
-    public TextConvertPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
+    public FigletPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
         this.assetManager = assetManager;
         this.mView = view;
         mView.setPresenter(this);

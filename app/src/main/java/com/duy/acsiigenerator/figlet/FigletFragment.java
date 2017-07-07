@@ -159,7 +159,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Re
         mRecyclerView.setAdapter(mAdapter);
         mEditIn.addTextChangedListener(mInputTextWatcher);
 
-        mPresenter = new TextConvertPresenter(getContext().getAssets(), this);
+        mPresenter = new FigletPresenter(getContext().getAssets(), this);
     }
 
     @Override

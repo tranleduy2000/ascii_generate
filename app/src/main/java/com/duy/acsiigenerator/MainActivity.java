@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.duy.acsiigenerator.bigtext.BigFontFragment;
 import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
 import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
 import com.duy.acsiigenerator.figlet.FigletFragment;
@@ -45,11 +47,13 @@ import imagetotext.duy.com.asciigenerator.R;
 public class MainActivity extends AppCompatActivity {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
+    @Nullable
     private AdView mAdView;
     private Fragment mTextFragment;
     private Fragment mImageToAsciiFragment;
     private Fragment mEmoticonFragment;
     private Fragment mTextImageFragment;
+    private Fragment mBigFontFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         mTextFragment = FigletFragment.newInstance();
         mImageToAsciiFragment = ImageToAsciiFragment.newInstance();
-        mEmoticonFragment = new EmoticonFragment();
-        mTextImageFragment = new TextImageFragment();
+        mEmoticonFragment = EmoticonFragment.newInstance();
+        mTextImageFragment = TextImageFragment.newInstance();
+        mBigFontFragment = BigFontFragment.newInstance();
 
         bindView();
         showAdView();
@@ -77,27 +82,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 AdRequest adRequest = new AdRequest.Builder().build();
-                mAdView.loadAd(adRequest);
+                if (mAdView != null) {
+                    mAdView.loadAd(adRequest);
+                }
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mAdView.resume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mAdView.pause();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
     }
 
     @Override
     protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
         super.onDestroy();
-        mAdView.destroy();
+
     }
 
     private void bindView() {
@@ -128,6 +142,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_text_image: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mTextImageFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    }
+                    case R.id.action_big_text: {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.content, mBigFontFragment);
                         fragmentTransaction.commit();
                         return true;
                     }
