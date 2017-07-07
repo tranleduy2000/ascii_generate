@@ -46,7 +46,7 @@ public class Reader {
                 Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
                 HashMap<Character, String> font = new HashMap<>();
                 for (int i = 'A'; i < 'Z' && matcher.find(); i++) {
-                    font.put((char) i, matcher.group());
+                    font.put((char) i, matcher.group(2));
                 }
                 fonts.add(font);
             } catch (IOException e) {
@@ -67,12 +67,34 @@ public class Reader {
     }
 
     public String convert(String text, int position) {
-        HashMap<Character, String> hashMap = fonts.get(position);
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            String s = hashMap.get(text.charAt(i));
-            result.append(s == null ? text.charAt(i) : s);
+        if (text.trim().isEmpty()) {
+            return text;
         }
+
+        HashMap<Character, String> hashMap = fonts.get(position);
+        ArrayList<String> chars = new ArrayList<>();
+        for (int i = 0; i < text.length(); i++) {
+            String s = hashMap.get(Character.toUpperCase(text.charAt(i)));
+            if (s == null) {
+                throw new UnsupportedOperationException("Invalid character " + text.charAt(i));
+            }
+            chars.add(s);
+        }
+        StringBuilder result = new StringBuilder();
+        String[][] maps = new String[chars.size()][chars.get(0).split("\\n").length];
+        for (int i = 0; i < chars.size(); i++) {
+            maps[i] = chars.get(i).split("\\n");
+            System.out.println(maps[i]);
+        }
+
+        for (int j = 0; j < maps[0].length; j++) {
+            for (int i = 0; i < chars.size(); i++) {
+                result.append(maps[i][j]);
+            }
+            result.append("\n");
+        }
+
+
         return result.toString();
     }
 

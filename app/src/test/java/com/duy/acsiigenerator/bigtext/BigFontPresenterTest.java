@@ -16,14 +16,11 @@
 
 package com.duy.acsiigenerator.bigtext;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Duy on 07-Jul-17.
@@ -31,59 +28,20 @@ import java.util.ArrayList;
 public class BigFontPresenterTest {
     @Test
     public void convert() throws Exception {
-        File file = new File("C:\\github\\AsciiGenerator\\app\\src\\main\\java\\com\\duy\\acsiigenerator\\bigtext");
+        File file = new File("C:\\github\\AsciiGenerator\\app\\src\\main\\assets\\bigtext");
         File[] files = file.listFiles();
+        System.out.println(Arrays.toString(files));
         FileInputStream[] inputStreams = new FileInputStream[files.length];
         for (int i = 0; i < files.length; i++) {
             inputStreams[i] = new FileInputStream(files[i]);
         }
-        BigFontPresenter bigFontPresenter = new BigFontPresenter(inputStreams, new BigFontContract.View() {
-            @Override
-            public void showResult(@NonNull ArrayList<String> result) {
-
-            }
-
-            @Override
-            public void clearResult() {
-
-            }
-
-            @Override
-            public void addResult(String text) {
-                System.out.println(text);
-            }
-
-            @Override
-            public void setPresenter(@Nullable BigFontContract.Presenter presenter) {
-
-            }
-
-            @Override
-            public void setProgress(int process) {
-
-            }
-
-            @Override
-            public int getMaxProgress() {
-                return 0;
-            }
-
-            @Override
-            public void setColor(int color) {
-
-            }
-
-            @Override
-            public void showProgress() {
-
-            }
-
-            @Override
-            public void hideProgress() {
-
-            }
-        });
-        bigFontPresenter.convert("HELLO EVERYONE");
+        Reader cache = new Reader();
+        cache.loadAndClose(inputStreams);
+        int size = cache.getSize();
+        for (int i = 0; i < size; i++) {
+            String convert = cache.convert("HELLOEVERYONE", i);
+            System.out.println(convert);
+        }
     }
 
 }
