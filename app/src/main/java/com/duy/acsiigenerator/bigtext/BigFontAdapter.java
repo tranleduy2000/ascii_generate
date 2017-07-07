@@ -102,6 +102,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     }
 
     public void clear() {
+        objects.clear();
         notifyDataSetChanged();
         invalidateEmptyView();
     }
@@ -118,7 +119,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
 
         ViewHolder(View itemView) {
             super(itemView);
-            txtContent = itemView.findViewById(R.id.content);
+            txtContent = itemView.findViewById(R.id.text);
         }
 
     }

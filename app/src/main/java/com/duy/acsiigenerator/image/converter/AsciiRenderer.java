@@ -42,28 +42,29 @@ public class AsciiRenderer {
         }
     }
 
-    Paint paint = new Paint();
-    int charPixelHeight = 9;
-    int charPixelWidth = 7;
-    int textSize = 10;
     // One element of this array holds the visible bitmap. The next image is drawn offscreen into
     // the other element, and then activeBitmapIndex is flipped to make it visible.
-    Bitmap[] bitmaps = new Bitmap[2];
-    int activeBitmapIndex;
+    private Bitmap[] bitmaps = new Bitmap[2];
+    private int activeBitmapIndex;
     // When rendering an ASCII image, we draw color values directly into an int array a row at a
     // time. We use a bitmap containing the possible characters and copy slices from it. This is
     // faster than Canvas.drawText.
     // We store some temporary objects used to fill the bitmap pixels between requests,
     // so we can avoid allocating new objects when possible. See drawIntoBitmap().
-    Bitmap possibleCharsBitmap;
-    int[] possibleCharsBitmapPixels;
-    byte[] possibleCharsGrayscale;
-    ExecutorService threadPool;
-    List<Worker> renderWorkers;
-    int maxWidth;
-    int maxHeight;
-    int outputImageWidth;
-    int outputImageHeight;
+    private Bitmap possibleCharsBitmap;
+    private int[] possibleCharsBitmapPixels;
+    private byte[] possibleCharsGrayscale;
+    private ExecutorService threadPool;
+    private List<Worker> renderWorkers;
+    private int maxWidth;
+    private int maxHeight;
+    private int outputImageWidth;
+    private int outputImageHeight;
+    private Paint paint = new Paint();
+
+    private int charPixelHeight = 9;
+    private int charPixelWidth = 7;
+    private int textSize = 10;
 
     public Bitmap getVisibleBitmap() {
         return bitmaps[activeBitmapIndex];

@@ -59,8 +59,8 @@ public class ProcessImageOperation {
         final AsciiRenderer renderer = new AsciiRenderer();
         renderer.setMaximumImageSize(displayWidth, displayHeight);
 
-        int minWidth = Math.max(2 * renderer.asciiColumns(), 480);
-        int minHeight = Math.max(2 * renderer.asciiRows(), 320);
+        int minWidth = Math.max(3 * renderer.asciiColumns(), 480);
+        int minHeight = Math.max(3 * renderer.asciiRows(), 320);
         Bitmap bitmap = AndroidUtils.scaledBitmapFromURIWithMinimumSize(context, uri, minWidth, minHeight);
         renderer.setCameraImageSize(bitmap.getWidth(), bitmap.getHeight());
 
