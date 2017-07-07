@@ -16,13 +16,10 @@
 
 package com.duy.acsiigenerator.bigtext;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,24 +32,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import imagetotext.duy.com.asciigenerator.R;
 
-/**
- * Created by Duy on 07-Jul-17.
- */
 
 public class BigFontFragment extends Fragment implements BigFontContract.View {
-    private RecyclerView mRecyclerView;
+    private static final String TAG = "BigFontFragment";
+
     private ContentLoadingProgressBar mProgressBar;
-    private Dialog dialog;
     private BigFontAdapter mAdapter;
     @Nullable
     private BigFontContract.Presenter mPresenter;
@@ -144,7 +134,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setIndeterminate(false);
 
-        mRecyclerView = view.findViewById(R.id.listview);
+        RecyclerView mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new BigFontAdapter(getActivity(), view.findViewById(R.id.empty_view));
@@ -157,11 +147,11 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     private void createPresenter() {
         try {
             AssetManager assets = getContext().getAssets();
-            String[] paths = assets.list("bigtext");
-            InputStream[] inputStreams = new InputStream[paths.length];
-            for (int i = 0; i < paths.length; i++) {
-                String path = paths[i];
-                inputStreams[i] = assets.open(path);
+            String[] names = assets.list("bigtext");
+            InputStream[] inputStreams = new InputStream[names.length];
+            for (int i = 0; i < names.length; i++) {
+                String name = names[i];
+                inputStreams[i] = assets.open("bigtext" + "/" + name);
             }
             mPresenter = new BigFontPresenter(inputStreams, this);
         } catch (Exception e) {
@@ -173,7 +163,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     public void onStart() {
         super.onStart();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditIn.setText(sharedPreferences.getString("key_save", ""));
+        mEditIn.setText(sharedPreferences.getString(TAG, ""));
     }
 
     @Override
@@ -190,42 +180,8 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     @Override
     public void onDestroyView() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        sharedPreferences.edit().putString("key_save", mEditIn.getText().toString()).apply();
+        sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
         super.onDestroyView();
-    }
-
-
-    private String writeToStorage(Bitmap bitmap, String path, String fileName) {
-        File file = new File(path, fileName);
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-            // PNG is a lossless format, the compression factor (100) is ignored
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            bitmap.recycle();
-            Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                return MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
-                        file.getAbsolutePath(), file.getName(), file.getName());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void onDestroy() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
-        super.onDestroy();
     }
 
 }

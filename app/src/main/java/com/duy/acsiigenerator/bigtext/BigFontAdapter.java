@@ -49,8 +49,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     private ClipboardManagerCompat clipboardManagerCompat;
     @Nullable
     private View emptyView;
-    @Nullable
-    private int color;
 
     public BigFontAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
@@ -58,9 +56,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.emptyView = emptyView;
         invalidateEmptyView();
-        this.color = context.getResources().getColor(android.R.color.primary_text_dark);
-
-        objects.add(context.getString(R.string.figlet_msg));
     }
 
     private void invalidateEmptyView() {
@@ -110,9 +105,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     }
 
     public void clear() {
-        this.objects.clear();
-        objects.add(context.getString(R.string.figlet_msg));
-
         notifyDataSetChanged();
         invalidateEmptyView();
     }
@@ -123,13 +115,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
         invalidateEmptyView();
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
 
-    public interface OnItemClickListener {
-        void onSaveImage(Bitmap bitmap);
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;

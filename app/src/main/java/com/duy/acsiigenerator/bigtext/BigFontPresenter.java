@@ -33,7 +33,6 @@ public class BigFontPresenter implements BigFontContract.Presenter {
     public BigFontPresenter(InputStream[] inputStream, BigFontContract.View view) {
         this.inputStreams = inputStream;
         this.view = view;
-        this.view.setPresenter(this);
     }
 
     @Override
