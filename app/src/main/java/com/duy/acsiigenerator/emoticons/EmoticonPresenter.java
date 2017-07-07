@@ -21,6 +21,7 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.duy.acsiigenerator.FileUtil;
 import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
 import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
 
@@ -92,7 +93,7 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             try {
                 InputStream stream = assets.open(params[0]);
                 String string = FileUtil.streamToString(stream);
-                Matcher matcher = EmoticonManager.PATTERN.matcher(string);
+                Matcher matcher = FileUtil.PATTERN_SLIP.matcher(string);
                 ArrayList<String> result = new ArrayList<>();
                 while (matcher.find() && !isCancelled()) {
                     publishProgress(matcher.group(2));

@@ -18,7 +18,7 @@ package com.duy.acsiigenerator.clipboard;
 
 /**
  * The classes in this package take advantage of the fact that the VM does
- * not attempt to load a class until it's accessed, and the verifier
+ * not attempt to loadAndClose a class until it's accessed, and the verifier
  * does not run until a class is loaded.  By keeping the methods which
  * are unavailable on older platforms in subclasses which are only ever
  * accessed on platforms where they are available, we can preserve

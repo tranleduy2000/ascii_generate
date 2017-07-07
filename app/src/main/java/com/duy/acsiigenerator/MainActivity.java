@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
 import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
-import com.duy.acsiigenerator.figlet.TextFragment;
+import com.duy.acsiigenerator.figlet.FigletFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         hideStatusBar();
         setContentView(R.layout.activity_main);
 
-        mTextFragment = TextFragment.newInstance();
+        mTextFragment = FigletFragment.newInstance();
         mImageToAsciiFragment = ImageToAsciiFragment.newInstance();
         mEmoticonFragment = new EmoticonFragment();
         mTextImageFragment = new TextImageFragment();
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_text: {
+                    case R.id.action_figlet: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mTextFragment);
                         fragmentTransaction.commit();
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_text);
+        bottomNavigationView.setSelectedItemId(R.id.action_figlet);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -17,10 +17,10 @@
 <resources>
     <string name="app_name">Ascii Generator</string>
 
-    <string name="type_your_text">Type your text ...</string>
+    <string name="type_your_text">Type your text …</string>
     <string name="copy">copy</string>
     <string name="share">share</string>
-    <string name="please_enter_your_text_and_wait">Please enter your text and wait...</string>
+    <string name="please_enter_your_text_and_wait">Please enter your text and wait…</string>
     <string name="save_as_image">Save as image</string>
     <string name="permission_msg">Permission is Required for getting list of files</string>
     <string name="copied">Copied</string>
@@ -32,4 +32,10 @@
     <string name="select_file">Select file</string>
     <string name="emoticon">Emoticons</string>
     <string name="text_image">Text image</string>
+    <string name="figlet_msg">
+        !! You can not copy/paste with \n
+        this tool because it is only \n
+        supported for fixed width font.</string>
+    <string name="figlet">Figlet</string>
+    <string name="big_text">Big text</string>
 </resources>

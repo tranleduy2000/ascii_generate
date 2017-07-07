@@ -57,7 +57,7 @@ import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT
  * Created by Duy on 15-Jun-17.
  */
 
-public class TextFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
+public class FigletFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
@@ -83,11 +83,11 @@ public class TextFragment extends Fragment implements ConvertContract.View, Resu
         }
     };
 
-    public static TextFragment newInstance() {
+    public static FigletFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        TextFragment fragment = new TextFragment();
+        FigletFragment fragment = new FigletFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.acsiigenerator.emoticons;
+package com.duy.acsiigenerator;
 
 import android.support.annotation.NonNull;
 
@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 /**
  * Created by Duy on 03-Jul-17.
@@ -29,6 +30,7 @@ import java.io.InputStreamReader;
 
 public class FileUtil {
     private static final String TAG = "FileUtil";
+    public static final Pattern PATTERN_SLIP = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
 
     public static String streamToString(@NonNull InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

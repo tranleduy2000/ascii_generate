@@ -61,6 +61,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         this.emptyView = emptyView;
         invalidateEmptyView();
         this.color = context.getResources().getColor(android.R.color.primary_text_dark);
+
+        objects.add(context.getString(R.string.figlet_msg));
     }
 
     private void invalidateEmptyView() {
@@ -127,6 +129,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     public void clear() {
         this.objects.clear();
+        objects.add(context.getString(R.string.figlet_msg));
+
         notifyDataSetChanged();
         invalidateEmptyView();
     }
