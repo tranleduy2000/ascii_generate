@@ -56,7 +56,7 @@ import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT
  */
 
 public class FigletFragment extends Fragment implements ConvertContract.View, FigletAdapter.OnItemClickListener {
-    private RecyclerView mRecyclerView;
+    private static final String TAG = "FigletFragment";
     private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
     private FigletAdapter mAdapter;
@@ -149,7 +149,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setIndeterminate(false);
 
-        mRecyclerView = view.findViewById(R.id.listview);
+        RecyclerView mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new FigletAdapter(getActivity(), view.findViewById(R.id.empty_view));
@@ -157,20 +157,18 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         mRecyclerView.setAdapter(mAdapter);
         mEditIn.addTextChangedListener(mInputTextWatcher);
 
-        mPresenter = new FigletPresenter(getContext().getAssets(), this);
+        if (mPresenter == null) {
+            mPresenter = new FigletPresenter(getContext().getAssets(), this);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditIn.setText(sharedPreferences.getString("key_save", ""));
+        mEditIn.setText(sharedPreferences.getString(TAG, ""));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -181,7 +179,8 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
     @Override
     public void onDestroyView() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        sharedPreferences.edit().putString("key_save", mEditIn.getText().toString()).apply();
+        sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
+        mPresenter.cancel();
         super.onDestroyView();
     }
 

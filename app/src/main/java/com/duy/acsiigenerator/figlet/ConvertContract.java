@@ -47,5 +47,7 @@ public class ConvertContract {
 
     public interface Presenter {
         void onTextChanged(@NonNull String text);
+
+        void cancel();
     }
 }

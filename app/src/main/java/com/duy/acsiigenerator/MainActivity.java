@@ -40,20 +40,22 @@ import com.duy.acsiigenerator.figlet.FigletFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
+    private static final String TAG = "MainActivity";
     @Nullable
     private AdView mAdView;
     private Fragment mTextFragment;
     private Fragment mImageToAsciiFragment;
     private Fragment mEmoticonFragment;
     private Fragment mTextImageFragment;
-    private Fragment mBigFontFragment;
+    private BigFontFragment mBigFontFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         mBigFontFragment = BigFontFragment.newInstance();
 
         bindView();
-        showAdView();
+        if (!BuildConfig.DEBUG) {
+            showAdView();
+        }
     }
 
     private void hideStatusBar() {
@@ -117,44 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private void bindView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_figlet: {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.content, mTextFragment);
-                        fragmentTransaction.commit();
-                        return false;
-                    }
-                    case R.id.action_image: {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
-                        fragmentTransaction.commit();
-                        return false;
-                    }
-                    case R.id.action_emoticon: {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.content, mEmoticonFragment);
-                        fragmentTransaction.commit();
-                        return false;
-                    }
-                    case R.id.action_text_image: {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.content, mTextImageFragment);
-                        fragmentTransaction.commit();
-                        return false;
-                    }
-                    case R.id.action_big_text: {
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.content, mBigFontFragment);
-                        fragmentTransaction.commit();
-                        return false;
-                    }
-                }
-                return false;
-            }
-        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.action_big_text);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -222,4 +189,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        FirebaseAnalytics.getInstance(this).logEvent(item.toString(), new Bundle());
+        switch (item.getItemId()) {
+            case R.id.action_figlet: {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content, mTextFragment);
+                fragmentTransaction.commit();
+                return true;
+            }
+            case R.id.action_image: {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
+                fragmentTransaction.commit();
+                return true;
+            }
+            case R.id.action_emoticon: {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content, mEmoticonFragment);
+                fragmentTransaction.commit();
+                return true;
+            }
+            case R.id.action_text_image: {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content, mTextImageFragment);
+                fragmentTransaction.commit();
+                return true;
+            }
+            case R.id.action_big_text: {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content, mBigFontFragment);
+                fragmentTransaction.commit();
+                return true;
+            }
+            default:
+                return false;
+        }
+    }
 }

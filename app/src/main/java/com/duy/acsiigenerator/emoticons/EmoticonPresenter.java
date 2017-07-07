@@ -44,7 +44,6 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
     public EmoticonPresenter(Context context, EmoticonContract.View view) {
         this.context = context;
         this.view = view;
-        view.setPresenter(this);
     }
 
     @Override

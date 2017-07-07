@@ -144,6 +144,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     }
 
     private void createPresenter() {
+        if (mPresenter != null) return;
         try {
             AssetManager assets = getContext().getAssets();
             String[] names = assets.list("bigtext");
@@ -165,6 +166,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         mEditIn.setText(sharedPreferences.getString(TAG, ""));
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -180,6 +182,9 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     public void onDestroyView() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
+        if (mPresenter != null) {
+            mPresenter.cancel();
+        }
         super.onDestroyView();
     }
 

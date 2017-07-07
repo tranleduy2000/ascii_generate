@@ -49,5 +49,7 @@ public class BigFontContract {
 
     public interface Presenter {
         void convert(String text);
+
+        void cancel();
     }
 }

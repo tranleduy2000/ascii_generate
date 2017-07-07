@@ -44,7 +44,6 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
     protected ShowAdapter mFacesAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
-
     @Override
     public void showProgress() {
         mProgressBar.show();
@@ -89,12 +88,15 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mPresenter = new EmoticonPresenter(getContext(), this);
+
         return inflater.inflate(R.layout.fragment_emoticon, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mPresenter == null) {
+            mPresenter = new EmoticonPresenter(getContext(), this);
+        }
     }
 }

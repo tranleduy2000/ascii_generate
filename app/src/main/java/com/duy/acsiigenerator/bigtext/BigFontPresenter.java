@@ -18,6 +18,7 @@ package com.duy.acsiigenerator.bigtext;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,6 +44,12 @@ public class BigFontPresenter implements BigFontContract.Presenter {
         handler.removeCallbacks(process);
         process.setInput(text);
         handler.postDelayed(process, 300);
+    }
+
+    @Override
+    public void cancel() {
+        handler.removeCallbacks(process);
+        process.cancel();
     }
 
     private class TaskGenerateData extends AsyncTask<String, String, Void> {
@@ -85,6 +92,7 @@ public class BigFontPresenter implements BigFontContract.Presenter {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            if (isCancelled()) return;
             view.addResult(values[0]);
             view.setProgress((int) (maxProgress / count.get() * current.incrementAndGet()));
         }
@@ -97,6 +105,8 @@ public class BigFontPresenter implements BigFontContract.Presenter {
     }
 
     public class ProcessData implements Runnable {
+        @Nullable
+        TaskGenerateData taskGenerateData;
         private String input = "";
 
         public void setInput(String input) {
@@ -105,7 +115,14 @@ public class BigFontPresenter implements BigFontContract.Presenter {
 
         @Override
         public void run() {
-            new TaskGenerateData(view).execute(input);
+            taskGenerateData = new TaskGenerateData(view);
+            taskGenerateData.execute(input);
+        }
+
+        public void cancel() {
+            if (taskGenerateData != null) {
+                taskGenerateData.cancel(true);
+            }
         }
     }
 }

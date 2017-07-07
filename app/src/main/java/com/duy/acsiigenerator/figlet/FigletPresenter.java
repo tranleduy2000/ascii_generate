@@ -47,7 +47,6 @@ public class FigletPresenter implements ConvertContract.Presenter {
     public FigletPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
         this.assetManager = assetManager;
         this.mView = view;
-        mView.setPresenter(this);
     }
 
     public String convert(String fontName, String data) {
@@ -71,6 +70,12 @@ public class FigletPresenter implements ConvertContract.Presenter {
         handler.postDelayed(process, 300);
     }
 
+    @Override
+    public void cancel() {
+        handler.removeCallbacks(process);
+        process.cancel();
+    }
+
     @Nullable
     public ConvertContract.View getView() {
         return mView;
@@ -78,6 +83,8 @@ public class FigletPresenter implements ConvertContract.Presenter {
 
 
     public class ProcessData implements Runnable {
+        @Nullable
+        TaskGenerateData taskGenerateData;
         private String input = "";
 
         public void setInput(String input) {
@@ -86,7 +93,14 @@ public class FigletPresenter implements ConvertContract.Presenter {
 
         @Override
         public void run() {
-            new TaskGenerateData().execute(input);
+            taskGenerateData = new TaskGenerateData();
+            taskGenerateData.execute(input);
+        }
+
+        public void cancel() {
+            if (taskGenerateData != null) {
+                taskGenerateData.cancel(true);
+            }
         }
     }
 
@@ -128,6 +142,7 @@ public class FigletPresenter implements ConvertContract.Presenter {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            if (isCancelled()) return;
             mView.addResult(values[0]);
             mView.setProgress((int) (maxProgress / count.get() * current.incrementAndGet()));
         }
