@@ -129,6 +129,7 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
 
     public void clear() {
         this.objects.clear();
+        objects.add(context.getString(R.string.figlet_msg));
         notifyDataSetChanged();
         invalidateEmptyView();
     }

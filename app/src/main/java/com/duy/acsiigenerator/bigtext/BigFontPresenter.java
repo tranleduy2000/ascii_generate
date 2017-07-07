@@ -17,6 +17,7 @@
 package com.duy.acsiigenerator.bigtext;
 
 import android.os.AsyncTask;
+import android.os.Handler;
 
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,6 +30,8 @@ public class BigFontPresenter implements BigFontContract.Presenter {
     private Reader cache = new Reader();
     private InputStream[] inputStreams;
     private BigFontContract.View view;
+    private ProcessData process = new ProcessData();
+    private Handler handler = new Handler();
 
     public BigFontPresenter(InputStream[] inputStream, BigFontContract.View view) {
         this.inputStreams = inputStream;
@@ -37,22 +40,19 @@ public class BigFontPresenter implements BigFontContract.Presenter {
 
     @Override
     public void convert(String text) {
-        if (!cache.isLoaded()) {
-            cache.loadAndClose(inputStreams);
-        }
-        new TaskGenerateData(view, cache).execute(text);
+        handler.removeCallbacks(process);
+        process.setInput(text);
+        handler.postDelayed(process, 300);
     }
 
-    private static class TaskGenerateData extends AsyncTask<String, String, Void> {
+    private class TaskGenerateData extends AsyncTask<String, String, Void> {
         private float maxProgress = 100;
         private AtomicInteger count = new AtomicInteger(0);
         private AtomicInteger current = new AtomicInteger(0);
         private BigFontContract.View view;
-        private Reader reader;
 
-        public TaskGenerateData(BigFontContract.View view, Reader reader) {
+        public TaskGenerateData(BigFontContract.View view) {
             this.view = view;
-            this.reader = reader;
         }
 
         @Override
@@ -66,10 +66,14 @@ public class BigFontPresenter implements BigFontContract.Presenter {
 
         @Override
         protected Void doInBackground(String... params) {
-            int size = reader.getSize();
+            if (!cache.isLoaded()) {
+                cache.loadAndClose(inputStreams);
+            }
+            int size = cache.getSize();
+
             for (int i = 0; i < size && !isCancelled(); i++) {
                 try {
-                    String convert = reader.convert(params[0], i);
+                    String convert = cache.convert(params[0], i);
                     view.addResult(convert);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -89,6 +93,19 @@ public class BigFontPresenter implements BigFontContract.Presenter {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             view.hideProgress();
+        }
+    }
+
+    public class ProcessData implements Runnable {
+        private String input = "";
+
+        public void setInput(String input) {
+            this.input = input;
+        }
+
+        @Override
+        public void run() {
+            new TaskGenerateData(view).execute(input);
         }
     }
 }

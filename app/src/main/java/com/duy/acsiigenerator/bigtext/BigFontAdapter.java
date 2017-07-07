@@ -69,7 +69,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_emiticon, parent, false);
+        View view = inflater.inflate(R.layout.list_item_big_font, parent, false);
         return new ViewHolder(view);
     }
 

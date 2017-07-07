@@ -125,37 +125,37 @@ public class MainActivity extends AppCompatActivity {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mTextFragment);
                         fragmentTransaction.commit();
-                        return true;
+                        return false;
                     }
                     case R.id.action_image: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
                         fragmentTransaction.commit();
-                        return true;
+                        return false;
                     }
                     case R.id.action_emoticon: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mEmoticonFragment);
                         fragmentTransaction.commit();
-                        return true;
+                        return false;
                     }
                     case R.id.action_text_image: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mTextImageFragment);
                         fragmentTransaction.commit();
-                        return true;
+                        return false;
                     }
                     case R.id.action_big_text: {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.content, mBigFontFragment);
                         fragmentTransaction.commit();
-                        return true;
+                        return false;
                     }
                 }
                 return false;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_figlet);
+        bottomNavigationView.setSelectedItemId(R.id.action_big_text);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
