@@ -24,38 +24,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.bigtext.BigFontFragment;
-import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
-import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
-import com.duy.acsiigenerator.figlet.FigletFragment;
-import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
     private static final String TAG = "MainActivity";
     @Nullable
     private AdView mAdView;
-    private Fragment mTextFragment;
-    private Fragment mImageToAsciiFragment;
-    private Fragment mEmoticonFragment;
-    private Fragment mTextImageFragment;
-    private BigFontFragment mBigFontFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +51,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         hideStatusBar();
         setContentView(R.layout.activity_main);
 
-        mTextFragment = FigletFragment.newInstance();
-        mImageToAsciiFragment = ImageToAsciiFragment.newInstance();
-        mEmoticonFragment = EmoticonFragment.newInstance();
-        mTextImageFragment = TextImageFragment.newInstance();
-        mBigFontFragment = BigFontFragment.newInstance();
 
         bindView();
         if (!BuildConfig.DEBUG) {
@@ -118,11 +101,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void bindView() {
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.action_big_text);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        PagerSectionAdapter pagerSectionAdapter =
+                new PagerSectionAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(pagerSectionAdapter);
+        viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_texture_black_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_insert_emoticon_black_24dp);
+        tabLayout.getTabAt(4).setIcon(R.drawable.ic_collections_black_24dp);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -188,43 +180,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        FirebaseAnalytics.getInstance(this).logEvent(item.toString(), new Bundle());
-        switch (item.getItemId()) {
-            case R.id.action_figlet: {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content, mTextFragment);
-                fragmentTransaction.commit();
-                return true;
-            }
-            case R.id.action_image: {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content, mImageToAsciiFragment);
-                fragmentTransaction.commit();
-                return true;
-            }
-            case R.id.action_emoticon: {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content, mEmoticonFragment);
-                fragmentTransaction.commit();
-                return true;
-            }
-            case R.id.action_text_image: {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content, mTextImageFragment);
-                fragmentTransaction.commit();
-                return true;
-            }
-            case R.id.action_big_text: {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content, mBigFontFragment);
-                fragmentTransaction.commit();
-                return true;
-            }
-            default:
-                return false;
-        }
-    }
 }
