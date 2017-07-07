@@ -110,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_texture_black_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_insert_emoticon_black_24dp);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_collections_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_white_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_white_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_texture_white_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_insert_emoticon_white_24dp);
+        tabLayout.getTabAt(4).setIcon(R.drawable.ic_collections_white_24dp);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
