@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.ImageFactory;
 import com.duy.acsiigenerator.clipboard.ClipboardManagerCompat;
 import com.duy.acsiigenerator.clipboard.ClipboardManagerCompatFactory;
 
@@ -51,7 +50,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     @Nullable
     private View emptyView;
     @Nullable
-    private OnItemClickListener onItemClickListener;
     private int color;
 
     public BigFontAdapter(@NonNull Context context, @Nullable View emptyView) {
@@ -61,6 +59,8 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
         this.emptyView = emptyView;
         invalidateEmptyView();
         this.color = context.getResources().getColor(android.R.color.primary_text_dark);
+
+        objects.add(context.getString(R.string.figlet_msg));
     }
 
     private void invalidateEmptyView() {
@@ -102,14 +102,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
-        holder.saveImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onSaveImage(ImageFactory.createImageFromView(holder.txtContent));
-                }
-            }
-        });
     }
 
     @Override
@@ -117,16 +109,10 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
         return objects.size();
     }
 
-    public OnItemClickListener getOnItemClickListener() {
-        return onItemClickListener;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
     public void clear() {
         this.objects.clear();
+        objects.add(context.getString(R.string.figlet_msg));
+
         notifyDataSetChanged();
         invalidateEmptyView();
     }

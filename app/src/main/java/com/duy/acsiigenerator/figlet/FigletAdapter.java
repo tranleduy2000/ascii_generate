@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.acsiigenerator.figlet.adapter;
+package com.duy.acsiigenerator.figlet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +42,7 @@ import imagetotext.duy.com.asciigenerator.R;
  * Created by Duy on 06-May-17.
  */
 
-public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
+public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final List<String> objects = new ArrayList<>();
     private Context context;
@@ -51,9 +51,10 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @Nullable
     private View emptyView;
     @Nullable
+    private OnItemClickListener onItemClickListener;
     private int color;
 
-    public ResultAdapter(@NonNull Context context, @Nullable View emptyView) {
+    public FigletAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
@@ -103,6 +104,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
+        holder.saveImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onSaveImage(ImageFactory.createImageFromView(holder.txtContent));
+                }
+            }
+        });
     }
 
     @Override
@@ -110,10 +119,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         return objects.size();
     }
 
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public void clear() {
         this.objects.clear();
-        objects.add(context.getString(R.string.figlet_msg));
-
         notifyDataSetChanged();
         invalidateEmptyView();
     }

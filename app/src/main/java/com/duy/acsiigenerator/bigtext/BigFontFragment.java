@@ -37,8 +37,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.figlet.adapter.ResultAdapter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,7 +53,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     private RecyclerView mRecyclerView;
     private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
-    private ResultAdapter mAdapter;
+    private BigFontAdapter mAdapter;
     @Nullable
     private BigFontContract.Presenter mPresenter;
     private EditText mEditIn;
@@ -149,7 +147,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ResultAdapter(getActivity(), view.findViewById(R.id.empty_view));
+        mAdapter = new BigFontAdapter(getActivity(), view.findViewById(R.id.empty_view));
         mRecyclerView.setAdapter(mAdapter);
         mEditIn.addTextChangedListener(mInputTextWatcher);
 
@@ -195,7 +193,6 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         sharedPreferences.edit().putString("key_save", mEditIn.getText().toString()).apply();
         super.onDestroyView();
     }
-
 
 
     private String writeToStorage(Bitmap bitmap, String path, String fileName) {

@@ -42,8 +42,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.duy.acsiigenerator.figlet.adapter.ResultAdapter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -57,11 +55,11 @@ import static com.duy.acsiigenerator.MainActivity.EXTERNAL_READ_PERMISSION_GRANT
  * Created by Duy on 15-Jun-17.
  */
 
-public class FigletFragment extends Fragment implements ConvertContract.View, ResultAdapter.OnItemClickListener {
+public class FigletFragment extends Fragment implements ConvertContract.View, FigletAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
-    private ResultAdapter mAdapter;
+    private FigletAdapter mAdapter;
     @Nullable
     private ConvertContract.Presenter mPresenter;
     private EditText mEditIn;
@@ -154,7 +152,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Re
         mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ResultAdapter(getActivity(), view.findViewById(R.id.empty_view));
+        mAdapter = new FigletAdapter(getActivity(), view.findViewById(R.id.empty_view));
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mEditIn.addTextChangedListener(mInputTextWatcher);
