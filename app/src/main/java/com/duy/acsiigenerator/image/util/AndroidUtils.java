@@ -88,7 +88,10 @@ public class AndroidUtils {
     public static BitmapFactory.Options computeBitmapSizeFromURI(Context context, Uri imageURI) throws FileNotFoundException {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageURI), null, options);
+        Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageURI), null, options);
+        if (bitmap != null) {
+            bitmap.recycle();
+        }
         return options;
     }
 
@@ -105,6 +108,7 @@ public class AndroidUtils {
         options.inSampleSize = (int) Math.min(wratio, hratio);
 
         return BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageURI), null, options);
+//        return BitmapFactory.decodeStream(context.getContentResolver().openInputStream(imageURI));
     }
 
     /**

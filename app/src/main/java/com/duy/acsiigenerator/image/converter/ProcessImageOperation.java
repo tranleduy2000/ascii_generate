@@ -53,15 +53,17 @@ public class ProcessImageOperation {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         // assume width is always larger
-        int displayWidth = Math.max(display.getWidth(), display.getHeight());
-        int displayHeight = Math.min(display.getWidth(), display.getHeight());
+        int displayWidth = Math.max(display.getWidth(), display.getHeight()) * 2;
+        int displayHeight = Math.min(display.getWidth(), display.getHeight()) * 2;
 
         final AsciiRenderer renderer = new AsciiRenderer();
         renderer.setMaximumImageSize(displayWidth, displayHeight);
 
-        int minWidth = Math.max(3 * renderer.asciiColumns(), 480);
-        int minHeight = Math.max(3 * renderer.asciiRows(), 320);
+        int minWidth = Math.max(2 * renderer.asciiColumns(), 480);
+        int minHeight = Math.max(2 * renderer.asciiRows(), 320);
+
         Bitmap bitmap = AndroidUtils.scaledBitmapFromURIWithMinimumSize(context, uri, minWidth, minHeight);
+
         renderer.setCameraImageSize(bitmap.getWidth(), bitmap.getHeight());
 
         AsciiConverter converter = new AsciiConverter();

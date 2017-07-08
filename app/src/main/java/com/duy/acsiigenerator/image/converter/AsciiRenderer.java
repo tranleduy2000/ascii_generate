@@ -62,19 +62,19 @@ public class AsciiRenderer {
     private int outputImageHeight;
     private Paint paint = new Paint();
 
-    private int charPixelHeight = 9;
-    private int charPixelWidth = 7;
+    private float charPixelHeight = 4.5f;
+    private float charPixelWidth = 3.5f;
     private int textSize = 10;
 
     public Bitmap getVisibleBitmap() {
         return bitmaps[activeBitmapIndex];
     }
 
-    public int getCharPixelHeight() {
+    public float getCharPixelHeight() {
         return charPixelHeight;
     }
 
-    public int getCharPixelWidth() {
+    public float getCharPixelWidth() {
         return charPixelWidth;
     }
 
@@ -96,8 +96,8 @@ public class AsciiRenderer {
         }
         // Scale 10 point text per 1000px width. Char width is 70% of text size and height is 90%.
         textSize = (int) Math.round(Math.max(10, outputImageWidth / 100.0));
-        charPixelWidth = (int) (textSize * 0.7);
-        charPixelHeight = (int) (textSize * 0.9);
+        charPixelWidth = (textSize * 0.7f);
+        charPixelHeight =  (textSize * 0.9f);
     }
 
     public int getOutputImageWidth() {
@@ -109,11 +109,11 @@ public class AsciiRenderer {
     }
 
     public int asciiColumnsForWidth(int width) {
-        return width / getCharPixelWidth();
+        return (int) (width / getCharPixelWidth());
     }
 
     public int asciiRowsForHeight(int height) {
-        return height / getCharPixelHeight();
+        return (int) (height / getCharPixelHeight());
     }
 
     public int asciiRows() {
@@ -181,11 +181,11 @@ public class AsciiRenderer {
         // Create a bitmap containing each character that we might need to render. We could try to
         // skip this step if (as is usually the case) the characters are the same as the previous
         // frame, but in practice there's only a few characters and it takes almost no time.
-        int pixelsPerRow = charPixelWidth * result.columns;
+        int pixelsPerRow = (int) (charPixelWidth * result.columns);
         if (possibleCharsBitmap == null ||
                 possibleCharsBitmap.getWidth() != pixelsPerRow ||
                 possibleCharsBitmap.getHeight() != charPixelHeight) {
-            possibleCharsBitmap = Bitmap.createBitmap(pixelsPerRow, charPixelHeight, Bitmap.Config.ARGB_8888);
+            possibleCharsBitmap = Bitmap.createBitmap(pixelsPerRow, (int) charPixelHeight, Bitmap.Config.ARGB_8888);
         }
         Canvas charsBitmapCanvas = new Canvas(possibleCharsBitmap);
         charsBitmapCanvas.drawARGB(255, 0, 0, 0);
@@ -218,7 +218,7 @@ public class AsciiRenderer {
         int numWorkers = renderWorkers.size();
         for (int i = 0; i < numWorkers; i++) {
             renderWorkers.get(i).init(i, numWorkers,
-                    result, charPixelWidth, charPixelHeight, possibleCharsGrayscale, bitmap);
+                    result, (int) charPixelWidth, (int) charPixelHeight, possibleCharsGrayscale, bitmap);
         }
 
         try {
