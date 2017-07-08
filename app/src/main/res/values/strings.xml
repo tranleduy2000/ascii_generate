@@ -39,4 +39,6 @@
     <string name="figlet">Figlet</string>
     <string name="big_text">Big text</string>
     <string name="null_uri">Please select file and convert to image!</string>
+    <string name="share_app">Share this app</string>
+    <string name="get_text_converter">Get Text Converter app</string>
 </resources>

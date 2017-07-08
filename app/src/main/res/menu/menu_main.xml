@@ -31,6 +31,11 @@
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share_white_24dp"
-        android:title="@string/more_app_from_dev"
+        android:title="@string/share_app"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_text_converter"
+        android:icon="@drawable/ic_text_converter"
+        android:title="@string/get_text_converter"
         app:showAsAction="ifRoom"/>
 </menu>

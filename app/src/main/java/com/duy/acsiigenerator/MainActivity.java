@@ -127,10 +127,13 @@ public class MainActivity extends AppCompatActivity {
                         moreApp();
                         return true;
                     case R.id.action_rate:
-                        goToPlayStore();
+                        goToPlayStore(BuildConfig.APPLICATION_ID);
                         return true;
                     case R.id.action_share:
                         shareApp();
+                        return true;
+                    case R.id.action_text_converter:
+                        goToPlayStore("duy.com.text_converter");
                         return true;
                 }
                 return false;
@@ -162,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void goToPlayStore() {
-        Uri uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID);
+    public void goToPlayStore(String appid) {
+        Uri uri = Uri.parse("market://details?id=" + appid);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
         // to taken back to our application, we need to add following flags to intent.
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)));
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + appid)));
         }
     }
 
