@@ -336,7 +336,7 @@ public class AsciiConverter {
         return result;
     }
 
-    public static enum ColorType {
+    public enum ColorType {
         // all same color
         NONE(" .:oO8#"),
 
@@ -348,7 +348,7 @@ public class AsciiConverter {
 
         String[] pixelChars;
 
-        private ColorType(String pixelCharString) {
+        ColorType(String pixelCharString) {
             this.pixelChars = toPixelCharArray(pixelCharString);
         }
 

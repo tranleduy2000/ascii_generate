@@ -18,7 +18,7 @@ package com.duy.acsiigenerator.image;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,7 +27,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
@@ -44,7 +43,6 @@ import com.duy.acsiigenerator.image.converter.AsciiConverter;
 import com.duy.acsiigenerator.image.converter.ProcessImageOperation;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import imagetotext.duy.com.asciigenerator.R;
@@ -53,13 +51,12 @@ import imagetotext.duy.com.asciigenerator.R;
  * Created by Duy on 15-Jun-17.
  */
 
-public class ImageToAsciiFragment extends Fragment {
+public class ImageToAsciiFragment extends Fragment implements View.OnClickListener {
     private static final int PICK_IMAGE = 1231;
     private static final String TAG = "ImageToAsciiFragment";
     private static final int TAKE_PICTURE = 1;
     private static final int REQUEST_PERMISSION = 1002;
     private ImageView mPreview;
-    private FloatingActionButton mButtonSave;
     private ProgressBar mProgressBar;
     private Spinner mSpinnerType;
     private Uri mCurrentUri = null;
@@ -82,9 +79,14 @@ public class ImageToAsciiFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPreview = view.findViewById(R.id.image_preview);
-        mButtonSave = view.findViewById(R.id.fab_save);
-        mButtonSave.hide();
+
+        view.findViewById(R.id.btn_save).setOnClickListener(this);
+        view.findViewById(R.id.btn_share).setOnClickListener(this);
+        view.findViewById(R.id.btn_select).setOnClickListener(this);
+
         mProgressBar = view.findViewById(R.id.progress_bar);
+        mProgressBar.setVisibility(View.GONE);
+
         mSpinnerType = view.findViewById(R.id.spinner_type);
         mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,19 +102,6 @@ public class ImageToAsciiFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.btn_select).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                selectImage();
-            }
-        });
-        /*view.findViewById(R.id.btn_cam).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });*/
     }
 
     private void selectImage() {
@@ -157,17 +146,14 @@ public class ImageToAsciiFragment extends Fragment {
                 if (intent != null) {
                     this.mCurrentUri = intent.getData();
                     convertImageToAsciiFromIntent(intent.getData());
-                    mButtonSave.hide();
                 } else {
                     mCurrentUri = null;
                 }
                 break;
             case TAKE_PICTURE:
-                mButtonSave.hide();
                 this.mCurrentUri = intent.getData();
                 if (resultCode == Activity.RESULT_OK) {
                     if (intent.getData() != null) {
-                        mButtonSave.hide();
                         convertImageToAsciiFromIntent(intent.getData());
                     } else {
                         Toast.makeText(getContext(), "Capture failed", Toast.LENGTH_SHORT).show();
@@ -177,16 +163,9 @@ public class ImageToAsciiFragment extends Fragment {
         }
     }
 
-    public void takePhoto() {
-        if (!permissionGrated()) {
-            return;
-        }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, TAKE_PICTURE);
-    }
-
 
     private void convertImageToAsciiFromIntent(Uri uri) {
+        this.mCurrentUri = null;
         new TaskConvertImageToAscii(getContext(), getCurrentType()).execute(uri);
     }
 
@@ -203,13 +182,58 @@ public class ImageToAsciiFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_save: {
+                if (mCurrentUri != null) {
+                    addImageToGallery(mCurrentUri.getPath());
+                } else {
+                    Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case R.id.btn_select: {
+                selectImage();
+                break;
+            }
+            case R.id.btn_share: {
+                if (mCurrentUri == null) {
+                    Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, mCurrentUri);
+                    intent.setType("image/*");
+                    startActivity(Intent.createChooser(intent, "Share Image"));
+                }
+                break;
+            }
+        }
+    }
+
+    public void addImageToGallery(final String filePath) {
+        try {
+            ContentValues values = new ContentValues();
+
+            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+            values.put(MediaStore.MediaColumns.DATA, filePath);
+
+            getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Toast.makeText(getContext(), "Saved in gallery", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private class TaskConvertImageToAscii extends AsyncTask<Uri, Void, Uri> {
         private String textPath;
         private String imagePath;
         private Context context;
         private AsciiConverter.ColorType type;
 
-        public TaskConvertImageToAscii(Context context, AsciiConverter.ColorType type) {
+        TaskConvertImageToAscii(Context context, AsciiConverter.ColorType type) {
             this.context = context;
             this.type = type;
         }
@@ -227,7 +251,6 @@ public class ImageToAsciiFragment extends Fragment {
                         params[0], type);
                 imagePath = output.first;
                 textPath = output.second;
-                addImageToGallery(context.getContentResolver(), new File(imagePath));
                 return Uri.fromFile(new File(imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -241,30 +264,12 @@ public class ImageToAsciiFragment extends Fragment {
             if (uri == null) {
                 Toast.makeText(context, "IO Exception", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Saved in gallery", Toast.LENGTH_SHORT).show();
+
                 mPreview.setImageURI(uri);
-                mButtonSave.show();
-                mButtonSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.putExtra(Intent.EXTRA_STREAM, uri);
-                        intent.setType("image/*");
-                        startActivity(Intent.createChooser(intent, "Share Image"));
-                    }
-                });
             }
             mProgressBar.setVisibility(View.GONE);
+            mCurrentUri = uri;
         }
 
-        public String addImageToGallery(ContentResolver cr, File filepath) {
-            try {
-                return MediaStore.Images.Media.insertImage(cr, filepath.toString(),
-                        filepath.getName(), "Ascii art");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
     }
 }
