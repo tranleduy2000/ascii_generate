@@ -39,7 +39,7 @@ public class BigFontPresenterTest {
         cache.loadAndClose(inputStreams);
         int size = cache.getSize();
         for (int i = 0; i < size; i++) {
-            String convert = cache.convert("HELLO EVERYONE", i);
+            String convert = cache.convert("ASCII ART", i);
             System.out.println(convert);
         }
         for (int i = 0; i < size; i++) {
@@ -47,6 +47,16 @@ public class BigFontPresenterTest {
                 String convert = cache.convert(String.valueOf(j), i);
                 System.out.println(convert);
             }
+        }
+    }
+
+    @Test
+    public void convert2() throws Exception {
+        for (char c = 'a'; c <= 'z'; c++) {
+            System.out.print(c);
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            System.out.print(c);
         }
     }
 
