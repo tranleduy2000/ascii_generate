@@ -18,6 +18,7 @@ package com.duy.acsiigenerator.image.converter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
@@ -30,28 +31,44 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Writes bitmaps and HTML to directories on the external storage directory.
  */
 public class AsciiImageWriter {
 
-    private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-
+    private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+    private static final String PATH_IMAGE = Environment.getExternalStorageDirectory() + "/AsciiArt";
+    private static final String PATH_TEXT = Environment.getExternalStorageDirectory() + "/AsciiArt/Text";
 
     public static Pair<String, String> saveImage(Context context, Bitmap image, AsciiConverter.Result asciiResult)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
-        File imageFile = new File(context.getFilesDir(), datestr + ".png");
+        Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        File imageFile;
+        File textFile;
+
+        if (isSDPresent) {
+            imageFile = new File(PATH_IMAGE, datestr + ".png");
+            textFile = new File(PATH_TEXT, datestr + ".txt");
+            if (!imageFile.exists()) {
+                imageFile.getParentFile().mkdirs();
+                imageFile.createNewFile();
+            }
+            if (!textFile.exists()) {
+                textFile.getParentFile().mkdirs();
+                textFile.createNewFile();
+            }
+        } else {
+            imageFile = new File(context.getFilesDir(), datestr + ".png");
+            textFile = new File(context.getFilesDir(), datestr + ".txt");
+        }
         saveBitmap(image, imageFile);
-
-        File textFile = new File(context.getFilesDir(), datestr + ".txt");
-
         FileWriter textOutput = new FileWriter(textFile);
         writeText(asciiResult, textOutput);
         textOutput.close();
         image.recycle();
-
         return new Pair<>(imageFile.getPath(), textFile.getPath());
     }
 

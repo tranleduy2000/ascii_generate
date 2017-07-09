@@ -266,9 +266,10 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
                 Toast.makeText(context, "IO Exception", Toast.LENGTH_SHORT).show();
             } else {
                 mPreview.setImageURI(uri);
+                mResultUri = uri;
             }
             mProgressBar.setVisibility(View.GONE);
-            mResultUri = uri;
+
         }
 
     }
