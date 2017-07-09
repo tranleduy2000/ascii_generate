@@ -25,6 +25,7 @@ import com.duy.acsiigenerator.bigtext.BigFontFragment;
 import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
 import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
 import com.duy.acsiigenerator.figlet.FigletFragment;
+import com.duy.acsiigenerator.fragments.AdsFragment;
 import com.duy.acsiigenerator.image.ImageToAsciiFragment;
 
 import imagetotext.duy.com.asciigenerator.R;
@@ -43,7 +44,7 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -54,10 +55,12 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
             case 1:
                 return BigFontFragment.newInstance();
             case 2:
-                return TextImageFragment.newInstance();
+                return AdsFragment.newInstance();
             case 3:
-                return EmoticonFragment.newInstance();
+                return TextImageFragment.newInstance();
             case 4:
+                return EmoticonFragment.newInstance();
+            case 5:
                 return ImageToAsciiFragment.newInstance();
             default:
                 return null;
@@ -72,10 +75,12 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
             case 1:
                 return context.getString(R.string.big_text);
             case 2:
-                return context.getString(R.string.text_image);
+                return context.getString(R.string.ads);
             case 3:
-                return context.getString(R.string.emoticon);
+                return context.getString(R.string.text_image);
             case 4:
+                return context.getString(R.string.emoticon);
+            case 5:
                 return context.getString(R.string.photo);
             default:
                 return null;

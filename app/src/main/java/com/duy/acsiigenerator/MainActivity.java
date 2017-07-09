@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -34,7 +33,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -55,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_main);
 
         bindView();
-        if (!BuildConfig.DEBUG) {
-            showAdView();
-        } else {
+        if (BuildConfig.DEBUG) {
             FirebaseCrash.setCrashCollectionEnabled(false);
         }
     }
@@ -65,44 +61,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void hideStatusBar() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    private void showAdView() {
-        mAdView = (AdView) findViewById(R.id.ad_view);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                if (mAdView != null) {
-                    mAdView.loadAd(adRequest);
-                }
-            }
-        }, 1000);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mAdView != null) {
-            mAdView.resume();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mAdView != null) {
-            mAdView.pause();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
-        super.onDestroy();
-
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -119,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_white_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_texture_white_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_insert_emoticon_white_24dp);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_collections_white_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_ads_white);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_texture_white_24dp);
+        tabLayout.getTabAt(4).setIcon(R.drawable.ic_insert_emoticon_white_24dp);
+        tabLayout.getTabAt(5).setIcon(R.drawable.ic_collections_white_24dp);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

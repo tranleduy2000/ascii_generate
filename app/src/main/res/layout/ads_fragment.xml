@@ -17,27 +17,36 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="start">
+        android:layout_margin="4dp"
+        app:cardBackgroundColor="?cardBackground"
+        app:cardUseCompatPadding="true">
 
-        <include layout="@layout/content_main"/>
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/header"
-            app:menu="@menu/menu_main">
+            android:orientation="vertical">
 
-        </android.support.design.widget.NavigationView>
-    </android.support.v4.widget.DrawerLayout>
+
+            <com.google.android.gms.ads.NativeExpressAdView
+                android:id="@+id/ad_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                ads:adSize="320x320"
+                ads:adUnitId="ca-app-pub-9351804859208340/2791730715">
+            </com.google.android.gms.ads.NativeExpressAdView>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>
