@@ -25,8 +25,6 @@ import android.util.Pair;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.duy.acsiigenerator.image.util.AndroidUtils;
-
 import java.io.IOException;
 
 import static com.duy.acsiigenerator.image.converter.AsciiConverter.ColorType;

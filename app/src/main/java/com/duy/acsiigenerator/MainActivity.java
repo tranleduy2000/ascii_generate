@@ -29,7 +29,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -39,7 +41,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
     private static final String TAG = "MainActivity";
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerSectionAdapter);
         viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
         viewPager.setCurrentItem(1); //big font
+        viewPager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
@@ -198,4 +201,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        switch (position) {
+            case 2:
+            case 3:
+            case 4:
+                hideKeyboard();
+                break;
+        }
+    }
+
+    private void hideKeyboard() {
+        View currentFocus = getWindow().getCurrentFocus();
+        if (currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

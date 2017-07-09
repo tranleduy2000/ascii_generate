@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.acsiigenerator.image.util;
+package com.duy.acsiigenerator.image.converter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

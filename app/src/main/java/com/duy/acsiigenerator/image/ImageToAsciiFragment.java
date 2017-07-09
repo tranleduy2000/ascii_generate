@@ -59,7 +59,8 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
     private ImageView mPreview;
     private ProgressBar mProgressBar;
     private Spinner mSpinnerType;
-    private Uri mCurrentUri = null;
+    private Uri mResultUri = null;
+    private Uri mOriginalUri = null;
 
     public static ImageToAsciiFragment newInstance() {
         Bundle args = new Bundle();
@@ -91,8 +92,8 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
         mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mCurrentUri != null) {
-                    convertImageToAsciiFromIntent(mCurrentUri);
+                if (mOriginalUri != null) {
+                    convertImageToAsciiFromIntent(mOriginalUri);
                 }
             }
 
@@ -144,14 +145,14 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
         switch (requestCode) {
             case PICK_IMAGE:
                 if (intent != null) {
-                    this.mCurrentUri = intent.getData();
+                    this.mOriginalUri = intent.getData();
                     convertImageToAsciiFromIntent(intent.getData());
                 } else {
-                    mCurrentUri = null;
+                    mOriginalUri = null;
                 }
                 break;
             case TAKE_PICTURE:
-                this.mCurrentUri = intent.getData();
+                this.mOriginalUri = intent.getData();
                 if (resultCode == Activity.RESULT_OK) {
                     if (intent.getData() != null) {
                         convertImageToAsciiFromIntent(intent.getData());
@@ -165,7 +166,7 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
 
 
     private void convertImageToAsciiFromIntent(Uri uri) {
-        this.mCurrentUri = null;
+        this.mResultUri = null;
         new TaskConvertImageToAscii(getContext(), getCurrentType()).execute(uri);
     }
 
@@ -186,8 +187,8 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save: {
-                if (mCurrentUri != null) {
-                    addImageToGallery(mCurrentUri.getPath());
+                if (mResultUri != null) {
+                    addImageToGallery(mResultUri.getPath());
                 } else {
                     Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
                 }
@@ -198,11 +199,11 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
                 break;
             }
             case R.id.btn_share: {
-                if (mCurrentUri == null) {
+                if (mResultUri == null) {
                     Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_STREAM, mCurrentUri);
+                    intent.putExtra(Intent.EXTRA_STREAM, mResultUri);
                     intent.setType("image/*");
                     startActivity(Intent.createChooser(intent, "Share Image"));
                 }
@@ -264,11 +265,10 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
             if (uri == null) {
                 Toast.makeText(context, "IO Exception", Toast.LENGTH_SHORT).show();
             } else {
-
                 mPreview.setImageURI(uri);
             }
             mProgressBar.setVisibility(View.GONE);
-            mCurrentUri = uri;
+            mResultUri = uri;
         }
 
     }
