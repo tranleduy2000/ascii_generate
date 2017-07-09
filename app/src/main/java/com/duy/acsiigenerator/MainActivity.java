@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
 import imagetotext.duy.com.asciigenerator.R;
@@ -51,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
         hideStatusBar();
         setContentView(R.layout.activity_main);
 
-
         bindView();
         if (!BuildConfig.DEBUG) {
             showAdView();
+        } else {
+            FirebaseCrash.setCrashCollectionEnabled(false);
         }
     }
 
