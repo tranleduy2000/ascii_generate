@@ -36,6 +36,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.image.converter.AsciiImageWriter;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -182,31 +185,52 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         super.onDestroyView();
     }
 
-
-    @Override
-    public void onSaveImage(final Bitmap bitmap) {
+    private boolean permissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getContext(), "Permission denied, please enable permission", Toast.LENGTH_SHORT).show();
-               requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-                bitmap.recycle();
-                return;
+                return false;
             }
         }
-        final String fileName = System.currentTimeMillis() + ".png";
-        String uri = writeToStorage(bitmap, getContext().getFilesDir().getPath(), fileName);
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri));
-        intent.setType("image/*");
-        startActivity(Intent.createChooser(intent, "Share Image"));
+        return true;
+    }
+
+    @Override
+    public void onSaveImage(@Nullable final Bitmap bitmap) {
+        if (!permissionGranted()) {
+            if (bitmap != null) {
+                bitmap.recycle();
+            }
+            return;
+        }
+        try {
+            Pair<String, String> file = AsciiImageWriter.saveImage(getContext(), bitmap, null);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file.first)));
+            intent.setType("image/*");
+            startActivity(Intent.createChooser(intent, "Share Image"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "IO Exception", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String writeToStorage(Bitmap bitmap, String path, String fileName) {
         File file = new File(path, fileName);
+        if (!file.exists()) {
+            boolean mkdirs = file.getParentFile().mkdirs();
+            try {
+                boolean create = file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
@@ -215,19 +239,22 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            bitmap.recycle();
             Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
             try {
                 if (out != null) {
                     out.close();
                 }
-                return MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
-                        file.getAbsolutePath(), file.getName(), file.getName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        try {
+            return MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
+                    file.getAbsolutePath(), file.getName(), file.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

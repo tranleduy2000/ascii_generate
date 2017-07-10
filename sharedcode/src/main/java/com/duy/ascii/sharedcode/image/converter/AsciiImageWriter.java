@@ -42,7 +42,8 @@ public class AsciiImageWriter {
     private static final String PATH_IMAGE = Environment.getExternalStorageDirectory() + "/AsciiArt";
     private static final String PATH_TEXT = Environment.getExternalStorageDirectory() + "/AsciiArt/Text";
 
-    public static Pair<String, String> saveImage(Context context, Bitmap image, AsciiConverter.Result asciiResult)
+    public static Pair<String, String> saveImage(Context context, Bitmap image,
+                                                 @Nullable AsciiConverter.Result asciiResult)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
         Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
@@ -66,7 +67,9 @@ public class AsciiImageWriter {
         }
         saveBitmap(image, imageFile);
         FileWriter textOutput = new FileWriter(textFile);
-        writeText(asciiResult, textOutput);
+        if (asciiResult != null) {
+            writeText(asciiResult, textOutput);
+        }
         textOutput.close();
         image.recycle();
         return new Pair<>(imageFile.getPath(), textFile.getPath());
@@ -85,7 +88,7 @@ public class AsciiImageWriter {
         return fileToWrite.getPath();
     }
 
-    private static void writeText(AsciiConverter.Result result, Writer writer) throws IOException {
+    private static void writeText(@NonNull AsciiConverter.Result result, Writer writer) throws IOException {
         for (int r = 0; r < result.rows; r++) {
             for (int c = 0; c < result.columns; c++) {
                 writer.write(result.stringAtRowColumn(r, c));

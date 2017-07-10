@@ -146,7 +146,7 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onSaveImage(Bitmap bitmap);
+        void onSaveImage(@Nullable Bitmap bitmap);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -301,6 +301,7 @@ public class AsciiConverter {
                         totalBlue += blue;
                     }
                 }
+                if (samples == 0) samples = 1;
                 int averageBright = totalBright / samples;
                 result.asciiIndexes[asciiIndex] = (averageBright * result.pixelChars.length) / 256;
                 if (DEBUG) {
