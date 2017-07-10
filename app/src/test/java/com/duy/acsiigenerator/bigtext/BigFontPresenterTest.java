@@ -16,6 +16,8 @@
 
 package com.duy.acsiigenerator.bigtext;
 
+import com.duy.ascii.sharedcode.bigtext.Reader;
+
 import org.junit.Test;
 
 import java.io.File;

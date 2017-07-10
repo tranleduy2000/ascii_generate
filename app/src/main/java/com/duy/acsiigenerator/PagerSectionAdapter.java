@@ -21,12 +21,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.duy.acsiigenerator.bigtext.BigFontFragment;
-import com.duy.acsiigenerator.emoticons.fragment.EmoticonFragment;
-import com.duy.acsiigenerator.emoticons.fragment.TextImageFragment;
-import com.duy.acsiigenerator.figlet.FigletFragment;
-import com.duy.acsiigenerator.fragments.AdsFragment;
-import com.duy.acsiigenerator.image.ImageToAsciiFragment;
+import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
+import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
+import com.duy.ascii.sharedcode.emoticons.fragment.TextImageFragment;
+import com.duy.ascii.sharedcode.figlet.FigletFragment;
+import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 
 import imagetotext.duy.com.asciigenerator.R;
 

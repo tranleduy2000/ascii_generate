@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2017 by Tran Le Duy
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Ascii Generator</string>
+
+    <string name="type_your_text">Type your text …</string>
+    <string name="copy">copy</string>
+    <string name="share">share</string>
+    <string name="please_enter_your_text_and_wait">Please enter your text and wait…</string>
+    <string name="save_as_image">Save as image</string>
+    <string name="permission_msg">Permission is Required for getting list of files</string>
+    <string name="copied">Copied</string>
+    <string name="saved">Saved</string>
+    <string name="rate_app">Rate app</string>
+    <string name="more_app_from_dev">More app from Dev</string>
+    <string name="text">Text</string>
+    <string name="photo">Photo</string>
+    <string name="select_file">Select file</string>
+    <string name="emoticon">Emoticons</string>
+    <string name="text_image">Text image</string>
+    <string name="figlet_msg">
+        !! You can not copy/paste with \n
+        this tool because it is only \n
+        supported for fixed width font.</string>
+    <string name="figlet">Figlet</string>
+    <string name="big_text">Big text</string>
+    <string name="null_uri">Please select file and convert to image!</string>
+    <string name="share_app">Share this app</string>
+    <string name="get_text_converter">Get Text Converter app</string>
+    <string name="ads">Ads</string>
+</resources>
