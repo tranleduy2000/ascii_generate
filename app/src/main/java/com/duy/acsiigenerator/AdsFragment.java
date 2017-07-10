@@ -28,6 +28,7 @@ import com.google.android.gms.ads.NativeExpressAdView;
 
 import imagetotext.duy.com.asciigenerator.R;
 
+
 /**
  * Created by Duy on 07-Jun-17.
  */
