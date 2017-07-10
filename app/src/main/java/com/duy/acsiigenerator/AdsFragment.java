@@ -60,7 +60,7 @@ public class AdsFragment extends Fragment {
         view.findViewById(R.id.btn_pro_version).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StoreUtil.gotoPlayStore(getActivity(), "com.duy.text_converter.pro");
+                StoreUtil.gotoPlayStore(getActivity(), "com.duy.asciigenerator.pro");
             }
         });
 

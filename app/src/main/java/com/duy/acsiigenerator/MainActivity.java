@@ -16,10 +16,6 @@
 
 package com.duy.acsiigenerator;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -30,9 +26,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.StoreUtil;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.crash.FirebaseCrash;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
@@ -40,22 +39,48 @@ import imagetotext.duy.com.asciigenerator.R;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    public static final int EXTERNAL_READ_PERMISSION = 1212;
-    private static final String TAG = "MainActivity";
+    private InterstitialAd interstitialAd = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MobileAds.initialize(this);
         if (BuildConfig.DEBUG) {
             FirebaseCrash.setCrashCollectionEnabled(false);
         }
-
         hideStatusBar();
         setContentView(R.layout.activity_main);
-
         bindView();
 
+        createAdInterstitial();
+    }
+
+    private void createAdInterstitial() {
+
+        //create ad
+        interstitialAd = new InterstitialAd(this);
+        if (BuildConfig.DEBUG) {
+            interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        } else {
+            interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        }
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    finish();
+                }
+            });
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void hideStatusBar() {
@@ -88,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_more_app:
-                        moreApp();
+                        StoreUtil.moreApp(MainActivity.this);
                         return true;
                     case R.id.action_rate:
                         StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
@@ -106,34 +131,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
 
-    private void moreApp() {
-        Uri uri = Uri.parse("market://search?q=pub:Trần Lê Duy");
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        // To count with Play market backstack, After pressing back button,
-        // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        try {
-            startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/search?q=pub:Trần Lê Duy")));
-        }
-
-    }
-
-
     //Add this method to show Dialog when the required permission has been granted to the app.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case EXTERNAL_READ_PERMISSION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                } else {
-                    //Permission has not been granted. Notify the user.
-                    Toast.makeText(MainActivity.this, R.string.permission_msg, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
     }
 
     @Override
@@ -165,4 +165,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
 
     }
+
+
 }
