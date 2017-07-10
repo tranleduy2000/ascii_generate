@@ -109,7 +109,7 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onSaveImage(ImageFactory.createImageFromView(holder.txtContent));
+                    onItemClickListener.onSaveImage(ImageFactory.loadBitmapFromView(holder.txtContent));
                 }
             }
         });
