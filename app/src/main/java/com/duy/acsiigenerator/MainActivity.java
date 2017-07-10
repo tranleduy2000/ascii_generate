@@ -22,7 +22,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -33,7 +32,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
+import com.duy.ascii.sharedcode.StoreUtil;
 import com.google.firebase.crash.FirebaseCrash;
 
 import imagetotext.duy.com.asciigenerator.BuildConfig;
@@ -41,21 +40,22 @@ import imagetotext.duy.com.asciigenerator.R;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    public static final int EXTERNAL_READ_PERMISSION_GRANT = 1212;
+    public static final int EXTERNAL_READ_PERMISSION = 1212;
     private static final String TAG = "MainActivity";
-    @Nullable
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (BuildConfig.DEBUG) {
+            FirebaseCrash.setCrashCollectionEnabled(false);
+        }
+
         hideStatusBar();
         setContentView(R.layout.activity_main);
 
         bindView();
-        if (BuildConfig.DEBUG) {
-            FirebaseCrash.setCrashCollectionEnabled(false);
-        }
+
     }
 
     private void hideStatusBar() {
@@ -91,13 +91,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         moreApp();
                         return true;
                     case R.id.action_rate:
-                        goToPlayStore(BuildConfig.APPLICATION_ID);
+                        StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
                         return true;
                     case R.id.action_share:
-                        shareApp();
+                        StoreUtil.shareApp(MainActivity.this, BuildConfig.APPLICATION_ID);
                         return true;
                     case R.id.action_text_converter:
-                        goToPlayStore("duy.com.text_converter");
+                        StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
                         return true;
                 }
                 return false;
@@ -121,36 +121,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-    private void shareApp() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
-        intent.setType("text/plain");
-        startActivity(intent);
-
-    }
-
-    public void goToPlayStore(String appid) {
-        Uri uri = Uri.parse("market://details?id=" + appid);
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        // To count with Play market backstack, After pressing back button,
-        // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        try {
-            startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + appid)));
-        }
-    }
-
 
     //Add this method to show Dialog when the required permission has been granted to the app.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case EXTERNAL_READ_PERMISSION_GRANT: {
+            case EXTERNAL_READ_PERMISSION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
                     //Permission has not been granted. Notify the user.
@@ -166,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             case 2:
             case 3:
             case 4:
+            case 5:
                 hideKeyboard();
                 break;
         }
