@@ -144,7 +144,7 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case PICK_IMAGE:
-                if (intent != null) {
+                if (intent != null && intent.getData() != null) {
                     this.mOriginalUri = intent.getData();
                     convertImageToAsciiFromIntent(intent.getData());
                 } else {
