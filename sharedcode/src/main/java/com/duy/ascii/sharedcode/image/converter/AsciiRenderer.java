@@ -97,7 +97,7 @@ public class AsciiRenderer {
         // Scale 10 point text per 1000px width. Char width is 70% of text size and height is 90%.
         textSize = (int) Math.round(Math.max(10, outputImageWidth / 100.0));
         charPixelWidth = (textSize * 0.7f);
-        charPixelHeight =  (textSize * 0.9f);
+        charPixelHeight = (textSize * 0.9f);
     }
 
     public int getOutputImageWidth() {
@@ -181,7 +181,7 @@ public class AsciiRenderer {
         // Create a bitmap containing each character that we might need to render. We could try to
         // skip this step if (as is usually the case) the characters are the same as the previous
         // frame, but in practice there's only a few characters and it takes almost no time.
-        int pixelsPerRow = (int) (charPixelWidth * result.columns);
+        int pixelsPerRow = Math.min((int) (charPixelWidth * result.columns), 1);
         if (possibleCharsBitmap == null ||
                 possibleCharsBitmap.getWidth() != pixelsPerRow ||
                 possibleCharsBitmap.getHeight() != charPixelHeight) {

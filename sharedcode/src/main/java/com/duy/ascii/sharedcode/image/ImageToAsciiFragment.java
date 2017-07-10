@@ -41,10 +41,11 @@ import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
-import com.duy.ascii.sharedcode.image.converter.ProcessImageOperation;
 
 import java.io.File;
 import java.io.IOException;
+
+import static com.duy.ascii.sharedcode.image.converter.ProcessImageOperation.processImage;
 
 
 /**
@@ -242,8 +243,10 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
         @Override
         protected Uri doInBackground(Uri... params) {
             try {
-                Pair<String, String> output = ProcessImageOperation.processImage(context,
-                        params[0], type);
+                Pair<String, String> output = processImage(context, params[0], type);
+                if (output == null) {
+                    return null;
+                }
                 imagePath = output.first;
                 textPath = output.second;
                 return Uri.fromFile(new File(imagePath));

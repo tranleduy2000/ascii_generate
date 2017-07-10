@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import java.io.FileNotFoundException;
@@ -99,6 +100,7 @@ public class AndroidUtils {
      * Returns a Bitmap from the given URI that may be scaled by an integer factor to reduce its size,
      * while staying as least as large as the width and height parameters.
      */
+    @Nullable
     public static Bitmap scaledBitmapFromURIWithMinimumSize(Context context, Uri imageURI, int width, int height) throws FileNotFoundException {
         BitmapFactory.Options options = computeBitmapSizeFromURI(context, imageURI);
         options.inJustDecodeBounds = false;

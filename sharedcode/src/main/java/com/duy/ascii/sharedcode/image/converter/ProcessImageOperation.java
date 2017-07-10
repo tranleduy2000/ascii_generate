@@ -37,6 +37,7 @@ public class ProcessImageOperation {
      * Reads the image from the given URI, creates ASCII PNG and HTML files, and writes them to
      * a new directory under the AsciiCam directory in /sdcard. Returns the path to the PNG file.
      */
+    @Nullable
     public static Pair<String, String> processImage(Context context, Uri uri,
                                                     @Nullable ColorType type) throws IOException {
         Log.d(TAG, "processImage() called with: context = [" + context + "], uri = [" + uri + "]");
@@ -61,7 +62,9 @@ public class ProcessImageOperation {
         int minHeight = Math.max(2 * renderer.asciiRows(), 320);
 
         Bitmap bitmap = AndroidUtils.scaledBitmapFromURIWithMinimumSize(context, uri, minWidth, minHeight);
-
+        if (bitmap == null) {
+            return null;
+        }
         renderer.setCameraImageSize(bitmap.getWidth(), bitmap.getHeight());
 
         AsciiConverter converter = new AsciiConverter();
