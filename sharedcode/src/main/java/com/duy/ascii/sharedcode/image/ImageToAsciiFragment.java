@@ -186,29 +186,23 @@ public class ImageToAsciiFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_save: {
-                if (mResultUri != null) {
-                    addImageToGallery(mResultUri.getPath());
-                } else {
-                    Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
-                }
-                break;
+        int i = v.getId();
+        if (i == R.id.btn_save) {
+            if (mResultUri != null) {
+                addImageToGallery(mResultUri.getPath());
+            } else {
+                Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
             }
-            case R.id.btn_select: {
-                selectImage();
-                break;
-            }
-            case R.id.btn_share: {
-                if (mResultUri == null) {
-                    Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_STREAM, mResultUri);
-                    intent.setType("image/*");
-                    startActivity(Intent.createChooser(intent, "Share Image"));
-                }
-                break;
+        } else if (i == R.id.btn_select) {
+            selectImage();
+        } else if (i == R.id.btn_share) {
+            if (mResultUri == null) {
+                Toast.makeText(getContext(), R.string.null_uri, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_STREAM, mResultUri);
+                intent.setType("image/*");
+                startActivity(Intent.createChooser(intent, "Share Image"));
             }
         }
     }
