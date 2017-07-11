@@ -26,7 +26,6 @@ import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.ShowAdapter;
 
 
-
 /**
  * Created by Duy on 03-Jul-17.
  */
@@ -44,11 +43,11 @@ public class EmoticonFragment extends BaseFragment implements EmoticonContract.V
     }
 
 
-
     @Override
     protected int getIndex() {
         return INDEX;
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

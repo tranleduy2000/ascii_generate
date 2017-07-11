@@ -28,8 +28,6 @@ import com.duy.ascii.sharedcode.R;
 import java.util.ArrayList;
 
 
-
-
 /**
  * Created by Duy on 09-Jul-17.
  */

@@ -39,8 +39,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 
-
-
 public class BigFontFragment extends Fragment implements BigFontContract.View {
     private static final String TAG = "BigFontFragment";
 
@@ -162,16 +160,11 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditIn.setText(sharedPreferences.getString(TAG, ""));
-    }
-
 
     @Override
     public void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mEditIn.setText(sharedPreferences.getString(TAG, ""));
         super.onResume();
     }
 
@@ -180,15 +173,14 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         super.onSaveInstanceState(outState);
     }
 
-
     @Override
-    public void onDestroyView() {
+    public void onPause() {
+        super.onPause();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
         if (mPresenter != null) {
             mPresenter.cancel();
         }
-        super.onDestroyView();
     }
 
 }

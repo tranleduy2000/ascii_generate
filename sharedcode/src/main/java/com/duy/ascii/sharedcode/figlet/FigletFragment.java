@@ -181,7 +181,9 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
     public void onDestroyView() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
-        mPresenter.cancel();
+        if (mPresenter != null) {
+            mPresenter.cancel();
+        }
         super.onDestroyView();
     }
 

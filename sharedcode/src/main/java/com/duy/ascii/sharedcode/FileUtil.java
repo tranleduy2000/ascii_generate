@@ -29,8 +29,8 @@ import java.util.regex.Pattern;
  */
 
 public class FileUtil {
-    private static final String TAG = "FileUtil";
     public static final Pattern PATTERN_SLIP = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
+    private static final String TAG = "FileUtil";
 
     public static String streamToString(@NonNull InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

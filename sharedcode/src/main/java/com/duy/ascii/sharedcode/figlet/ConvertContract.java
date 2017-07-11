@@ -42,6 +42,7 @@ public class ConvertContract {
         void setColor(int color);
 
         void showProgress();
+
         void hideProgress();
     }
 

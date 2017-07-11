@@ -33,7 +33,6 @@ import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import java.util.ArrayList;
 
 
-
 /**
  * Created by Duy on 06-May-17.
  */
@@ -54,7 +53,7 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_emiticon, parent, false);
+        View view = inflater.inflate(R.layout.list_item_big_font, parent, false);
         return new ViewHolder(view);
     }
 

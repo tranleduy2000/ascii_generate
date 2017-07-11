@@ -26,7 +26,6 @@ import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.ShowAdapter;
 
 
-
 /**
  * Created by Duy on 03-Jul-17.
  */
