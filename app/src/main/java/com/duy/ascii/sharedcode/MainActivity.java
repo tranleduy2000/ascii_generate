@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadAdView() {
         if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
             findViewById(R.id.card_ad_view).setVisibility(View.GONE);
+            findViewById(R.id.btn_remove_ads).setVisibility(View.GONE);
             return;
         }
         mAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);

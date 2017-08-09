@@ -60,6 +60,8 @@ public class ImageAsciiActivity extends AdBannerActivity implements EmoticonCont
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new EmoticonPresenter(this, this);
+
+        loadAdViewIfNeed();
     }
 
     @Override

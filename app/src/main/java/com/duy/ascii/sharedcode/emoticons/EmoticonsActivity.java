@@ -56,6 +56,8 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new EmoticonPresenter(this, this);
+
+        loadAdViewIfNeed();
     }
 
     @Override

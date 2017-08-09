@@ -24,6 +24,7 @@ import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.NativeExpressAdView;
 
 
@@ -38,8 +39,7 @@ public class AdBannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadAdViewIfNeed();
-//        loadNativeAd();
+        MobileAds.initialize(this);
     }
 
     protected void loadAdViewIfNeed() {

@@ -83,7 +83,9 @@
     <string name="latin_characters">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
     <string name="latin_number_characters">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
     <string name="emoji">Emoji</string>
+
     <string name="ad_emoticons">ca-app-pub-9351804859208340/5481653280</string>
     <string name="ad_ascii_art">ca-app-pub-9351804859208340/8950125006</string>
     <string name="ad_unit_main">ca-app-pub-9351804859208340/4215359997</string>
+    <string name="ad_unit_emoji">ca-app-pub-9351804859208340/9334280145</string>
 </resources>
