@@ -19,13 +19,13 @@ package com.duy.ascii.sharedcode.emoji;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.MenuItem;
 
+import com.duy.ascii.sharedcode.AdBannerActivity;
 import com.duy.ascii.sharedcode.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -48,7 +48,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * Created by Duy on 09-Aug-17.
  */
 
-public class EmojiActivity extends AppCompatActivity implements HeaderAdapter.EmojiClickListener {
+public class EmojiActivity extends AdBannerActivity implements HeaderAdapter.EmojiClickListener {
     private static final String TAG = "EmojiActivity";
     private final Handler mHandler = new Handler();
     private HashMap<String, ArrayList<String>> emojis = new HashMap<>();
@@ -72,7 +72,7 @@ public class EmojiActivity extends AppCompatActivity implements HeaderAdapter.Em
     }
 
     private void updateData() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view_header);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         HeaderAdapter headerAdapter = new HeaderAdapter(this, getHeaderData());

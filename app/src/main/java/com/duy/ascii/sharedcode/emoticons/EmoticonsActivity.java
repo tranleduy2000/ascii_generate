@@ -18,19 +18,28 @@ package com.duy.ascii.sharedcode.emoticons;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.duy.ascii.sharedcode.AdBannerActivity;
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Duy on 09-Aug-17.
  */
 
-public class EmoticonsActivity extends AppCompatActivity {
+public class EmoticonsActivity extends AdBannerActivity implements EmoticonContract.View {
+    public static final int INDEX = 1;
+    protected EmoticonContract.Presenter mPresenter;
+    protected RecyclerView mRecyclerView;
+    protected EmoticonsAdapter mAdapter;
+    protected ContentLoadingProgressBar mProgressBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +48,52 @@ public class EmoticonsActivity extends AppCompatActivity {
         setTitle(R.string.emoticons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mAdapter = new EmoticonsAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content, EmoticonFragment.newInstance()).commit();
+        mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
+        mPresenter = new EmoticonPresenter(this, this);
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressBar.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.hide();
+    }
+
+    @Override
+    public void display(ArrayList<String> list) {
+        mAdapter.clear();
+        mAdapter.addAll(list);
+    }
+
+    @Override
+    public void setPresenter(EmoticonContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public void append(String value) {
+        mAdapter.add(value);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.stop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.start(INDEX);
     }
 
     @Override
@@ -52,4 +104,6 @@ public class EmoticonsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

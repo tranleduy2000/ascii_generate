@@ -37,16 +37,22 @@ public class AdBannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadAdViewIfNeed();
+//        loadNativeAd();
     }
 
-    protected void loadAdView() {
-        mAdView = (AdView) findViewById(R.id.ad_view);
-        if (mAdView != null) {
-            if (BuildConfig.IS_PREMIUM_USER) {
-                mAdView.setVisibility(View.GONE);
-            } else {
-                mAdView.loadAd(new AdRequest.Builder().build());
+    protected void loadAdViewIfNeed() {
+        try {
+            mAdView = (AdView) findViewById(R.id.ad_view);
+            if (mAdView != null) {
+                if (BuildConfig.IS_PREMIUM_USER) {
+                    mAdView.setVisibility(View.GONE);
+                } else {
+                    mAdView.loadAd(new AdRequest.Builder().build());
+                }
             }
+        } catch (Exception e) {
+            //class cast
         }
     }
 
@@ -72,13 +78,17 @@ public class AdBannerActivity extends AppCompatActivity {
     }
 
     protected void loadNativeAd() {
-        mNativeExpressAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
-        if (mNativeExpressAdView != null) {
-            if (BuildConfig.IS_PREMIUM_USER) {
-                mNativeExpressAdView.setVisibility(View.GONE);
-            } else {
-                mNativeExpressAdView.loadAd(new AdRequest.Builder().build());
+        try {
+            mNativeExpressAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
+            if (mNativeExpressAdView != null) {
+                if (BuildConfig.IS_PREMIUM_USER) {
+                    mNativeExpressAdView.setVisibility(View.GONE);
+                } else {
+                    mNativeExpressAdView.loadAd(new AdRequest.Builder().build());
+                }
             }
+        } catch (Exception e) {
+
         }
     }
 }

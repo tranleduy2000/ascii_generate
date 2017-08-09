@@ -28,20 +28,32 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/recycle_view"
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/ad_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:adSize="SMART_BANNER"
-            app:adUnitId="ca-app-pub-9351804859208340/9334280145" />
+            app:adUnitId="@string/ad_ascii_art" />
     </LinearLayout>
 
 

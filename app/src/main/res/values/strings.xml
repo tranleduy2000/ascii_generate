@@ -16,7 +16,7 @@
 
 <resources>
     <string name="app_name">Ascii Generator</string>
-    <string name="donate_for_develop_remove_ads_get_pro_version">Donate for develop, remove ads, get pro version!</string>
+    <string name="donate_for_develop_remove_ads_get_pro_version">Remove ads!</string>
     <string name="interstitial_full_screen">ca-app-pub-9351804859208340/7588530318</string>
     <string name="header_emoticon">"¯\\_(ツ)_/¯"</string>
     <string name="header_ascii_image">
@@ -83,4 +83,6 @@
     <string name="latin_characters">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
     <string name="latin_number_characters">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
     <string name="emoji">Emoji</string>
+    <string name="ad_emoticons">ca-app-pub-9351804859208340/5481653280</string>
+    <string name="ad_ascii_art">ca-app-pub-9351804859208340/8950125006</string>
 </resources>

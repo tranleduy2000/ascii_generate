@@ -8,37 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:661933145827:android:6987242234d1d469",
-        "android_client_info": {
-          "package_name": "com.example.duy.calculator"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:661933145827:android:56243afa293ddf23",
         "android_client_info": {
           "package_name": "com.duy.calculator.free"
@@ -166,37 +135,6 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:661933145827:android:266fac34d008cf28",
-        "android_client_info": {
-          "package_name": "com.duy.pascal.compiler.pro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:661933145827:android:fa9b2e14e93930f5",
         "android_client_info": {
           "package_name": "duy.com.text_converter"
@@ -262,6 +200,130 @@
         "mobilesdk_app_id": "1:661933145827:android:2fd3975ebd74ac15",
         "android_client_info": {
           "package_name": "com.duy.asciiart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661933145827:android:09fa0bbe1472dd1b",
+        "android_client_info": {
+          "package_name": "com.duy.text_converter.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661933145827:android:24f5451cf833f564",
+        "android_client_info": {
+          "package_name": "com.duy.asciigenerator.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661933145827:android:bb80f9116123d7e6",
+        "android_client_info": {
+          "package_name": "com.duy.compiler.javanide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661933145827-kelu32a5v9n079ncq5ohf6gnklskvtii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkku1p2jdDp_xfQyIbusO7wgZDf7Zdqdw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661933145827:android:46599d8a4abb791e",
+        "android_client_info": {
+          "package_name": "com.duy.notifi"
         }
       },
       "oauth_client": [

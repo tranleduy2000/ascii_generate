@@ -36,6 +36,7 @@ import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 /**
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_figlet).setOnClickListener(this);
         findViewById(R.id.card_image_ascii).setOnClickListener(this);
         findViewById(R.id.card_emoji).setOnClickListener(this);
+        findViewById(R.id.btn_remove_ads).setOnClickListener(this);
     }
 
     private void loadAdView() {
@@ -99,24 +101,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         switch (v.getId()) {
             case R.id.card_image_to_ascii:
+                firebaseAnalytics.logEvent("card_image_to_ascii", new Bundle());
                 startActivity(new Intent(this, ImageToAsciiActivity.class));
                 break;
             case R.id.card_big_ascii:
+                firebaseAnalytics.logEvent("card_big_ascii", new Bundle());
                 startActivity(new Intent(this, BigFontActivity.class));
                 break;
             case R.id.card_image_ascii:
+                firebaseAnalytics.logEvent("card_image_ascii", new Bundle());
                 startActivity(new Intent(this, ImageAsciiActivity.class));
                 break;
             case R.id.card_emoticons:
+                firebaseAnalytics.logEvent("card_emoticons", new Bundle());
                 startActivity(new Intent(this, EmoticonsActivity.class));
                 break;
             case R.id.card_figlet:
+                firebaseAnalytics.logEvent("card_figlet", new Bundle());
                 startActivity(new Intent(this, FigletActivity.class));
                 break;
             case R.id.card_emoji:
+                firebaseAnalytics.logEvent("card_emoji", new Bundle());
                 startActivity(new Intent(this, EmojiActivity.class));
+                break;
+            case R.id.btn_remove_ads:
+                firebaseAnalytics.logEvent("btn_remove_ads", new Bundle());
+                StoreUtil.gotoPlayStore(this, "com.duy.asciigenerator.pro");
                 break;
         }
     }

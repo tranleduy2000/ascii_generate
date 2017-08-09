@@ -22,8 +22,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.duy.ascii.sharedcode.FileUtil;
-import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
-import com.duy.ascii.sharedcode.asciiart.ImageAsciiFragment;
+import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,10 +58,10 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             }
         }, view);
         switch (index) {
-            case EmoticonFragment.INDEX:
+            case EmoticonsActivity.INDEX:
                 loadData.execute("emoticons/faces.txt");
                 break;
-            case ImageAsciiFragment.INDEX:
+            case ImageAsciiActivity.INDEX:
                 loadData.execute("emoticons/image.txt");
                 break;
         }

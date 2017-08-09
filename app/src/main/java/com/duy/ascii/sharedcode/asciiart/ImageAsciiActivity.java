@@ -18,28 +18,86 @@ package com.duy.ascii.sharedcode.asciiart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
+import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
+import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by Duy on 09-Aug-17.
  */
 
-public class ImageAsciiActivity extends AppCompatActivity {
+public class ImageAsciiActivity extends AppCompatActivity implements EmoticonContract.View {
+    public static final int INDEX = 2;
+    protected EmoticonContract.Presenter mPresenter;
+    protected RecyclerView mRecyclerView;
+    protected EmoticonsAdapter mAdapter;
+    protected ContentLoadingProgressBar mProgressBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emoticons);
+        setContentView(R.layout.activity_ascii_art);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.ascii_art);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content, ImageAsciiFragment.newInstance()).commit();
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ImageAsciiAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+
+
+        mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
+        mPresenter = new EmoticonPresenter(this, this);
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressBar.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.hide();
+    }
+
+    @Override
+    public void display(ArrayList<String> list) {
+        mAdapter.clear();
+        mAdapter.addAll(list);
+    }
+
+    @Override
+    public void setPresenter(EmoticonContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public void append(String value) {
+        mAdapter.add(value);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.stop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.start(INDEX);
     }
 
     @Override
