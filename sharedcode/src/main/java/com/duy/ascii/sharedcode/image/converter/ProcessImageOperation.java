@@ -71,7 +71,7 @@ public class ProcessImageOperation {
         final Result result = converter.computeResultForBitmap(bitmap,
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
-        String path = AsciiImageWriter.saveImage(context, renderer.createBitmap(result), result);
+        String path = AsciiImageWriter.saveImage(context, renderer.createBitmap(result));
         bitmap.recycle();
         return path;
     }

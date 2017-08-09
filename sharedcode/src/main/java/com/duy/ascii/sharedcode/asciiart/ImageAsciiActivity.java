@@ -35,9 +35,8 @@ public class ImageAsciiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emoticons);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        setTitle(R.string.emoticons);
+        setTitle(R.string.ascii_art);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content, ImageAsciiFragment.newInstance()).commit();

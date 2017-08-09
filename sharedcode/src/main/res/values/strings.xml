@@ -47,4 +47,7 @@
     <string name="save">Save</string>
     <string name="gallery">Gallery</string>
     <string name="delete">Delete</string>
+    <string name="ascii_art">Ascii art</string>
+    <string name="latin_characters">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
+    <string name="latin_number_characters">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
 </resources>

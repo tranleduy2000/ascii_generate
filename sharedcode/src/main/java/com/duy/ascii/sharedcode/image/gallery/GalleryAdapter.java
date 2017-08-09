@@ -31,6 +31,7 @@ import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.ShareUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -73,8 +74,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     private void remove(int adapterPosition) {
-        paths.remove(adapterPosition);
+        File remove = paths.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
+
+        try {
+            remove.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

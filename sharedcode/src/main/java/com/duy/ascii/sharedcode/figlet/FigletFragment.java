@@ -18,7 +18,6 @@ package com.duy.ascii.sharedcode.figlet;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -29,7 +28,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +40,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.ShareUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -198,12 +197,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
 
     @Override
     public void onShareImage(@NonNull File bitmap) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        Uri uriForFile = FileProvider.getUriForFile(getContext(), "com.duy.ascii.fileprovider", bitmap);
-        intent.putExtra(Intent.EXTRA_STREAM, uriForFile);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        startActivity(Intent.createChooser(intent, "Share Image Via"));
+        ShareUtil.shareImage(getContext(), Uri.fromFile(bitmap));
     }
 
     @Override

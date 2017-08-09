@@ -20,7 +20,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,11 +34,14 @@ import java.util.Locale;
  */
 public class AsciiImageWriter {
 
-    private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
-    public static final String PATH_IMAGE = Environment.getExternalStorageDirectory() + "/AsciiArt";
+    public static final String PATH_IMAGE = new File(Environment.getExternalStorageDirectory(),
+            "AsciiArt" + File.separator + "Image").getPath();
 
-    public static String saveImage(Context context, Bitmap image,
-                                   @Nullable AsciiConverter.Result asciiResult)
+    public static final String PATH_FIGLET = new File(Environment.getExternalStorageDirectory(),
+            "AsciiArt" + File.separator + "Figlet").getPath();
+    private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+
+    public static String saveImage(Context context, Bitmap image)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
         Boolean isSDPresent = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -58,7 +60,7 @@ public class AsciiImageWriter {
         return imageFile.getPath();
     }
 
-    private static boolean saveBitmap(@NonNull Bitmap bitmap, @NonNull File fileToWrite) throws IOException {
+    public static boolean saveBitmap(@NonNull Bitmap bitmap, @NonNull File fileToWrite) throws IOException {
         FileOutputStream output = null;
         try {
             output = new FileOutputStream(fileToWrite);

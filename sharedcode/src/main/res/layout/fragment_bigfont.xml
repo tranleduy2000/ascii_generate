@@ -31,7 +31,7 @@
             android:id="@+id/edit_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="@string/latin_number_characters"
+            android:digits="@string/latin_characters"
             android:hint="@string/type_your_text"
             android:maxLines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />

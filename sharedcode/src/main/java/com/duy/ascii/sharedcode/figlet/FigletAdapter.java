@@ -17,7 +17,6 @@
 package com.duy.ascii.sharedcode.figlet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -28,12 +27,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.ImageFactory;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.image.converter.AsciiImageWriter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -92,27 +91,10 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, holder.txtContent.getText().toString());
-                intent.setType("text/plain");
-                context.startActivity(intent);
-            }
-        });
-
-        holder.copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clipboardManagerCompat.setText(holder.txtContent.getText().toString());
-                Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.saveImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (onItemClickListener != null) {
                     try {
                         Bitmap image = ImageFactory.createImageFromView(holder.txtContent, Color.BLACK);
-                        File file = new File(context.getFilesDir(), "temp.png");
+                        File file = new File(AsciiImageWriter.PATH_FIGLET, System.currentTimeMillis() + ".png");
                         ImageFactory.writeToFile(image, file);
                         image.recycle();
                         onItemClickListener.onShareImage(file);
@@ -160,14 +142,12 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;
-        public View copy, share, saveImg;
+        public View share;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = (TextView) itemView.findViewById(R.id.content);
-            copy = itemView.findViewById(R.id.copy);
             share = itemView.findViewById(R.id.share);
-            saveImg = itemView.findViewById(R.id.img_save);
         }
 
         public void bind() {
