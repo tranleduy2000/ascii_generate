@@ -24,7 +24,7 @@ import android.view.View;
 
 import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
-import com.duy.ascii.sharedcode.emoticons.ImageAsciiActivity;
+import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 

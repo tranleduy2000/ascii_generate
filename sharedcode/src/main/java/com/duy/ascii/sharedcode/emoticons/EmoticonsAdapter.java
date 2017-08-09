@@ -41,7 +41,7 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
     private Context context;
-    private LayoutInflater inflater;
+    protected LayoutInflater inflater;
     private ClipboardManagerCompat clipboardManagerCompat;
 
     public EmoticonsAdapter(@NonNull Context context) {
@@ -100,11 +100,11 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtContent;
-        View root;
+  public   static class ViewHolder extends RecyclerView.ViewHolder {
+      public   TextView txtContent;
+      public   View root;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
             root = itemView.findViewById(R.id.container);

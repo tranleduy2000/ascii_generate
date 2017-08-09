@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emoticons.fragment;
+package com.duy.ascii.sharedcode.asciiart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +24,7 @@ import android.view.View;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
+import com.duy.ascii.sharedcode.emoticons.fragment.BaseFragment;
 
 
 /**
@@ -55,8 +56,8 @@ public class ImageAsciiFragment extends BaseFragment implements EmoticonContract
         mRecyclerView = view.findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mFacesAdapter = new EmoticonsAdapter(getContext());
-        mRecyclerView.setAdapter(mFacesAdapter);
+        mAdapter = new ImageAsciiAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = view.findViewById(R.id.progress_bar);
 

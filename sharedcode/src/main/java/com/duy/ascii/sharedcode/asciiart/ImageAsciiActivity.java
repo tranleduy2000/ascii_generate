@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emoticons;
+package com.duy.ascii.sharedcode.asciiart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.emoticons.fragment.ImageAsciiFragment;
 
 /**
  * Created by Duy on 09-Aug-17.

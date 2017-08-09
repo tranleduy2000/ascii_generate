@@ -28,7 +28,7 @@
         <activity android:name=".image.ImageToAsciiActivity" />
         <activity android:name=".bigtext.BigFontActivity" />
         <activity android:name=".figlet.FigletActivity" />
-        <activity android:name=".emoticons.ImageAsciiActivity" />
+        <activity android:name=".asciiart.ImageAsciiActivity" />
     </application>
 
 </manifest>

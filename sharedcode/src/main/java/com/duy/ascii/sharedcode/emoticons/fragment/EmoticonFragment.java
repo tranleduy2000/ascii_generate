@@ -55,8 +55,8 @@ public class EmoticonFragment extends BaseFragment implements EmoticonContract.V
         mRecyclerView = view.findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mFacesAdapter = new EmoticonsAdapter(getContext());
-        mRecyclerView.setAdapter(mFacesAdapter);
+        mAdapter = new EmoticonsAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = view.findViewById(R.id.progress_bar);
 

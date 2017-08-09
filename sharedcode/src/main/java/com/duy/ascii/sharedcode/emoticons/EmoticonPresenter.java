@@ -23,7 +23,7 @@ import android.util.Log;
 
 import com.duy.ascii.sharedcode.FileUtil;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
-import com.duy.ascii.sharedcode.emoticons.fragment.ImageAsciiFragment;
+import com.duy.ascii.sharedcode.asciiart.ImageAsciiFragment;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
 
     protected EmoticonContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
-    protected EmoticonsAdapter mFacesAdapter;
+    protected EmoticonsAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
     @Override
@@ -56,8 +56,8 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
 
     @Override
     public void display(ArrayList<String> list) {
-        mFacesAdapter.clear();
-        mFacesAdapter.addAll(list);
+        mAdapter.clear();
+        mAdapter.addAll(list);
     }
 
     @Override
@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
 
     @Override
     public void append(String value) {
-        mFacesAdapter.add(value);
+        mAdapter.add(value);
     }
 
     @Override

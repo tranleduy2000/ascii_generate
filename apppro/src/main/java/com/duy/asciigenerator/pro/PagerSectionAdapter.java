@@ -23,7 +23,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
-import com.duy.ascii.sharedcode.emoticons.fragment.ImageAsciiFragment;
+import com.duy.ascii.sharedcode.asciiart.ImageAsciiFragment;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 
