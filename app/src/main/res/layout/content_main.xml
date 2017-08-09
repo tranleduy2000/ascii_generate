@@ -56,11 +56,11 @@
 
                     <com.google.android.gms.ads.NativeExpressAdView
                         android:id="@+id/native_ad_view"
-                        android:layout_width="360dp"
-                        android:layout_height="120dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:adSize="360x120"
-                        app:adUnitId="ca-app-pub-9351804859208340/4215359997">
+                        app:adUnitId="@string/ad_unit_main">
 
                     </com.google.android.gms.ads.NativeExpressAdView>
 

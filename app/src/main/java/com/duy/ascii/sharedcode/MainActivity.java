@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.card_ad_view).setVisibility(View.GONE);
             return;
         }
-        mAdView = (NativeExpressAdView) findViewById(R.id.ad_view);
+        mAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
         if (mAdView != null) {
             mAdView.loadAd(new AdRequest.Builder().build());
         }
