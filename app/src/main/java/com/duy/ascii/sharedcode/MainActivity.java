@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.acsiigenerator;
+package com.duy.ascii.sharedcode;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -37,13 +37,12 @@ import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
 
-import imagetotext.duy.com.asciigenerator.R;
 
 /**
  * Created by Duy on 09-Aug-17.
  */
 
-public class MainActivity2 extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private NativeExpressAdView mAdView;
 
     @Override
@@ -70,6 +69,10 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
     }
 
     private void loadAdView() {
+        if (BuildConfig.IS_PREMIUM_USER) {
+            findViewById(R.id.card_ad_view).setVisibility(View.GONE);
+            return;
+        }
         mAdView = (NativeExpressAdView) findViewById(R.id.ad_view);
         if (mAdView != null) {
             mAdView.loadAd(new AdRequest.Builder().build());
