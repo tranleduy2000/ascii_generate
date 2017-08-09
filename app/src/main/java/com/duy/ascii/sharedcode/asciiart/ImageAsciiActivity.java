@@ -19,12 +19,12 @@ package com.duy.ascii.sharedcode.asciiart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.duy.ascii.sharedcode.AdBannerActivity;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Created by Duy on 09-Aug-17.
  */
 
-public class ImageAsciiActivity extends AppCompatActivity implements EmoticonContract.View {
+public class ImageAsciiActivity extends AdBannerActivity implements EmoticonContract.View {
     public static final int INDEX = 2;
     protected EmoticonContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;

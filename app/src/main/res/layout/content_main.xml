@@ -59,6 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:minHeight="120dp"
                         app:adSize="360x120"
                         app:adUnitId="@string/ad_unit_main">
 

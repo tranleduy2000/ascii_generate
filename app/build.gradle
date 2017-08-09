@@ -23,8 +23,8 @@ android {
         applicationId "com.duy.asciiart"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 16
-        versionName "2.6"
+        versionCode 20
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

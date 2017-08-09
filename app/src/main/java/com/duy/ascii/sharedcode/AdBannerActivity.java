@@ -16,6 +16,7 @@
 
 package com.duy.ascii.sharedcode;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +46,7 @@ public class AdBannerActivity extends AppCompatActivity {
         try {
             mAdView = (AdView) findViewById(R.id.ad_view);
             if (mAdView != null) {
-                if (BuildConfig.IS_PREMIUM_USER) {
+                if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
                     mAdView.setVisibility(View.GONE);
                 } else {
                     mAdView.loadAd(new AdRequest.Builder().build());
@@ -89,6 +90,17 @@ public class AdBannerActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
 
+        }
+    }
+
+    private boolean hasPremiumApp() {
+        try {
+            PackageManager pm = getPackageManager();
+            pm.getPackageInfo("com.duy.asciigenerator.pro", 0);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

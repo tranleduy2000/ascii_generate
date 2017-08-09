@@ -17,11 +17,14 @@
 package com.duy.ascii.sharedcode;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,13 +74,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadAdView() {
-        if (BuildConfig.IS_PREMIUM_USER) {
+        if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
             findViewById(R.id.card_ad_view).setVisibility(View.GONE);
             return;
         }
         mAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
         if (mAdView != null) {
             mAdView.loadAd(new AdRequest.Builder().build());
+        }
+    }
+
+    private boolean hasPremiumApp() {
+        try {
+            PackageManager pm = getPackageManager();
+            pm.getPackageInfo("com.duy.asciigenerator.pro", 0);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -132,5 +146,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 StoreUtil.gotoPlayStore(this, "com.duy.asciigenerator.pro");
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_more_app:
+                StoreUtil.moreApp(MainActivity.this);
+                return true;
+            case R.id.action_rate:
+                StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
+                return true;
+            case R.id.action_share:
+                StoreUtil.shareApp(MainActivity.this, BuildConfig.APPLICATION_ID);
+                return true;
+            case R.id.action_text_converter:
+                StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
