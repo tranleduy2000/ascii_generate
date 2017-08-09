@@ -41,6 +41,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.StoreUtil;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
 import com.duy.ascii.sharedcode.image.gallery.GalleryActivity;
 
@@ -233,11 +234,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
         if (mResultUri == null) {
             Toast.makeText(this, R.string.null_uri, Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_STREAM, mResultUri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setType("image/*");
-            startActivity(Intent.createChooser(intent, "Select image image"));
+            StoreUtil.shareImage(this, mResultUri);
         }
     }
 

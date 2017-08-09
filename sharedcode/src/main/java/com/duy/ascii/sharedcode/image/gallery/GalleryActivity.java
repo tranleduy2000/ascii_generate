@@ -80,7 +80,7 @@ public class GalleryActivity extends AppCompatActivity {
             Collections.sort(paths, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    return Long.valueOf(o1.lastModified()).compareTo(o2.lastModified());
+                    return -Long.valueOf(o1.lastModified()).compareTo(o2.lastModified());
                 }
             });
             GalleryAdapter adapter = new GalleryAdapter(this, paths);
