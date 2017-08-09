@@ -30,14 +30,14 @@ import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
  * Created by Duy on 03-Jul-17.
  */
 
-public class TextImageFragment extends BaseFragment implements EmoticonContract.View {
+public class ImageAsciiFragment extends BaseFragment implements EmoticonContract.View {
     public static final int INDEX = 2;
 
-    public static TextImageFragment newInstance() {
+    public static ImageAsciiFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        TextImageFragment fragment = new TextImageFragment();
+        ImageAsciiFragment fragment = new ImageAsciiFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -23,7 +23,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
-import com.duy.ascii.sharedcode.emoticons.fragment.TextImageFragment;
+import com.duy.ascii.sharedcode.emoticons.fragment.ImageAsciiFragment;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 
@@ -56,7 +56,7 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
             case 2:
                 return AdsFragment.newInstance();
             case 3:
-                return TextImageFragment.newInstance();
+                return ImageAsciiFragment.newInstance();
             case 4:
                 return EmoticonFragment.newInstance();
             case 5:

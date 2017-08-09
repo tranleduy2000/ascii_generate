@@ -25,6 +25,10 @@
         android:supportsRtl="true">
 
         <activity android:name=".emoticons.EmoticonsActivity" />
+        <activity android:name=".image.ImageToAsciiActivity" />
+        <activity android:name=".bigtext.BigFontActivity" />
+        <activity android:name=".figlet.FigletActivity" />
+        <activity android:name=".emoticons.ImageAsciiActivity" />
     </application>
 
 </manifest>

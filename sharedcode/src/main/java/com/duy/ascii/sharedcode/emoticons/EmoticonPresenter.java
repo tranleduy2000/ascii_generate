@@ -23,7 +23,7 @@ import android.util.Log;
 
 import com.duy.ascii.sharedcode.FileUtil;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
-import com.duy.ascii.sharedcode.emoticons.fragment.TextImageFragment;
+import com.duy.ascii.sharedcode.emoticons.fragment.ImageAsciiFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,7 +62,7 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             case EmoticonFragment.INDEX:
                 loadData.execute("emoticons/faces.txt");
                 break;
-            case TextImageFragment.INDEX:
+            case ImageAsciiFragment.INDEX:
                 loadData.execute("emoticons/image.txt");
                 break;
         }

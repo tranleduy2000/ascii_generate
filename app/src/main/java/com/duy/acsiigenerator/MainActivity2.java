@@ -22,7 +22,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
+import com.duy.ascii.sharedcode.emoticons.ImageAsciiActivity;
+import com.duy.ascii.sharedcode.figlet.FigletActivity;
+import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 
 import imagetotext.duy.com.asciigenerator.R;
 
@@ -38,13 +42,28 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.card_emoticons).setOnClickListener(this);
         findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
+        findViewById(R.id.card_big_ascii).setOnClickListener(this);
+        findViewById(R.id.card_figlet).setOnClickListener(this);
+        findViewById(R.id.card_image_ascii).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.card_image_to_ascii:
+                startActivity(new Intent(this, ImageToAsciiActivity.class));
+                break;
+            case R.id.card_big_ascii:
+                startActivity(new Intent(this, BigFontActivity.class));
+                break;
+            case R.id.card_image_ascii:
+                startActivity(new Intent(this, ImageAsciiActivity.class));
+                break;
             case R.id.card_emoticons:
                 startActivity(new Intent(this, EmoticonsActivity.class));
+                break;
+            case R.id.card_figlet:
+                startActivity(new Intent(this, FigletActivity.class));
                 break;
         }
     }
