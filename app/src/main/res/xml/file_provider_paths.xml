@@ -15,11 +15,6 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- Customize your theme here. -->
-        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
-        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-    </style>
-</resources>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="share" path="/" />
+</paths>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2017 by Tran Le Duy
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +14,17 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardBackgroundColor="?cardBackground"
     app:cardUseCompatPadding="true">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbarSize="4dp">
@@ -43,8 +39,9 @@
             android:foreground="?attr/selectableItemBackground"
             android:padding="8dp"
             android:scrollbars="horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textColor="?android:attr/textColorPrimary"
-            tools:text="hello"/>
+            tools:text="hello" />
     </HorizontalScrollView>
 
 </android.support.v7.widget.CardView>

@@ -30,7 +30,7 @@
     <string name="text">Text</string>
     <string name="photo">Photo</string>
     <string name="select_file">Select file</string>
-    <string name="emoticon">Emoticons</string>
+    <string name="emoticons">Emoticons</string>
     <string name="text_image">Text image</string>
     <string name="figlet_msg">
         !! You can not copy/paste with \n

@@ -23,7 +23,7 @@ import android.view.View;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
-import com.duy.ascii.sharedcode.emoticons.ShowAdapter;
+import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
 
 
 /**
@@ -55,7 +55,7 @@ public class EmoticonFragment extends BaseFragment implements EmoticonContract.V
         mRecyclerView = view.findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mFacesAdapter = new ShowAdapter(getContext());
+        mFacesAdapter = new EmoticonsAdapter(getContext());
         mRecyclerView.setAdapter(mFacesAdapter);
 
         mProgressBar = view.findViewById(R.id.progress_bar);

@@ -18,16 +18,12 @@ package com.duy.acsiigenerator;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.duy.ascii.sharedcode.StoreUtil;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -51,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         hideStatusBar();
         setContentView(R.layout.activity_main);
         bindView();
-
         createAdInterstitial();
     }
 
@@ -88,46 +83,45 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void bindView() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerSectionAdapter pagerSectionAdapter =
-                new PagerSectionAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(pagerSectionAdapter);
-        viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
-        viewPager.setCurrentItem(1); //big font
-        viewPager.addOnPageChangeListener(this);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_white_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_white_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_ads_white);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_texture_white_24dp);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_insert_emoticon_white_24dp);
-        tabLayout.getTabAt(5).setIcon(R.drawable.ic_collections_white_24dp);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_more_app:
-                        StoreUtil.moreApp(MainActivity.this);
-                        return true;
-                    case R.id.action_rate:
-                        StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
-                        return true;
-                    case R.id.action_share:
-                        StoreUtil.shareApp(MainActivity.this, BuildConfig.APPLICATION_ID);
-                        return true;
-                    case R.id.action_text_converter:
-                        StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
-                        return true;
-                }
-                return false;
-            }
-        });
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.toolbar);
+//        PagerSectionAdapter pagerSectionAdapter =
+//                new PagerSectionAdapter(getSupportFragmentManager(), this);
+//        viewPager.setAdapter(pagerSectionAdapter);
+//        viewPager.setOffscreenPageLimit(pagerSectionAdapter.getCount());
+//        viewPager.setCurrentItem(1); //big font
+//        viewPager.addOnPageChangeListener(this);
+//
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+//        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.getTabAt(0).setIcon(R.drawable.ic_text_format_white_24dp);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_size_white_24dp);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.ic_ads_white);
+//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_texture_white_24dp);
+//        tabLayout.getTabAt(4).setIcon(R.drawable.ic_insert_emoticon_white_24dp);
+//        tabLayout.getTabAt(5).setIcon(R.drawable.ic_collections_white_24dp);
+//
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.action_more_app:
+//                        StoreUtil.moreApp(MainActivity.this);
+//                        return true;
+//                    case R.id.action_rate:
+//                        StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
+//                        return true;
+//                    case R.id.action_share:
+//                        StoreUtil.shareApp(MainActivity.this, BuildConfig.APPLICATION_ID);
+//                        return true;
+//                    case R.id.action_text_converter:
+//                        StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
 

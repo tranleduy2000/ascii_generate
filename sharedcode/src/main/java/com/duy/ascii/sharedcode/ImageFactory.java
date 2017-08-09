@@ -18,25 +18,34 @@ package com.duy.ascii.sharedcode;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.view.View;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Duy on 02-Jun-17.
  */
 
 public class ImageFactory {
-    public static Bitmap createImageFromView(View view) {
-        view.setDrawingCacheEnabled(true);
-        Bitmap bitmap = view.getDrawingCache(true).copy(Bitmap.Config.ARGB_8888, false);
-        view.destroyDrawingCache();
-        return bitmap;
+
+    public static Bitmap createImageFromView(View v, int background) {
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(b);
+        Paint backgroundPaint = new Paint();
+        backgroundPaint.setColor(background);
+        canvas.drawRect(0, 0, v.getWidth(), v.getHeight(), backgroundPaint);
+        v.draw(canvas);
+        return b;
     }
 
-    public static Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-        v.draw(c);
-        return b;
+    public static Uri writeToFile(Bitmap bitmap, File out) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(out);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+        fileOutputStream.close();
+        return Uri.fromFile(out);
     }
 }

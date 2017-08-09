@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
-import com.duy.ascii.sharedcode.emoticons.ShowAdapter;
+import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
 
     protected EmoticonContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
-    protected ShowAdapter mFacesAdapter;
+    protected EmoticonsAdapter mFacesAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
     @Override

@@ -37,14 +37,14 @@ import java.util.ArrayList;
  * Created by Duy on 06-May-17.
  */
 
-public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
+public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
     private Context context;
     private LayoutInflater inflater;
     private ClipboardManagerCompat clipboardManagerCompat;
 
-    public ShowAdapter(@NonNull Context context) {
+    public EmoticonsAdapter(@NonNull Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);

@@ -32,7 +32,7 @@
     <item
         android:id="@+id/action_emoticon"
         android:icon="@drawable/ic_insert_emoticon_black_24dp"
-        android:title="@string/emoticon"/>
+        android:title="@string/emoticons"/>
     <item
         android:id="@+id/action_image"
         android:icon="@drawable/ic_collections_black_24dp"

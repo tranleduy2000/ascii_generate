@@ -21,22 +21,20 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +42,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.image.converter.AsciiImageWriter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -187,7 +181,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         super.onDestroyView();
     }
 
-    private boolean permissionGranted() {
+    private boolean isPermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED ||
@@ -203,60 +197,13 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
     }
 
     @Override
-    public void onSaveImage(@Nullable final Bitmap bitmap) {
-        if (!permissionGranted()) {
-            if (bitmap != null) {
-                bitmap.recycle();
-            }
-            return;
-        }
-        try {
-            Pair<String, String> file = AsciiImageWriter.saveImage(getContext(), bitmap, null);
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file.first)));
-            intent.setType("image/*");
-            startActivity(Intent.createChooser(intent, "Share Image"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "IO Exception", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private String writeToStorage(Bitmap bitmap, String path, String fileName) {
-        File file = new File(path, fileName);
-        if (!file.exists()) {
-            boolean mkdirs = file.getParentFile().mkdirs();
-            try {
-                boolean create = file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-            // PNG is a lossless format, the compression factor (100) is ignored
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            return MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
-                    file.getAbsolutePath(), file.getName(), file.getName());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void onShareImage(@NonNull File bitmap) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        Uri uriForFile = FileProvider.getUriForFile(getContext(), "com.duy.ascii.fileprovider", bitmap);
+        intent.putExtra(Intent.EXTRA_STREAM, uriForFile);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+        startActivity(Intent.createChooser(intent, "Share Image Via"));
     }
 
     @Override

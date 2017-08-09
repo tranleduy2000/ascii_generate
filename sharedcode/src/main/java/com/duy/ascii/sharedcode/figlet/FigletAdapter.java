@@ -19,6 +19,7 @@ package com.duy.ascii.sharedcode.figlet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,7 @@ import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +110,15 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onSaveImage(ImageFactory.loadBitmapFromView(holder.txtContent));
+                    try {
+                        Bitmap image = ImageFactory.createImageFromView(holder.txtContent, Color.BLACK);
+                        File file = new File(context.getFilesDir(), "temp.png");
+                        ImageFactory.writeToFile(image, file);
+                        image.recycle();
+                        onItemClickListener.onShareImage(file);
+                    } catch (Exception e) {
+                        //IO exception
+                    }
                 }
             }
         });
@@ -145,7 +155,7 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onSaveImage(@Nullable Bitmap bitmap);
+        void onShareImage(@NonNull File bitmap);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

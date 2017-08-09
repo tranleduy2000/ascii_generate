@@ -78,7 +78,7 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
             case 3:
                 return context.getString(R.string.text_image);
             case 4:
-                return context.getString(R.string.emoticon);
+                return context.getString(R.string.emoticons);
             case 5:
                 return context.getString(R.string.photo);
             default:
