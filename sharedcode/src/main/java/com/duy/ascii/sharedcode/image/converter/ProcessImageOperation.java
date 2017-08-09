@@ -21,7 +21,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -38,8 +37,8 @@ public class ProcessImageOperation {
      * a new directory under the AsciiCam directory in /sdcard. Returns the path to the PNG file.
      */
     @Nullable
-    public static Pair<String, String> processImage(Context context, Uri uri,
-                                                    @Nullable ColorType type) throws IOException {
+    public static String processImage(Context context, Uri uri,
+                                      @Nullable ColorType type) throws IOException {
         Log.d(TAG, "processImage() called with: context = [" + context + "], uri = [" + uri + "]");
 
         ColorType colorType;
@@ -52,8 +51,8 @@ public class ProcessImageOperation {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         // assume width is always larger
-        int displayWidth = Math.max(display.getWidth(), display.getHeight()) * 2;
-        int displayHeight = Math.min(display.getWidth(), display.getHeight()) * 2;
+        int displayWidth = Math.max(display.getWidth(), display.getHeight()) ;
+        int displayHeight = Math.min(display.getWidth(), display.getHeight()) ;
 
         final AsciiRenderer renderer = new AsciiRenderer();
         renderer.setMaximumImageSize(displayWidth, displayHeight);
@@ -66,13 +65,14 @@ public class ProcessImageOperation {
             return null;
         }
         renderer.setCameraImageSize(bitmap.getWidth(), bitmap.getHeight());
+        renderer.setTextSize(12);
 
         AsciiConverter converter = new AsciiConverter();
         final Result result = converter.computeResultForBitmap(bitmap,
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
-        Pair<String, String> r = AsciiImageWriter.saveImage(context, renderer.createBitmap(result), result);
+        String path = AsciiImageWriter.saveImage(context, renderer.createBitmap(result), result);
         bitmap.recycle();
-        return r;
+        return path;
     }
 }

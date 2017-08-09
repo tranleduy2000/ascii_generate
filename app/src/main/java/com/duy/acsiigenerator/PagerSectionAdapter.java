@@ -25,7 +25,6 @@ import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
 import com.duy.ascii.sharedcode.asciiart.ImageAsciiFragment;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
-import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 
 import imagetotext.duy.com.asciigenerator.R;
 
@@ -59,8 +58,6 @@ public class PagerSectionAdapter extends FragmentPagerAdapter {
                 return ImageAsciiFragment.newInstance();
             case 4:
                 return EmoticonFragment.newInstance();
-            case 5:
-                return ImageToAsciiFragment.newInstance();
             default:
                 return null;
         }

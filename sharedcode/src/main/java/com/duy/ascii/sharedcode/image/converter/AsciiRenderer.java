@@ -100,6 +100,12 @@ public class AsciiRenderer {
         charPixelHeight = (int) (textSize * 0.9);
     }
 
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+        this.charPixelWidth = (int) (textSize * 0.7);
+        this.charPixelHeight = (int) (textSize * 0.9);
+    }
+
     public int getOutputImageWidth() {
         return this.outputImageWidth;
     }

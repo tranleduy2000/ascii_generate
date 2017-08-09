@@ -21,13 +21,10 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,61 +36,39 @@ import java.util.Locale;
 public class AsciiImageWriter {
 
     private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
-    private static final String PATH_IMAGE = Environment.getExternalStorageDirectory() + "/AsciiArt";
-    private static final String PATH_TEXT = Environment.getExternalStorageDirectory() + "/AsciiArt/Text";
+    public static final String PATH_IMAGE = Environment.getExternalStorageDirectory() + "/AsciiArt";
 
-    public static Pair<String, String> saveImage(Context context, Bitmap image,
-                                                 @Nullable AsciiConverter.Result asciiResult)
+    public static String saveImage(Context context, Bitmap image,
+                                   @Nullable AsciiConverter.Result asciiResult)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
-        Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        Boolean isSDPresent = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
         File imageFile;
-        File textFile;
-
         if (isSDPresent) {
             imageFile = new File(PATH_IMAGE, datestr + ".png");
-            textFile = new File(PATH_TEXT, datestr + ".txt");
             if (!imageFile.exists()) {
                 imageFile.getParentFile().mkdirs();
                 imageFile.createNewFile();
             }
-            if (!textFile.exists()) {
-                textFile.getParentFile().mkdirs();
-                textFile.createNewFile();
-            }
         } else {
             imageFile = new File(context.getFilesDir(), datestr + ".png");
-            textFile = new File(context.getFilesDir(), datestr + ".txt");
         }
         saveBitmap(image, imageFile);
-        FileWriter textOutput = new FileWriter(textFile);
-        if (asciiResult != null) {
-            writeText(asciiResult, textOutput);
-        }
-        textOutput.close();
         image.recycle();
-        return new Pair<>(imageFile.getPath(), textFile.getPath());
+        return imageFile.getPath();
     }
 
-    @Nullable
-    private static String saveBitmap(@NonNull Bitmap bitmap, @NonNull File fileToWrite) throws IOException {
+    private static boolean saveBitmap(@NonNull Bitmap bitmap, @NonNull File fileToWrite) throws IOException {
         FileOutputStream output = null;
         try {
             output = new FileOutputStream(fileToWrite);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
             output.close();
+        } catch (Exception e) {
+            return false;
         } finally {
             if (output != null) output.close();
         }
-        return fileToWrite.getPath();
-    }
-
-    private static void writeText(@NonNull AsciiConverter.Result result, Writer writer) throws IOException {
-        for (int r = 0; r < result.rows; r++) {
-            for (int c = 0; c < result.columns; c++) {
-                writer.write(result.stringAtRowColumn(r, c));
-            }
-            writer.write("\n");
-        }
+        return true;
     }
 }

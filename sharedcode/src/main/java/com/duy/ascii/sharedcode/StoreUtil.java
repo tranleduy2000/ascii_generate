@@ -18,8 +18,11 @@ package com.duy.ascii.sharedcode;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+
+import java.io.File;
 
 /**
  * Created by Duy on 10-Jul-17.
@@ -61,5 +64,9 @@ public class StoreUtil {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/search?q=pub:Trần Lê Duy")));
         }
+    }
+
+    public static void shareImage(Context context, File file) {
+
     }
 }

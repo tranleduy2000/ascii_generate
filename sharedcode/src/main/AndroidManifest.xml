@@ -24,13 +24,10 @@
         android:supportsRtl="true">
         <activity android:name=".emoticons.EmoticonsActivity" />
         <activity android:name=".image.ImageToAsciiActivity" />
+        <activity android:name=".image.gallery.GalleryActivity" />
         <activity android:name=".bigtext.BigFontActivity" />
         <activity android:name=".figlet.FigletActivity" />
         <activity android:name=".asciiart.ImageAsciiActivity" />
-        <activity
-            android:name=".Main2Activity3"
-            android:label="@string/title_activity_main23"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
