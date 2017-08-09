@@ -81,7 +81,7 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_result, parent, false);
+        View view = inflater.inflate(R.layout.list_item_figlet, parent, false);
         return new ViewHolder(view);
     }
 

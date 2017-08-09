@@ -17,16 +17,24 @@
 package com.duy.acsiigenerator;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
-import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 
 import imagetotext.duy.com.asciigenerator.R;
 
@@ -35,16 +43,53 @@ import imagetotext.duy.com.asciigenerator.R;
  */
 
 public class MainActivity2 extends AppCompatActivity implements View.OnClickListener {
+    private NativeExpressAdView mAdView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setTitle(R.string.app_name);
+
+        loadAdView();
+
+        Glide.with(this)
+                .load(R.drawable.header_image_to_ascii)
+                .apply(new RequestOptions().centerCrop())
+                .into((ImageView) findViewById(R.id.header_ascii));
+        ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
 
         findViewById(R.id.card_emoticons).setOnClickListener(this);
         findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
         findViewById(R.id.card_big_ascii).setOnClickListener(this);
         findViewById(R.id.card_figlet).setOnClickListener(this);
         findViewById(R.id.card_image_ascii).setOnClickListener(this);
+    }
+
+    private void loadAdView() {
+        mAdView = (NativeExpressAdView) findViewById(R.id.ad_view);
+        if (mAdView != null) {
+            mAdView.loadAd(new AdRequest.Builder().build());
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mAdView != null) mAdView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdView != null) mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAdView != null) mAdView.destroy();
     }
 
     @Override

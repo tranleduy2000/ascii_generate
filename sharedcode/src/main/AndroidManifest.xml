@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2017 by Tran Le Duy
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +12,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.duy.ascii.sharedcode">
 
@@ -23,12 +22,15 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-
         <activity android:name=".emoticons.EmoticonsActivity" />
         <activity android:name=".image.ImageToAsciiActivity" />
         <activity android:name=".bigtext.BigFontActivity" />
         <activity android:name=".figlet.FigletActivity" />
         <activity android:name=".asciiart.ImageAsciiActivity" />
+        <activity
+            android:name=".Main2Activity3"
+            android:label="@string/title_activity_main23"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
