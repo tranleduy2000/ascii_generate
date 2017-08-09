@@ -41,6 +41,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.StoreUtil;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
 import com.duy.ascii.sharedcode.image.gallery.GalleryActivity;
@@ -234,7 +235,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
         if (mResultUri == null) {
             Toast.makeText(this, R.string.null_uri, Toast.LENGTH_SHORT).show();
         } else {
-            StoreUtil.shareImage(this, mResultUri);
+            ShareUtil.shareImage(this, mResultUri);
         }
     }
 

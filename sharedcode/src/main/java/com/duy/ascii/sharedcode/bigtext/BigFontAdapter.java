@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 
@@ -86,12 +87,30 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
                 return false;
             }
         });
-
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clipboardManagerCompat.setText(holder.txtContent.getText().toString());
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.imgCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clipboardManagerCompat.setText(holder.txtContent.getText().toString());
+                Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.shareText(holder.txtContent.getText().toString(), context);
+            }
+        });
+        holder.shareMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.shareMessenger(holder.txtContent.getText().toString(), context);
             }
         });
     }
@@ -116,10 +135,14 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtContent;
+        View imgCopy, imgShare, shareMsg;
 
         ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
+            imgCopy = itemView.findViewById(R.id.img_copy);
+            imgShare = itemView.findViewById(R.id.img_share);
+            shareMsg = itemView.findViewById(R.id.img_share_msg);
         }
 
     }

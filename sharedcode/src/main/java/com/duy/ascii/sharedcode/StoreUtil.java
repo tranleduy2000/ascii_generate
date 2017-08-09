@@ -18,7 +18,6 @@ package com.duy.ascii.sharedcode;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -64,11 +63,4 @@ public class StoreUtil {
         }
     }
 
-    public static void shareImage(Context context, Uri file) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_STREAM, file);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        context.startActivity(Intent.createChooser(intent, "Select image image"));
-    }
 }

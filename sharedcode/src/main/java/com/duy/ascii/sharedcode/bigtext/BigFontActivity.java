@@ -35,7 +35,7 @@ public class BigFontActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_text);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        setTitle(R.string.emoticons);
+        setTitle(R.string.big_text);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
