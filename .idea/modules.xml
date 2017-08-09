@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AsciiGenerator.iml" filepath="$PROJECT_DIR$/AsciiGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/apppro/apppro.iml" filepath="$PROJECT_DIR$/apppro/apppro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sharedcode/sharedcode.iml" filepath="$PROJECT_DIR$/sharedcode/sharedcode.iml" />
     </modules>
   </component>
 </project>

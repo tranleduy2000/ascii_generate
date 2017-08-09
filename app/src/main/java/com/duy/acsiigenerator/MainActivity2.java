@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
+import com.duy.ascii.sharedcode.emoji.EmojiActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
@@ -65,6 +66,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.card_big_ascii).setOnClickListener(this);
         findViewById(R.id.card_figlet).setOnClickListener(this);
         findViewById(R.id.card_image_ascii).setOnClickListener(this);
+        findViewById(R.id.card_emoji).setOnClickListener(this);
     }
 
     private void loadAdView() {
@@ -109,6 +111,9 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.card_figlet:
                 startActivity(new Intent(this, FigletActivity.class));
+                break;
+            case R.id.card_emoji:
+                startActivity(new Intent(this, EmojiActivity.class));
                 break;
         }
     }

@@ -49,7 +49,7 @@
                 app:cardUseCompatPadding="true">
 
                 <com.google.android.gms.ads.NativeExpressAdView
-                    android:id="@+id/ad_view"
+                    android:id="@+id/native_ad_view"
                     android:layout_width="360dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"

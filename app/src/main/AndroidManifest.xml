@@ -17,6 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="imagetotext.duy.com.asciigenerator">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -37,7 +38,7 @@
             </intent-filter>
         </activity>
 
-   <activity
+        <activity
             android:name="com.duy.acsiigenerator.MainActivity2"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/app_name">
@@ -48,6 +49,14 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".emoticons.EmoticonsActivity" />
+        <activity android:name=".image.ImageToAsciiActivity" />
+        <activity android:name=".image.gallery.GalleryActivity" />
+        <activity android:name=".bigtext.BigFontActivity" />
+        <activity android:name=".figlet.FigletActivity" />
+        <activity android:name=".asciiart.ImageAsciiActivity" />
+        <activity android:name=".emoji.EmojiActivity" />
 
     </application>
 
