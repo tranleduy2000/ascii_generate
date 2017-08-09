@@ -53,7 +53,7 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_big_font, parent, false);
+        View view = inflater.inflate(R.layout.list_item_emoticon, parent, false);
         return new ViewHolder(view);
     }
 

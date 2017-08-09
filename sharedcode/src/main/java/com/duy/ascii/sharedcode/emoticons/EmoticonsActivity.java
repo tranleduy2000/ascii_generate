@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.fragment.EmoticonFragment;
@@ -36,8 +37,19 @@ public class EmoticonsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_emoticons);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.emoticons);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content, EmoticonFragment.newInstance()).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return false;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
