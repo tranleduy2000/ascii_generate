@@ -42,7 +42,6 @@ import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.ShareUtil;
-import com.duy.ascii.sharedcode.StoreUtil;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
 import com.duy.ascii.sharedcode.image.gallery.GalleryActivity;
 
@@ -63,14 +62,14 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
     private ImageView mPreview;
     private ProgressBar mProgressBar;
     private Spinner mSpinnerType;
-    private Uri mResultUri = null;
+    private File mResultFile = null;
     private Uri mOriginalUri = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mResultUri = savedInstanceState.getParcelable("result_uri");
+            mResultFile = (File) savedInstanceState.getSerializable("result_file");
             mOriginalUri = savedInstanceState.getParcelable("origin_uri");
         }
         setContentView(R.layout.activity_image_to_ascii);
@@ -102,7 +101,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mOriginalUri != null) outState.putParcelable("origin_uri", mOriginalUri);
-        if (mResultUri != null) outState.putParcelable("result_uri", mResultUri);
+        if (mResultFile != null) outState.putSerializable("result_file", mResultFile);
     }
 
     @Override
@@ -174,7 +173,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
                         convertImageToAsciiFromIntent(intent.getData());
                     } else {
                         mOriginalUri = null;
-                        mResultUri = null;
+                        mResultFile = null;
                         mPreview.setImageBitmap(null);
                     }
                 }
@@ -194,7 +193,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
 
 
     private void convertImageToAsciiFromIntent(Uri uri) {
-        this.mResultUri = null;
+        this.mResultFile = null;
         new TaskConvertImageToAscii(this, getCurrentType()).execute(uri);
     }
 
@@ -224,18 +223,18 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void saveImage() {
-        if (mResultUri != null) {
-            addImageToGallery(mResultUri.getPath());
+        if (mResultFile != null) {
+            addImageToGallery(mResultFile.getPath());
         } else {
             Toast.makeText(this, R.string.null_uri, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void shareCurrentImage() {
-        if (mResultUri == null) {
+        if (mResultFile == null) {
             Toast.makeText(this, R.string.null_uri, Toast.LENGTH_SHORT).show();
         } else {
-            ShareUtil.shareImage(this, mResultUri);
+            ShareUtil.shareImage(this, mResultFile);
         }
     }
 
@@ -255,7 +254,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    private class TaskConvertImageToAscii extends AsyncTask<Uri, Void, Uri> {
+    private class TaskConvertImageToAscii extends AsyncTask<Uri, Void, File> {
         private Context context;
         private AsciiConverter.ColorType type;
 
@@ -271,11 +270,11 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
         }
 
         @Override
-        protected Uri doInBackground(Uri... params) {
+        protected File doInBackground(Uri... params) {
             try {
                 String output = processImage(context, params[0], type);
                 if (output != null) {
-                    return Uri.fromFile(new File(output));
+                    return new File(output);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -284,13 +283,13 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
         }
 
         @Override
-        protected void onPostExecute(final Uri uri) {
+        protected void onPostExecute(final File uri) {
             super.onPostExecute(uri);
             if (uri == null) {
                 Toast.makeText(context, "IO Exception", Toast.LENGTH_SHORT).show();
             } else {
-                mPreview.setImageURI(uri);
-                mResultUri = uri;
+                mPreview.setImageURI(Uri.fromFile(uri));
+                mResultFile = uri;
             }
             mProgressBar.setVisibility(View.GONE);
         }

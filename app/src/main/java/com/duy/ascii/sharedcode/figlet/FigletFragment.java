@@ -197,7 +197,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
 
     @Override
     public void onShareImage(@NonNull File bitmap) {
-        ShareUtil.shareImage(getContext(), Uri.fromFile(bitmap));
+        ShareUtil.shareImage(getContext(), bitmap);
     }
 
     @Override
