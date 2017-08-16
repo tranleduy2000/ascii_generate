@@ -88,4 +88,6 @@
     <string name="ad_ascii_art">ca-app-pub-9351804859208340/8950125006</string>
     <string name="ad_unit_main">ca-app-pub-9351804859208340/4215359997</string>
     <string name="ad_unit_emoji">ca-app-pub-9351804859208340/9334280145</string>
+    <string name="cool_symbol">Cool symbol</string>
+    <string name="header_symbol">⇦ ⇧ ⇨ ⇩ ⇪ ⇹ ⇺ ⇻ ⇼</string>
 </resources>

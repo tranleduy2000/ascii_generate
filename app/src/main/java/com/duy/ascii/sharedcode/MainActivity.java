@@ -37,6 +37,7 @@ import com.duy.ascii.sharedcode.emoji.EmojiActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
+import com.duy.ascii.sharedcode.unicodesymbol.SymbolActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_figlet).setOnClickListener(this);
         findViewById(R.id.card_image_ascii).setOnClickListener(this);
         findViewById(R.id.card_emoji).setOnClickListener(this);
+        findViewById(R.id.card_symbol).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
 
     }
@@ -160,6 +162,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.card_emoji:
                 firebaseAnalytics.logEvent("card_emoji", new Bundle());
                 startActivity(new Intent(this, EmojiActivity.class));
+                break;
+            case R.id.card_symbol:
+                firebaseAnalytics.logEvent("card_symbol", new Bundle());
+                startActivity(new Intent(this, SymbolActivity.class));
                 break;
             case R.id.btn_remove_ads:
                 firebaseAnalytics.logEvent("btn_remove_ads", new Bundle());

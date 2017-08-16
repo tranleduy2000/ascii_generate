@@ -30,7 +30,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -41,26 +41,29 @@
 
         <activity
             android:name=".emoticons.EmoticonsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".image.ImageToAsciiActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".image.gallery.GalleryActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".bigtext.BigFontActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".figlet.FigletActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".asciiart.ImageAsciiActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".emoji.EmojiActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".unicodesymbol.SymbolActivity"
+            android:configChanges="orientation|screenSize"/>
 
         <provider
             android:name=".AsciiFileProvider"

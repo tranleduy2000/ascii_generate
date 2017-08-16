@@ -17,7 +17,6 @@
 package com.duy.ascii.sharedcode.image.gallery;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.ShareUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -68,7 +66,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtil.shareImage(context, Uri.fromFile(paths.get(holder.getAdapterPosition())));
+                ShareUtil.shareImage(context, paths.get(holder.getAdapterPosition()));
             }
         });
     }

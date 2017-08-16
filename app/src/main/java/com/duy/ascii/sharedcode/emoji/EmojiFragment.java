@@ -25,11 +25,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.HeaderAdapter.EmojiClickListener;
@@ -66,11 +66,10 @@ public class EmojiFragment extends BottomSheetDialogFragment {
         ArrayList<String> emojis = (ArrayList<String>) getArguments().getSerializable("data");
 
         final EditText editInput = view.findViewById(R.id.edit_input);
-        Button btnCopy = view.findViewById(R.id.btn_copy);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view_emoji);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         EmojiAdapter emojiAdapter = new EmojiAdapter(getActivity(), emojis);
         recyclerView.setAdapter(emojiAdapter);
 
@@ -80,12 +79,19 @@ public class EmojiFragment extends BottomSheetDialogFragment {
                 editInput.getEditableText().insert(Math.max(editInput.getSelectionStart(), 0), emoji);
             }
         });
-        btnCopy.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_copy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManagerCompat manager = ClipboardManagerCompatFactory.getManager(getContext());
                 manager.setText(editInput.getText());
                 Toast.makeText(getContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        view.findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.shareText(editInput.getText().toString(), getContext());
             }
         });
     }
