@@ -93,12 +93,17 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
             public void onClick(View v) {
                 if (onItemClickListener != null) {
                     try {
-                        Bitmap image = ImageFactory.createImageFromView(holder.txtContent, Color.BLACK);
+                        Bitmap image = ImageFactory.createImageFromView(holder.txtContent, Color.WHITE);
                         File file = new File(AsciiImageWriter.PATH_FIGLET, System.currentTimeMillis() + ".png");
+                        if (!file.exists()) {
+                            file.getParentFile().mkdirs();
+                            file.createNewFile();
+                        }
                         ImageFactory.writeToFile(image, file);
                         image.recycle();
                         onItemClickListener.onShareImage(file);
                     } catch (Exception e) {
+                        e.printStackTrace();
                         //IO exception
                     }
                 }
@@ -146,12 +151,8 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtContent = (TextView) itemView.findViewById(R.id.content);
+            txtContent = itemView.findViewById(R.id.content);
             share = itemView.findViewById(R.id.share);
-        }
-
-        public void bind() {
-
         }
     }
 }

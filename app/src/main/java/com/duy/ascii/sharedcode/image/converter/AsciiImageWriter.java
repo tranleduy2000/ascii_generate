@@ -56,7 +56,6 @@ public class AsciiImageWriter {
             imageFile = new File(context.getFilesDir(), datestr + ".png");
         }
         saveBitmap(image, imageFile);
-        image.recycle();
         return imageFile.getPath();
     }
 

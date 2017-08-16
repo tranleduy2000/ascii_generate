@@ -28,7 +28,7 @@
     android:gravity="center"
     android:padding="8dp"
     android:scrollbars="horizontal"
+    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
     android:textColor="?android:textColorPrimary"
-    android:textSize="40sp"
     tools:text="hello" />
 

@@ -70,7 +70,7 @@ public class EmojiFragment extends BottomSheetDialogFragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view_emoji);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         EmojiAdapter emojiAdapter = new EmojiAdapter(getActivity(), emojis);
         recyclerView.setAdapter(emojiAdapter);
 

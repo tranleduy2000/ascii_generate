@@ -51,8 +51,8 @@ public class ProcessImageOperation {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         // assume width is always larger
-        int displayWidth = Math.max(display.getWidth(), display.getHeight()) ;
-        int displayHeight = Math.min(display.getWidth(), display.getHeight()) ;
+        int displayWidth = Math.max(display.getWidth(), display.getHeight());
+        int displayHeight = Math.min(display.getWidth(), display.getHeight());
 
         final AsciiRenderer renderer = new AsciiRenderer();
         renderer.setMaximumImageSize(displayWidth, displayHeight);
@@ -72,7 +72,7 @@ public class ProcessImageOperation {
                 renderer.asciiRows(), renderer.asciiColumns(), colorType);
 
         String path = AsciiImageWriter.saveImage(context, renderer.createBitmap(result));
-        bitmap.recycle();
+        if (!bitmap.isRecycled()) bitmap.recycle();
         return path;
     }
 }

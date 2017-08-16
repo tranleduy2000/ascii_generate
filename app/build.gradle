@@ -18,13 +18,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.duy.asciiart"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 21
-        versionName "3.0"
+        versionCode 22
+        versionName "3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -32,6 +32,7 @@ android {
         release {
             minifyEnabled false
             debuggable false
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -42,11 +43,18 @@ android {
     }
 
     productFlavors {
+        dev {
+            minSdkVersion 21
+            buildConfigField "boolean", "IS_PREMIUM_USER", "false"
+            applicationId "com.duy.asciiart"
+        }
         free {
+            minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "false"
             applicationId "com.duy.asciiart"
         }
         pro {
+            minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "true"
             applicationId "com.duy.asciigenerator.pro"
         }

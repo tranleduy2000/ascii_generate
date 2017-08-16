@@ -15,11 +15,11 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.duy.ascii.sharedcode">
+          package="com.duy.ascii.sharedcode">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -33,35 +33,44 @@
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <activity
             android:name=".emoticons.EmoticonsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
         <activity
             android:name=".image.ImageToAsciiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
         </activity>
         <activity
             android:name=".image.gallery.GalleryActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
         <activity
             android:name=".bigtext.BigFontActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
         <activity
             android:name=".figlet.FigletActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
         <activity
             android:name=".asciiart.ImageAsciiActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
         <activity
             android:name=".emoji.EmojiActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard" />
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"/>
 
+        <provider
+            android:name=".AsciiFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

@@ -24,7 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 
 /**
  * Created by Duy on 09-Aug-17.
@@ -36,7 +35,7 @@ public class FigletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_figlet);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        setTitle(R.string.emoticons);
+        setTitle(R.string.figlet);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 

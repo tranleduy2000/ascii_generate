@@ -37,7 +37,9 @@ import com.duy.ascii.sharedcode.emoji.EmojiActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -48,6 +50,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private NativeExpressAdView mAdView;
+    private InterstitialAd interstitialAd = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTitle(R.string.app_name);
 
         loadAdView();
+        createAdInterstitial();
 
         Glide.with(this)
                 .load(R.drawable.header_image_to_ascii)
@@ -71,6 +75,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_image_ascii).setOnClickListener(this);
         findViewById(R.id.card_emoji).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
+
+    }
+
+    private void createAdInterstitial() {
+        if (!BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
+            //create ad
+            interstitialAd = new InterstitialAd(this);
+            if (BuildConfig.DEBUG) {
+                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            } else {
+                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+            }
+            interstitialAd.loadAd(new AdRequest.Builder().build());
+        }
     }
 
     private void loadAdView() {
@@ -86,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean hasPremiumApp() {
+        if (true) return false;
         try {
             PackageManager pm = getPackageManager();
             pm.getPackageInfo("com.duy.asciigenerator.pro", 0);
@@ -172,5 +191,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (BuildConfig.IS_PREMIUM_USER) {
+            super.onBackPressed();
+            return;
+        }
+        if (interstitialAd != null) {
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        finish();
+                    }
+                });
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 }
