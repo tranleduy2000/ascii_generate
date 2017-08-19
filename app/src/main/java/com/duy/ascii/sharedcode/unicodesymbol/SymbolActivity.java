@@ -90,6 +90,8 @@ public class SymbolActivity extends AdBannerActivity {
                 ShareUtil.shareText(editInput.getText().toString(), SymbolActivity.this);
             }
         });
+
+        loadAdViewIfNeed();
     }
 
     private void parseData() {
