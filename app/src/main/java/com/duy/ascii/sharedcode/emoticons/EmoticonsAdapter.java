@@ -59,19 +59,20 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.txtContent.setText(objects.get(position));
-        holder.root.setOnClickListener(new View.OnClickListener() {
+        final String text = objects.get(position);
+        holder.txtContent.setText(text);
+        holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clipboardManagerCompat.setText(holder.txtContent.getText().toString());
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
-        holder.root.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, holder.txtContent.getText().toString());
+                intent.putExtra(Intent.EXTRA_TEXT, text);
                 intent.setType("text/plain");
                 context.startActivity(intent);
                 return false;
