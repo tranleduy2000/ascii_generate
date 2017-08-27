@@ -23,8 +23,8 @@ android {
         applicationId "com.duy.asciiart"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 25
-        versionName "3.3"
+        versionCode 26
+        versionName "3.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -47,16 +47,19 @@ android {
             minSdkVersion 21
             buildConfigField "boolean", "IS_PREMIUM_USER", "false"
             applicationId "com.duy.asciiart"
+            resValue "string", "app_name", "Ascii Art"
         }
         free {
             minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "false"
             applicationId "com.duy.asciiart"
+            resValue "string", "app_name", "Ascii Art"
         }
         pro {
             minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "true"
             applicationId "com.duy.asciigenerator.pro"
+            resValue "string", "app_name", "(Pro) Ascii Art"
         }
     }
     externalNativeBuild {

@@ -53,8 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minHeight="120dp"
-                    app:adSize="300x120"
+                    android:minHeight="250dp"
+                    app:adSize="300x250"
                     app:adUnitId="@string/ad_unit_main">
 
                 </com.google.android.gms.ads.NativeExpressAdView>
