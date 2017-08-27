@@ -74,7 +74,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         });
     }
 
-    private String refine(String text) {
+    public static String refine(String text) {
         if (text.contains(".")) {
             text = text.substring(0, text.indexOf("."));
         }

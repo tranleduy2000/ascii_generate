@@ -120,6 +120,7 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
 
     @Override
     public void onHeaderClick(String path) {
+        setTitle(HeaderAdapter.refine(path));
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         pref.edit().putString("last_path", path).apply();
         if (loadDataTask != null && !loadDataTask.isCancelled()) {
