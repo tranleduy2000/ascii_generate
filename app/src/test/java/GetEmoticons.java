@@ -97,7 +97,7 @@ public class GetEmoticons extends TestCase {
         if (title == null || list == null || list.isEmpty()) return;
         String fileName = title.replaceAll("\\W", "") + ".xml";
         File file = new File("C:\\github\\AsciiGenerator\\app\\src\\main\\assets\\emoticons\\" + fileName);
-
+        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         org.w3c.dom.Document document = documentBuilder.newDocument();

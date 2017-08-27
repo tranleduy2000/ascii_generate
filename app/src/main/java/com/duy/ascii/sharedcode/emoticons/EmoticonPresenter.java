@@ -58,11 +58,8 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
             }
         }, view);
         switch (index) {
-            case EmoticonsActivity.INDEX:
-                loadData.execute("emoticons/faces.txt");
-                break;
             case ImageAsciiActivity.INDEX:
-                loadData.execute("emoticons/image.txt");
+                loadData.execute("image.txt");
                 break;
         }
     }
