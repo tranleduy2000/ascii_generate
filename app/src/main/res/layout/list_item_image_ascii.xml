@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -30,6 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:fillViewport="true"
+
         android:scrollbarSize="4dp">
 
         <com.duy.ascii.sharedcode.view.BaseTextView
@@ -40,7 +43,7 @@
             android:padding="8dp"
             android:scrollbars="horizontal"
             android:textColor="?android:attr/textColorPrimary"
-            tools:text="hello" />
+            tools:text="hello"/>
     </HorizontalScrollView>
 
 </android.support.v7.widget.CardView>

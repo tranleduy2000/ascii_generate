@@ -40,8 +40,8 @@ import java.util.ArrayList;
 public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
-    private Context context;
     protected LayoutInflater inflater;
+    private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
 
     public EmoticonsAdapter(@NonNull Context context) {
@@ -60,14 +60,14 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.txtContent.setText(objects.get(position));
-        holder.txtContent.setOnClickListener(new View.OnClickListener() {
+        holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clipboardManagerCompat.setText(holder.txtContent.getText().toString());
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
-        holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.root.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -100,9 +100,9 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
         notifyDataSetChanged();
     }
 
-  public   static class ViewHolder extends RecyclerView.ViewHolder {
-      public   TextView txtContent;
-      public   View root;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView txtContent;
+        public View root;
 
         public ViewHolder(View itemView) {
             super(itemView);

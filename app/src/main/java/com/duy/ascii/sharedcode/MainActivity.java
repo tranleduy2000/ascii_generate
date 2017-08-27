@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_emoji).setOnClickListener(this);
         findViewById(R.id.card_symbol).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
-
     }
 
     private void createAdInterstitial() {
