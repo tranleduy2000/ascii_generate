@@ -68,6 +68,7 @@ public class GetEmoticons extends TestCase {
                 if (node instanceof Element) {
                     if (((Element) node).tagName().equals("h3")) {
                         writeFile(title, list);
+                        list.clear();
                         System.out.println("Title: " + node.childNode(0));
                         title = node.childNode(0).toString();
                     } else if (((Element) node).tagName().equals("table")) {
