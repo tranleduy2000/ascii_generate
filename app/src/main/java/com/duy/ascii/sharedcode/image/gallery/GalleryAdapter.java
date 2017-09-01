@@ -72,11 +72,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     private void remove(int adapterPosition) {
-        File remove = paths.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
-
         try {
-            remove.delete();
+            File remove = paths.remove(adapterPosition);
+            if (remove.delete()) {
+                notifyItemRemoved(adapterPosition);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,11 +87,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return paths.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         Button btnDelete, btnShare;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             btnDelete = itemView.findViewById(R.id.btn_delete);
