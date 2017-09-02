@@ -77,7 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_emoji).setOnClickListener(this);
         findViewById(R.id.card_symbol).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
+
+
     }
+
+    private static final String TAG = "MainActivity";
 
     private void createAdInterstitial() {
         if (!BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
@@ -99,9 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         mAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
-        if (mAdView != null) {
-            mAdView.loadAd(new AdRequest.Builder().build());
-        }
+        if (mAdView != null) mAdView.loadAd(new AdRequest.Builder().build());
     }
 
     private boolean hasPremiumApp() {
