@@ -19,16 +19,20 @@ package com.duy.ascii.sharedcode.asciiart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.duy.ascii.sharedcode.AdBannerActivity;
+import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 
@@ -36,12 +40,13 @@ import java.util.ArrayList;
  * Created by Duy on 09-Aug-17.
  */
 
-public class ImageAsciiActivity extends AdBannerActivity implements EmoticonContract.View {
+public class ImageAsciiActivity extends AppCompatActivity implements EmoticonContract.View {
     public static final int INDEX = 2;
     protected EmoticonContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
     protected EmoticonsAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
+    private InterstitialAd interstitialAd = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +66,43 @@ public class ImageAsciiActivity extends AdBannerActivity implements EmoticonCont
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new EmoticonPresenter(this, this);
 
-        loadAdViewIfNeed();
+        createAdInterstitial();
+    }
+
+    private void createAdInterstitial() {
+        if (!BuildConfig.IS_PREMIUM_USER) {
+            //create ad
+            interstitialAd = new InterstitialAd(this);
+            if (BuildConfig.DEBUG) {
+                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            } else {
+                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+            }
+            interstitialAd.loadAd(new AdRequest.Builder().build());
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (BuildConfig.IS_PREMIUM_USER) {
+            super.onBackPressed();
+            return;
+        }
+        if (interstitialAd != null) {
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        finish();
+                    }
+                });
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     @Override
@@ -105,7 +146,7 @@ public class ImageAsciiActivity extends AdBannerActivity implements EmoticonCont
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            this.finish();
+            this.onBackPressed();
             return false;
         }
         return super.onOptionsItemSelected(item);

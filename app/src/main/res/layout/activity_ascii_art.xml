@@ -22,39 +22,24 @@
 
     <include layout="@layout/toolbar" />
 
-    <LinearLayout
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical" />
-
-            <android.support.v4.widget.ContentLoadingProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/ad_view"
-            android:layout_width="match_parent"
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:adSize="SMART_BANNER"
-            app:adUnitId="@string/ad_ascii_art" />
-    </LinearLayout>
-
-
+            android:layout_gravity="center" />
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
