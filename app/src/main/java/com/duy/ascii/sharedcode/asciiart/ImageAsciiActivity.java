@@ -31,6 +31,7 @@ import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
@@ -65,20 +66,20 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new EmoticonPresenter(this, this);
 
-        createAdInterstitial();
+//        createAdInterstitial();
     }
 
     private void createAdInterstitial() {
-//        if (!BuildConfig.IS_PREMIUM_USER) {
-//            //create ad
-//            interstitialAd = new InterstitialAd(this);
-//            if (BuildConfig.DEBUG) {
-//                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-//            } else {
-//                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-//            }
-//            interstitialAd.loadAd(new AdRequest.Builder().build());
-//        }
+        if (!BuildConfig.IS_PREMIUM_USER) {
+            //create ad
+            interstitialAd = new InterstitialAd(this);
+            if (BuildConfig.DEBUG) {
+                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            } else {
+                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+            }
+            interstitialAd.loadAd(new AdRequest.Builder().build());
+        }
     }
 
 
@@ -101,6 +102,8 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
             } else {
                 super.onBackPressed();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 

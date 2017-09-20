@@ -62,12 +62,12 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/ad_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:adSize="SMART_BANNER"
-            app:adUnitId="@string/ad_emoticons"/>
+        <!--<com.google.android.gms.ads.AdView-->
+            <!--android:id="@+id/ad_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:adSize="SMART_BANNER"-->
+            <!--app:adUnitId="@string/ad_emoticons"/>-->
     </LinearLayout>
 
 

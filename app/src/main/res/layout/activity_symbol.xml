@@ -75,12 +75,12 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/ad_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:adSize="SMART_BANNER"
-            app:adUnitId="@string/ad_unit_emoji"/>
+        <!--<com.google.android.gms.ads.AdView-->
+            <!--android:id="@+id/ad_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:adSize="SMART_BANNER"-->
+            <!--app:adUnitId="@string/ad_unit_emoji"/>-->
     </LinearLayout>
 
 

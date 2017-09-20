@@ -56,7 +56,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private NativeExpressAdView mAdView;
-    private InterstitialAd interstitialAd = null;
+    private InterstitialAd mInterstitialAd = null;
     private ViewGroup mContainerAd;
 
     @Override
@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_emoji).setOnClickListener(this);
         findViewById(R.id.card_symbol).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
-
-
     }
 
     private void loadAdView() {
@@ -202,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
                 return true;
             case R.id.action_share:
-                StoreUtil.shareApp(MainActivity.this, BuildConfig.APPLICATION_ID);
+                StoreUtil.shareThisApp(MainActivity.this);
                 return true;
             case R.id.action_text_converter:
                 StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
@@ -217,10 +215,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
             return;
         }
-        if (interstitialAd != null) {
-            if (interstitialAd.isLoaded()) {
-                interstitialAd.show();
-                interstitialAd.setAdListener(new AdListener() {
+        if (mInterstitialAd != null) {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+                mInterstitialAd.setAdListener(new AdListener() {
                     @Override
                     public void onAdClosed() {
                         super.onAdClosed();
@@ -230,6 +228,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 super.onBackPressed();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 }

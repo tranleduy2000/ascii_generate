@@ -37,15 +37,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Duy on 09-Aug-17.
@@ -59,12 +56,14 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
     protected EmoticonsAdapter mContentAdapter;
     protected ContentLoadingProgressBar mProgressBar;
     private LoadDataTask loadDataTask;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emoticons);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         setTitle(R.string.emoticons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -121,7 +120,7 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
 
     @Override
     public void onHeaderClick(String path) {
-        setTitle(HeaderAdapter.refine(path));
+        mToolbar.setSubtitle(HeaderAdapter.refine(path.substring(path.lastIndexOf("/"))));
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         pref.edit().putString("last_path", path).apply();
         if (loadDataTask != null && !loadDataTask.isCancelled()) {
@@ -169,11 +168,7 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
                         publishProgress(string);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;

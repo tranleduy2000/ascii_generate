@@ -82,7 +82,6 @@ dependencies {
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support:support-vector-drawable:26.+'
 
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
@@ -95,6 +94,6 @@ dependencies {
     compile 'com.sothree.slidinguppanel:library:3.3.1'
     testCompile 'junit:junit:4.12'
 
-    compile 'org.jsoup:jsoup:1.10.3'
+//    compile 'org.jsoup:jsoup:1.10.3'
 }
 apply plugin: 'com.google.gms.google-services'
