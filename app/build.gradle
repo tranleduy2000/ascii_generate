@@ -30,7 +30,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -58,7 +58,7 @@ android {
             minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "true"
             applicationId "com.duy.asciigenerator.pro"
-            resValue "string", "app_name", "(Pro) Ascii Art"
+            resValue "string", "app_name", "Ascii Art (Pro)"
         }
     }
     externalNativeBuild {

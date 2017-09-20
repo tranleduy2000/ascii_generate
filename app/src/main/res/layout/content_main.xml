@@ -15,12 +15,12 @@
   -->
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,9 +34,9 @@
             android:orientation="vertical"
             android:padding="2dp">
 
-            <include layout="@layout/card_image_to_ascii"/>
+            <include layout="@layout/card_image_to_ascii" />
 
-            <include layout="@layout/card_big_text"/>
+            <include layout="@layout/card_big_text" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_ad_view"
@@ -44,20 +44,23 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:minHeight="121dp"
-                app:cardElevation="2dp"
                 app:cardUseCompatPadding="true">
 
-                <com.google.android.gms.ads.NativeExpressAdView
-                    android:id="@+id/native_ad_view"
+                <FrameLayout
+                    android:id="@+id/container_ad"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:minHeight="250dp"
-                    app:adSize="300x250"
-                    app:adUnitId="@string/ad_unit_main">
+                    android:layout_height="301dp">
+                    <!--<com.google.android.gms.ads.NativeExpressAdView-->
+                    <!--android:id="@+id/native_ad_view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:minHeight="250dp"-->
+                    <!--app:adSize="300x250"-->
+                    <!--app:adUnitId="@string/ad_unit_main">-->
 
-                </com.google.android.gms.ads.NativeExpressAdView>
+                    <!--</com.google.android.gms.ads.NativeExpressAdView>-->
+                </FrameLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -66,7 +69,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/donate_for_develop_remove_ads_get_pro_version"/>
+                android:text="@string/donate_for_develop_remove_ads_get_pro_version" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_image_ascii"
@@ -92,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/header_ascii_image"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
                     </FrameLayout>
 
                     <TextView
@@ -101,7 +104,7 @@
                         android:padding="8dp"
                         android:text="Ascii image"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="?colorAccent"/>
+                        android:textColor="?colorAccent" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -110,7 +113,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="Collection of images ascii"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 </LinearLayout>
 
@@ -141,7 +144,7 @@
                             android:gravity="center"
                             android:text="@string/header_emoticon"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                            android:textSize="64sp"/>
+                            android:textSize="64sp" />
                     </FrameLayout>
 
                     <TextView
@@ -150,7 +153,7 @@
                         android:padding="8dp"
                         android:text="Emoticons"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="?colorAccent"/>
+                        android:textColor="?colorAccent" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -159,7 +162,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="Collection of images ascii"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 </LinearLayout>
 
@@ -190,7 +193,7 @@
                             android:gravity="center"
                             android:text="@string/header_emmoj"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                            android:textSize="64sp"/>
+                            android:textSize="64sp" />
                     </FrameLayout>
 
                     <TextView
@@ -199,7 +202,7 @@
                         android:padding="8dp"
                         android:text="Emoji"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="?colorAccent"/>
+                        android:textColor="?colorAccent" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -208,7 +211,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="✂ Copy and 📋 Paste Emoji"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 </LinearLayout>
 
@@ -239,7 +242,7 @@
                             android:gravity="center"
                             android:text="@string/header_symbol"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                            android:textSize="64sp"/>
+                            android:textSize="64sp" />
                     </FrameLayout>
 
                     <TextView
@@ -248,7 +251,7 @@
                         android:padding="8dp"
                         android:text="Symbol"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="?colorAccent"/>
+                        android:textColor="?colorAccent" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -257,7 +260,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="Enjoy Cool Symbols To Copy and Paste!"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
                 </LinearLayout>
 
@@ -289,7 +292,7 @@
                             android:layout_gravity="center"
                             android:text="@string/header_figlet"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
                     </FrameLayout>
 
                     <TextView
@@ -298,7 +301,7 @@
                         android:padding="8dp"
                         android:text="FIGlet Generator"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="?colorAccent"/>
+                        android:textColor="?colorAccent" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -307,7 +310,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="@string/summary_figlet"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

@@ -79,20 +79,7 @@ public class AdBannerActivity extends AppCompatActivity {
         if (mNativeExpressAdView != null) mNativeExpressAdView.destroy();
     }
 
-    protected void loadNativeAd() {
-        try {
-            mNativeExpressAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
-            if (mNativeExpressAdView != null) {
-                if (BuildConfig.IS_PREMIUM_USER) {
-                    mNativeExpressAdView.setVisibility(View.GONE);
-                } else {
-                    mNativeExpressAdView.loadAd(new AdRequest.Builder().build());
-                }
-            }
-        } catch (Exception e) {
 
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

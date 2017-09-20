@@ -26,6 +26,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +43,7 @@ import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -50,8 +54,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
  */
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "MainActivity";
     private NativeExpressAdView mAdView;
     private InterstitialAd interstitialAd = null;
+    private ViewGroup mContainerAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTitle(R.string.app_name);
 
         loadAdView();
-        createAdInterstitial();
 
         Glide.with(this)
                 .load(R.drawable.header_image_to_ascii)
@@ -81,29 +86,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private static final String TAG = "MainActivity";
-
-    private void createAdInterstitial() {
-        if (!BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
-            //create ad
-            interstitialAd = new InterstitialAd(this);
-            if (BuildConfig.DEBUG) {
-                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            } else {
-                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-            }
-            interstitialAd.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
     private void loadAdView() {
         if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
             findViewById(R.id.card_ad_view).setVisibility(View.GONE);
             findViewById(R.id.btn_remove_ads).setVisibility(View.GONE);
-            return;
+        } else {
+            mContainerAd = (ViewGroup) findViewById(R.id.container_ad);
+            mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    mContainerAd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    createNativeAdView();
+                }
+            });
         }
-        mAdView = (NativeExpressAdView) findViewById(R.id.native_ad_view);
-        if (mAdView != null) mAdView.loadAd(new AdRequest.Builder().build());
+
+    }
+
+    private void createNativeAdView() {
+        if (mContainerAd != null) {
+            mAdView = new NativeExpressAdView(this);
+            mAdView.setAdUnitId(getString(R.string.ad_unit_main));
+            int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().scaledDensity);
+            mAdView.setAdSize(new AdSize(width, 300));
+            mContainerAd.removeAllViews();
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT);
+            mContainerAd.addView(mAdView, params);
+            mAdView.loadAd(new AdRequest.Builder().build());
+        }
     }
 
     private boolean hasPremiumApp() {
