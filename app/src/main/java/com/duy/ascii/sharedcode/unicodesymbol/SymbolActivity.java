@@ -91,7 +91,7 @@ public class SymbolActivity extends AdBannerActivity {
             }
         });
 
-        loadAdViewIfNeed();
+//        loadAdViewIfNeed();
     }
 
     private void parseData() {

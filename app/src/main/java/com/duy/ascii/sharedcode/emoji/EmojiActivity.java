@@ -70,7 +70,7 @@ public class EmojiActivity extends AdBannerActivity implements HeaderAdapter.Emo
             }
         });
 
-        loadAdViewIfNeed();
+//        loadAdViewIfNeed();
     }
 
     private void updateData() {

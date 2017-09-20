@@ -84,7 +84,8 @@ public class EmoticonsActivity extends AdBannerActivity implements EmoticonContr
         mContent.setLayoutManager(new GridLayoutManager(this, 1));
         mContentAdapter = new EmoticonsAdapter(this);
         mContent.setAdapter(mContentAdapter);
-        loadAdViewIfNeed();
+
+//        loadAdViewIfNeed();
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String lastPath = pref.getString("last_path", "");
