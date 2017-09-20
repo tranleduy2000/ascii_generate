@@ -89,4 +89,6 @@
     <string name="ad_unit_emoji">ca-app-pub-9351804859208340/9334280145</string>
     <string name="cool_symbol">Cool symbol</string>
     <string name="header_symbol">⇦ ⇧ ⇨ ⇩ ⇪ ⇹ ⇺ ⇻ ⇼</string>
+    <string name="favorite">Favorite</string>
+    <string name="added_to_favorite">Added to favorite</string>
 </resources>

@@ -27,14 +27,14 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/img_copy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="end|center"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/copy"
@@ -43,8 +43,8 @@
 
             <ImageButton
                 android:id="@+id/img_share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="end|center"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/copy"
@@ -54,12 +54,29 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/img_share_msg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/copy"
                 android:src="@drawable/ic_msg_green"
                 android:tint="?colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/img_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:contentDescription="@string/copy"
+                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    android:tint="?colorAccent" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <HorizontalScrollView

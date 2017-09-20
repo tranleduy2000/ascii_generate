@@ -37,5 +37,6 @@ public class DatabaseContract {
         void delete(TextItem item);
 
         void insert(TextItem item);
+
     }
 }

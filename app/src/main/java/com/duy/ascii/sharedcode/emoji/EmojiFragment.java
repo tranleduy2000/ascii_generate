@@ -33,6 +33,8 @@ import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.HeaderAdapter.EmojiClickListener;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,8 @@ import java.util.ArrayList;
 
 public class EmojiFragment extends BottomSheetDialogFragment {
     public static final String TAG = "EmojiFragment";
+    private DatabasePresenter mDatabasePresenter;
+    private EditText mEditInput;
 
     public static EmojiFragment newInstance(ArrayList<String> emoji) {
 
@@ -63,9 +67,11 @@ public class EmojiFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.mDatabasePresenter = new DatabasePresenter(getContext(), null);
+
         ArrayList<String> emojis = (ArrayList<String>) getArguments().getSerializable("data");
 
-        final EditText editInput = view.findViewById(R.id.edit_input);
+        mEditInput = view.findViewById(R.id.edit_input);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view_emoji);
         recyclerView.setHasFixedSize(true);
@@ -76,14 +82,14 @@ public class EmojiFragment extends BottomSheetDialogFragment {
         emojiAdapter.setListener(new EmojiClickListener() {
             @Override
             public void onClick(String emoji) {
-                editInput.getEditableText().insert(Math.max(editInput.getSelectionStart(), 0), emoji);
+                mEditInput.getEditableText().insert(Math.max(mEditInput.getSelectionStart(), 0), emoji);
             }
         });
         view.findViewById(R.id.btn_copy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManagerCompat manager = ClipboardManagerCompatFactory.getManager(getContext());
-                manager.setText(editInput.getText());
+                manager.setText(mEditInput.getText());
                 Toast.makeText(getContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
             }
         });
@@ -91,8 +97,15 @@ public class EmojiFragment extends BottomSheetDialogFragment {
         view.findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtil.shareText(editInput.getText().toString(), getContext());
+                ShareUtil.shareText(mEditInput.getText().toString(), getContext());
             }
         });
+        view.findViewById(R.id.img_favorite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabasePresenter.insert(new TextItem(mEditInput.getText().toString()));
+            }
+        });
+
     }
 }

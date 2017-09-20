@@ -31,6 +31,8 @@ import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +49,14 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     private ClipboardManagerCompat clipboardManagerCompat;
     @Nullable
     private View emptyView;
+    private DatabasePresenter mDatabasePresenter;
 
     public BigFontAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.emptyView = emptyView;
+        this.mDatabasePresenter = new DatabasePresenter(context, null);
         invalidateEmptyView();
     }
 
@@ -76,7 +80,8 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.txtContent.setText(objects.get(position));
+        final String text = objects.get(position);
+        holder.txtContent.setText(text);
         holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -113,7 +118,15 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
                 ShareUtil.shareMessenger(holder.txtContent.getText().toString(), context);
             }
         });
+        holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabasePresenter.insert(new TextItem(text));
+                Toast.makeText(context, R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -133,9 +146,10 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     }
 
 
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtContent;
-        View imgCopy, imgShare, shareMsg;
+        View imgCopy, imgShare, shareMsg, imgFavorite;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -143,6 +157,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
             imgCopy = itemView.findViewById(R.id.img_copy);
             imgShare = itemView.findViewById(R.id.img_share);
             shareMsg = itemView.findViewById(R.id.img_share_msg);
+            imgFavorite = itemView.findViewById(R.id.img_favorite);
         }
 
     }

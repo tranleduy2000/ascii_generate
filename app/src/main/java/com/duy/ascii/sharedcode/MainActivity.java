@@ -38,6 +38,7 @@ import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
 import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
 import com.duy.ascii.sharedcode.emoji.EmojiActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
+import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolActivity;
@@ -205,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_text_converter:
                 StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
                 return true;
+            case R.id.action_favorite:
+                startActivity(new Intent(this, FavoriteActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -168,6 +168,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         super.onResume();
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

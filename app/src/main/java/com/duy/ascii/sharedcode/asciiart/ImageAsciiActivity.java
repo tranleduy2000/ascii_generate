@@ -25,14 +25,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
 import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 
@@ -46,7 +42,6 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
     protected RecyclerView mRecyclerView;
     protected EmoticonsAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
-    private InterstitialAd interstitialAd = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,45 +61,6 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new EmoticonPresenter(this, this);
 
-//        createAdInterstitial();
-    }
-
-    private void createAdInterstitial() {
-        if (!BuildConfig.IS_PREMIUM_USER) {
-            //create ad
-            interstitialAd = new InterstitialAd(this);
-            if (BuildConfig.DEBUG) {
-                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            } else {
-                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-            }
-            interstitialAd.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (BuildConfig.IS_PREMIUM_USER) {
-            super.onBackPressed();
-            return;
-        }
-        if (interstitialAd != null) {
-            if (interstitialAd.isLoaded()) {
-                interstitialAd.show();
-                interstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                        finish();
-                    }
-                });
-            } else {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override

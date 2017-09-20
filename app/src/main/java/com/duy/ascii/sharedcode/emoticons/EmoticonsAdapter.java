@@ -17,7 +17,6 @@
 package com.duy.ascii.sharedcode.emoticons;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,8 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.util.ArrayList;
 
@@ -43,13 +45,15 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
     protected LayoutInflater inflater;
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
+    private DatabasePresenter mDatabasePresenter;
+
 
     public EmoticonsAdapter(@NonNull Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
+        this.mDatabasePresenter = new DatabasePresenter(context, null);
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -71,11 +75,15 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
         holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, text);
-                intent.setType("text/plain");
-                context.startActivity(intent);
+                ShareUtil.shareText(holder.txtContent.getText().toString(), context);
                 return false;
+            }
+        });
+        holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabasePresenter.insert(new TextItem(text));
+                Toast.makeText(context, R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -103,12 +111,13 @@ public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;
-        public View root;
+        public View root, imgFavorite;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
             root = itemView.findViewById(R.id.container);
+            imgFavorite = itemView.findViewById(R.id.img_favorite);
         }
 
     }

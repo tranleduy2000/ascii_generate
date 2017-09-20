@@ -35,6 +35,8 @@ import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.EmojiAdapter;
 import com.duy.ascii.sharedcode.emoji.HeaderAdapter;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +49,8 @@ import java.util.Collections;
 
 public class SymbolActivity extends AdBannerActivity {
     private ArrayList<String> symbols = new ArrayList<>();
-    private EditText editInput;
+    private EditText mEditInput;
+    private DatabasePresenter mDatabasePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,12 +60,12 @@ public class SymbolActivity extends AdBannerActivity {
         setTitle(R.string.cool_symbol);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.mDatabasePresenter = new DatabasePresenter(this, null);
+
         parseData();
 
-        editInput = (EditText) findViewById(R.id.edit_input);
+        mEditInput = (EditText) findViewById(R.id.edit_input);
         Button btnCopy = (Button) findViewById(R.id.btn_copy);
-
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 6));
@@ -72,7 +75,7 @@ public class SymbolActivity extends AdBannerActivity {
         emojiAdapter.setListener(new HeaderAdapter.EmojiClickListener() {
             @Override
             public void onClick(String emoji) {
-                editInput.getEditableText().insert(Math.max(editInput.getSelectionStart(), 0), emoji);
+                mEditInput.getEditableText().insert(Math.max(mEditInput.getSelectionStart(), 0), emoji);
             }
         });
 
@@ -80,18 +83,24 @@ public class SymbolActivity extends AdBannerActivity {
             @Override
             public void onClick(View v) {
                 ClipboardManagerCompat manager = ClipboardManagerCompatFactory.getManager(SymbolActivity.this);
-                manager.setText(editInput.getText());
+                manager.setText(mEditInput.getText());
                 Toast.makeText(SymbolActivity.this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
             }
         });
         findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtil.shareText(editInput.getText().toString(), SymbolActivity.this);
+                ShareUtil.shareText(mEditInput.getText().toString(), SymbolActivity.this);
             }
         });
 
-//        loadAdViewIfNeed();
+        findViewById(R.id.img_favorite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabasePresenter.insert(new TextItem(mEditInput.getText().toString()));
+            }
+        });
+
     }
 
     private void parseData() {

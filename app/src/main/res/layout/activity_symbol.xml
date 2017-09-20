@@ -14,14 +14,13 @@
   ~ limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,8 +31,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -42,7 +40,7 @@
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edit_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,15 +53,22 @@
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/copy"/>
+                    android:text="@string/copy" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_share"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/share"/>
+                    android:text="@string/share" />
 
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/img_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    android:tint="?colorAccent" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -76,11 +81,11 @@
         </LinearLayout>
 
         <!--<com.google.android.gms.ads.AdView-->
-            <!--android:id="@+id/ad_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:adSize="SMART_BANNER"-->
-            <!--app:adUnitId="@string/ad_unit_emoji"/>-->
+        <!--android:id="@+id/ad_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:adSize="SMART_BANNER"-->
+        <!--app:adUnitId="@string/ad_unit_emoji"/>-->
     </LinearLayout>
 
 

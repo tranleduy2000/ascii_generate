@@ -29,6 +29,11 @@ public class TextItem {
         this.text = text;
     }
 
+    public TextItem(String text) {
+        this.time = System.currentTimeMillis();
+        this.text = text;
+    }
+
     public long getTime() {
         return time;
     }

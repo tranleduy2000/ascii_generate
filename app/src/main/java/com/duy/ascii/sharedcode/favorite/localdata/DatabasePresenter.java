@@ -17,6 +17,7 @@
 package com.duy.ascii.sharedcode.favorite.localdata;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 /**
  * Created by Duy on 09-Jul-17.
@@ -24,10 +25,11 @@ import android.content.Context;
 
 public class DatabasePresenter implements DatabaseContract.Presenter {
     private Context context;
+    @Nullable
     private DatabaseContract.View view;
     private DatabaseHelper mDatabaseHelper;
 
-    public DatabasePresenter(Context context, DatabaseContract.View view) {
+    public DatabasePresenter(Context context, @Nullable DatabaseContract.View view) {
         this.context = context;
         this.view = view;
         mDatabaseHelper = new DatabaseHelper(context);
@@ -46,4 +48,5 @@ public class DatabasePresenter implements DatabaseContract.Presenter {
     public void insert(TextItem item) {
         mDatabaseHelper.insert(item);
     }
+
 }
