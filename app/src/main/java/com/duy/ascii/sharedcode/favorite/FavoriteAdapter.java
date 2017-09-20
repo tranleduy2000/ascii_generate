@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper;
 import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.util.ArrayList;
@@ -38,35 +39,38 @@ import java.util.ArrayList;
  * Created by Duy on 06-May-17.
  */
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>  {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
     private static final String TAG = "ResultAdapter";
-    private final ArrayList<TextItem> objects = new ArrayList<>();
+    private final ArrayList<TextItem> mObjects = new ArrayList<>();
     protected LayoutInflater inflater;
     private Context context;
-    private ClipboardManagerCompat clipboardManagerCompat;
+    private ClipboardManagerCompat mClipboard;
+    private DatabaseHelper mDatabaseHelper;
 
-    public FavoriteAdapter(@NonNull Context context) {
+    public FavoriteAdapter(@NonNull Context context, DatabaseHelper databaseHelper) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
+        this.mClipboard = ClipboardManagerCompatFactory.getManager(context);
+        this.mDatabaseHelper = databaseHelper;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_image_ascii, parent, false);
+        View view = inflater.inflate(R.layout.list_item_favorite, parent, false);
         return new ViewHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final String text = objects.get(position).getText();
+        final TextItem item = mObjects.get(position);
+        final String text = item.getText();
         holder.txtContent.setText(text);
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clipboardManagerCompat.setText(holder.txtContent.getText().toString());
+                mClipboard.setText(holder.txtContent.getText().toString());
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
@@ -80,37 +84,52 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                 return false;
             }
         });
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remove(item, holder.getAdapterPosition());
+            }
+        });
+    }
+
+    private void remove(TextItem item, int adapterPosition) {
+        mDatabaseHelper.delete(item);
+        mObjects.remove(item);
+        if (adapterPosition > -1) {
+            notifyItemRemoved(adapterPosition);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return objects.size();
+        return mObjects.size();
     }
 
     public void clear() {
-        this.objects.clear();
+        this.mObjects.clear();
         notifyDataSetChanged();
     }
 
     public void add(TextItem value) {
-        this.objects.add(value);
-        notifyItemInserted(objects.size() - 1);
+        this.mObjects.add(value);
+        notifyItemInserted(mObjects.size() - 1);
     }
 
     public void addAll(ArrayList<TextItem> list) {
-        this.objects.clear();
-        this.objects.addAll(list);
+        this.mObjects.clear();
+        this.mObjects.addAll(list);
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;
-        public View root;
+        public View root, imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
             root = itemView.findViewById(R.id.container);
+            imgDelete = itemView.findViewById(R.id.img_delete);
         }
 
     }

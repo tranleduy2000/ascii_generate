@@ -23,6 +23,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper.TextEntry.COLUMN_CONTENT;
 import static com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper.TextEntry.COLUMN_TIME;
@@ -47,28 +49,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void insert(TextItem textItem) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_TIME, textItem.getTime());
-        contentValues.put(COLUMN_CONTENT, textItem.getText());
-        SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        writableDatabase.insert(TABLE_NAME, null, contentValues);
+    public boolean insert(TextItem textItem) {
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COLUMN_TIME, textItem.getTime());
+            contentValues.put(COLUMN_CONTENT, textItem.getText());
+            SQLiteDatabase writableDatabase = this.getWritableDatabase();
+            writableDatabase.insert(TABLE_NAME, null, contentValues);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public ArrayList<TextItem> getAll() {
         ArrayList<TextItem> list = new ArrayList<>();
-
-        String[] projection = new String[]{
-                COLUMN_TIME,
-                COLUMN_CONTENT
-        };
+        String[] projection = new String[]{COLUMN_TIME, COLUMN_CONTENT};
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
         while (cursor.moveToNext()) {
-            long time = cursor.getLong(cursor.getColumnIndex(COLUMN_TIME));
-            String content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT));
-            list.add(new TextItem(time, content));
+            try {
+                long time = cursor.getLong(cursor.getColumnIndex(COLUMN_TIME));
+                String content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT));
+                list.add(new TextItem(time, content));
+            } catch (Exception ignored) {
+            } finally {
+                cursor.close();
+            }
         }
+        Collections.sort(list, new Comparator<TextItem>() {
+            @Override
+            public int compare(TextItem textItem, TextItem t1) {
+                return Long.valueOf(t1.getTime()).compareTo(textItem.getTime());
+            }
+        });
         return list;
     }
 
@@ -77,9 +91,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int delete(long time) {
-        String selection = COLUMN_TIME + " LIKE ?";
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, selection, new String[]{time + ""});
+        try {
+            String selection = COLUMN_TIME + " LIKE ?";
+            SQLiteDatabase db = this.getWritableDatabase();
+            return db.delete(TABLE_NAME, selection, new String[]{time + ""});
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Override

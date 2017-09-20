@@ -40,6 +40,10 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
         this.mDatabaseHelper = new DatabaseHelper(context);
     }
 
+    public DatabaseHelper getDatabaseHelper() {
+        return mDatabaseHelper;
+    }
+
     @Override
     public void load(int index) {
         view.showProgress();

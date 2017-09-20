@@ -97,7 +97,10 @@ public class SymbolActivity extends AdBannerActivity {
         findViewById(R.id.img_favorite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabasePresenter.insert(new TextItem(mEditInput.getText().toString()));
+                if (!mEditInput.getText().toString().isEmpty()) {
+                    mDatabasePresenter.insert(new TextItem(mEditInput.getText().toString()));
+                    Toast.makeText(SymbolActivity.this, R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

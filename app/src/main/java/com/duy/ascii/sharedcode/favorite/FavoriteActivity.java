@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity implements FavoriteContract.View {
     public static final int INDEX = 2;
-    protected FavoriteContract.Presenter mPresenter;
+    protected FavoritePresenter mPresenter;
     protected RecyclerView mRecyclerView;
     protected FavoriteAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
@@ -46,18 +46,18 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ascii_art);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        setTitle(R.string.ascii_art);
+        setTitle(R.string.favorite);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new FavoriteAdapter(this);
-        mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new FavoritePresenter(this, this);
-
+        mAdapter = new FavoriteAdapter(this, mPresenter.getDatabaseHelper());
+        mRecyclerView.setAdapter(mAdapter);
+        mPresenter.load(INDEX);
     }
 
 
@@ -79,7 +79,7 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteContr
 
     @Override
     public void setPresenter(FavoriteContract.Presenter presenter) {
-        this.mPresenter = presenter;
+        this.mPresenter = (FavoritePresenter) presenter;
     }
 
     @Override
@@ -96,7 +96,6 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteContr
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.load(INDEX);
     }
 
     @Override
