@@ -79,7 +79,7 @@ public abstract class BaseFragment extends Fragment implements EmoticonContract.
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.start(getIndex());
+        mPresenter.load(getIndex());
     }
 
     protected abstract int getIndex();

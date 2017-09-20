@@ -14,31 +14,34 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.localdata;
+package com.duy.ascii.sharedcode.favorite;
+
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+
+import java.util.ArrayList;
 
 /**
- * Created by Duy on 09-Jul-17.
+ * Created by Duy on 03-Jul-17.
  */
 
-public class DatabasePresenter implements DatabaseContract.Presenter {
-    private DatabaseContract.View view;
+public class FavoriteContract {
+    public interface View {
+        void showProgress();
 
-    public DatabasePresenter(DatabaseContract.View view) {
-        this.view = view;
-    }
+        void hideProgress();
 
-    @Override
-    public void update(TextItem item) {
+        void display(ArrayList<TextItem> list);
 
-    }
+        void setPresenter(Presenter presenter);
 
-    @Override
-    public void delete(TextItem item) {
+        void append(TextItem value);
 
     }
 
-    @Override
-    public void insert(TextItem item) {
+    public interface Presenter {
+        void load(int index);
 
+        void stop();
     }
+
 }

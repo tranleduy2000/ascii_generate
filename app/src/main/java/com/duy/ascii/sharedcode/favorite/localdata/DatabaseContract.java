@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.localdata;
+package com.duy.ascii.sharedcode.favorite.localdata;
 
 import java.util.ArrayList;
 

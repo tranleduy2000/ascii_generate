@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.asciiart;
+package com.duy.ascii.sharedcode.favorite;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,14 +25,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
-import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
-import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
 
 import java.util.ArrayList;
 
@@ -40,13 +34,12 @@ import java.util.ArrayList;
  * Created by Duy on 09-Aug-17.
  */
 
-public class ImageAsciiActivity extends AppCompatActivity implements EmoticonContract.View {
+public class FavoriteActivity extends AppCompatActivity implements FavoriteContract.View {
     public static final int INDEX = 2;
-    protected EmoticonContract.Presenter mPresenter;
+    protected FavoriteContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
-    protected EmoticonsAdapter mAdapter;
+    protected FavoriteAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
-    private InterstitialAd interstitialAd = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,53 +52,14 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ImageAsciiAdapter(this);
+        mAdapter = new FavoriteAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
 
-
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
-        mPresenter = new EmoticonPresenter(this, this);
+        mPresenter = new FavoritePresenter(this, this);
 
-//        createAdInterstitial();
     }
 
-    private void createAdInterstitial() {
-        if (!BuildConfig.IS_PREMIUM_USER) {
-            //create ad
-            interstitialAd = new InterstitialAd(this);
-            if (BuildConfig.DEBUG) {
-                interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            } else {
-                interstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-            }
-            interstitialAd.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (BuildConfig.IS_PREMIUM_USER) {
-            super.onBackPressed();
-            return;
-        }
-        if (interstitialAd != null) {
-            if (interstitialAd.isLoaded()) {
-                interstitialAd.show();
-                interstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                        finish();
-                    }
-                });
-            } else {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public void showProgress() {
@@ -118,18 +72,18 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
     }
 
     @Override
-    public void display(ArrayList<String> list) {
+    public void display(ArrayList<TextItem> list) {
         mAdapter.clear();
         mAdapter.addAll(list);
     }
 
     @Override
-    public void setPresenter(EmoticonContract.Presenter presenter) {
+    public void setPresenter(FavoriteContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
     @Override
-    public void append(String value) {
+    public void append(TextItem value) {
         mAdapter.add(value);
     }
 
@@ -148,7 +102,7 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
+            this.finish();
             return false;
         }
         return super.onOptionsItemSelected(item);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.localdata;
+package com.duy.ascii.sharedcode.favorite.localdata;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,9 +24,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import static com.duy.ascii.sharedcode.localdata.DatabaseHelper.TextEntry.COLUMN_CONTENT;
-import static com.duy.ascii.sharedcode.localdata.DatabaseHelper.TextEntry.COLUMN_TIME;
-import static com.duy.ascii.sharedcode.localdata.DatabaseHelper.TextEntry.TABLE_NAME;
+import static com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper.TextEntry.COLUMN_CONTENT;
+import static com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper.TextEntry.COLUMN_TIME;
+import static com.duy.ascii.sharedcode.favorite.localdata.DatabaseHelper.TextEntry.TABLE_NAME;
 
 
 /**
@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         writableDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
-    private ArrayList<TextItem> getAll() {
+    public ArrayList<TextItem> getAll() {
         ArrayList<TextItem> list = new ArrayList<>();
 
         String[] projection = new String[]{

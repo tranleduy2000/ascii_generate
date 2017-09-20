@@ -46,7 +46,7 @@ public class EmoticonPresenter implements EmoticonContract.Presenter {
     }
 
     @Override
-    public void start(int index) {
+    public void load(int index) {
         view.showProgress();
         if (loadData != null && !loadData.isCancelled()) {
             loadData.cancel(true);
