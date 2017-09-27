@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * Created by Duy on 06-May-17.
  */
 
-public class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder> {
+class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
     protected LayoutInflater inflater;

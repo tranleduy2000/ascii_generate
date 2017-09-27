@@ -17,11 +17,11 @@
 package com.duy.ascii.sharedcode;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,19 +32,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.duy.ascii.sharedcode.asciiart.ImageAsciiActivity;
+import com.duy.ascii.sharedcode.asciiart.AsciiArtActivity;
+import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
+import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoji.EmojiActivity;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
+import com.duy.ascii.sharedcode.emoticons.EmoticonsFragment;
 import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletActivity;
 import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
+import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolActivity;
+import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -57,7 +58,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
  * Created by Duy on 09-Aug-17.
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     private NativeExpressAdView mAdView;
     private InterstitialAd mInterstitialAd = null;
@@ -70,34 +71,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bindView();
-        setSupportActionBar(mToolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.app_name);
 
-        loadAdView();
-
-        Glide.with(this)
-                .load(R.drawable.header_image_to_ascii)
-                .apply(new RequestOptions().centerCrop())
-                .into((ImageView) findViewById(R.id.header_ascii));
-        ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
+        bindView();
         addEvent();
+
+//        loadAdView();
+//        Glide.with(this)
+//                .load(R.drawable.header_image_to_ascii)
+//                .apply(new RequestOptions().centerCrop())
+//                .into((ImageView) findViewById(R.id.header_ascii));
+//        ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction
+                .replace(R.id.content, AsciiArtFragment.newInstance())
+                .commit();
     }
 
     private void addEvent() {
-        findViewById(R.id.card_emoticons).setOnClickListener(this);
-        findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
-        findViewById(R.id.card_big_ascii).setOnClickListener(this);
-        findViewById(R.id.card_figlet).setOnClickListener(this);
-        findViewById(R.id.card_image_ascii).setOnClickListener(this);
-        findViewById(R.id.card_emoji).setOnClickListener(this);
-        findViewById(R.id.card_symbol).setOnClickListener(this);
-        findViewById(R.id.btn_remove_ads).setOnClickListener(this);
+//        findViewById(R.id.card_emoticons).setOnClickListener(this);
+//        findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
+//        findViewById(R.id.card_big_ascii).setOnClickListener(this);
+//        findViewById(R.id.card_figlet).setOnClickListener(this);
+//        findViewById(R.id.card_image_ascii).setOnClickListener(this);
+//        findViewById(R.id.card_emoji).setOnClickListener(this);
+//        findViewById(R.id.card_symbol).setOnClickListener(this);
+//        findViewById(R.id.btn_remove_ads).setOnClickListener(this);
     }
 
     private void bindView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
                 R.string.open_drawer, R.string.close_drawer);
@@ -127,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mAdView = new NativeExpressAdView(this);
             mAdView.setAdUnitId(getString(R.string.ad_unit_main));
             int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().scaledDensity);
-            mAdView.setAdSize(new AdSize(width, 300));
+            mAdView.setAdSize(new AdSize(width, 250));
             mContainerAd.removeAllViews();
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT);
@@ -137,15 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean hasPremiumApp() {
-        if (true) return false;
-        try {
-            PackageManager pm = getPackageManager();
-            pm.getPackageInfo("com.duy.asciigenerator.pro", 0);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return false;
     }
 
     @Override
@@ -170,34 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         switch (v.getId()) {
-            case R.id.card_image_to_ascii:
-                firebaseAnalytics.logEvent("card_image_to_ascii", new Bundle());
-                startActivity(new Intent(this, ImageToAsciiActivity.class));
-                break;
-            case R.id.card_big_ascii:
-                firebaseAnalytics.logEvent("card_big_ascii", new Bundle());
-                startActivity(new Intent(this, BigFontActivity.class));
-                break;
-            case R.id.card_image_ascii:
-                firebaseAnalytics.logEvent("card_image_ascii", new Bundle());
-                startActivity(new Intent(this, ImageAsciiActivity.class));
-                break;
-            case R.id.card_emoticons:
-                firebaseAnalytics.logEvent("card_emoticons", new Bundle());
-                startActivity(new Intent(this, EmoticonsActivity.class));
-                break;
-            case R.id.card_figlet:
-                firebaseAnalytics.logEvent("card_figlet", new Bundle());
-                startActivity(new Intent(this, FigletActivity.class));
-                break;
-            case R.id.card_emoji:
-                firebaseAnalytics.logEvent("card_emoji", new Bundle());
-                startActivity(new Intent(this, EmojiActivity.class));
-                break;
-            case R.id.card_symbol:
-                firebaseAnalytics.logEvent("card_symbol", new Bundle());
-                startActivity(new Intent(this, SymbolActivity.class));
-                break;
             case R.id.btn_remove_ads:
                 firebaseAnalytics.logEvent("btn_remove_ads", new Bundle());
                 StoreUtil.gotoPlayStore(this, "com.duy.asciigenerator.pro");
@@ -255,5 +225,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mDrawerLayout.closeDrawers();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        switch (item.getItemId()) {
+            case R.id.action_ascii_art:
+                fragmentTransaction.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
+                break;
+            case R.id.action_big_text:
+                fragmentTransaction.replace(R.id.content, BigFontFragment.newInstance()).commit();
+                break;
+            case R.id.action_image_to_ascii:
+                fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
+                break;
+            case R.id.action_emoji:
+                break;
+            case R.id.action_emoji_art:
+                break;
+            case R.id.action_emoticon:
+                fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
+                break;
+            case R.id.action_symbol:
+                fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance()).commit();
+                break;
+        }
+        return false;
     }
 }

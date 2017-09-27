@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emoticons;
+package com.duy.ascii.sharedcode.asciiart;
 
 import java.util.ArrayList;
 
 /**
  * Created by Duy on 03-Jul-17.
  */
-
- class EmoticonContract {
+class AsciiArtContract {
     public interface View {
         void showProgress();
 

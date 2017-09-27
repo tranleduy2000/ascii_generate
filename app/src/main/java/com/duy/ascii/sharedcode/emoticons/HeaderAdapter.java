@@ -35,7 +35,7 @@ import java.util.Collections;
  * Created by Duy on 06-May-17.
  */
 
-public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
+ class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private static final String PATH = "emoticons";
     private final ArrayList<String> objects = new ArrayList<>();

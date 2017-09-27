@@ -14,30 +14,23 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emoticons;
+package com.duy.ascii.sharedcode;
 
-import java.util.ArrayList;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 /**
- * Created by Duy on 03-Jul-17.
+ * Created by Duy on 9/27/2017.
  */
 
- class EmoticonContract {
-    public interface View {
-        void showProgress();
+public class BaseActivity extends AppCompatActivity {
 
-        void hideProgress();
-
-        void display(ArrayList<String> list);
-
-        void setPresenter(Presenter presenter);
-
-        void append(String value);
-    }
-
-    public interface Presenter {
-        void load(int index);
-
-        void stop();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

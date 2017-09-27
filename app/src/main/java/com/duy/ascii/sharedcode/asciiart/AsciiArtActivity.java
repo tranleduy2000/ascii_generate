@@ -16,31 +16,12 @@
 
 package com.duy.ascii.sharedcode.asciiart;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
-
+import com.duy.ascii.sharedcode.BaseActivity;
 
 /**
- * Created by Duy on 06-May-17.
+ * Created by Duy on 09-Aug-17.
  */
 
-public class ImageAsciiAdapter extends EmoticonsAdapter {
-
-    public ImageAsciiAdapter(@NonNull Context context) {
-        super(context);
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_image_ascii, parent, false);
-        return new ViewHolder(view);
-    }
-
+public class AsciiArtActivity extends BaseActivity {
 
 }
-

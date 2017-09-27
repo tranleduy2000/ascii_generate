@@ -56,7 +56,7 @@
             android:name=".figlet.FigletActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".asciiart.ImageAsciiActivity"
+            android:name=".asciiart.AsciiArtActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".emoji.EmojiActivity"

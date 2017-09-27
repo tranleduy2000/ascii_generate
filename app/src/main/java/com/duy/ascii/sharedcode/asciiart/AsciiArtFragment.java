@@ -19,48 +19,53 @@ package com.duy.ascii.sharedcode.asciiart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.emoticons.EmoticonContract;
-import com.duy.ascii.sharedcode.emoticons.EmoticonPresenter;
-import com.duy.ascii.sharedcode.emoticons.EmoticonsAdapter;
+import com.duy.ascii.sharedcode.SimpleFragment;
 
 import java.util.ArrayList;
 
 /**
- * Created by Duy on 09-Aug-17.
+ * Created by Duy on 9/27/2017.
  */
 
-public class ImageAsciiActivity extends AppCompatActivity implements EmoticonContract.View {
+public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract.View {
     public static final int INDEX = 2;
-    protected EmoticonContract.Presenter mPresenter;
+    protected AsciiArtContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
-    protected EmoticonsAdapter mAdapter;
+    protected AsciiArtAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
+    public static AsciiArtFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        AsciiArtFragment fragment = new AsciiArtFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ascii_art);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        setTitle(R.string.ascii_art);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    protected int getRootLayout() {
+        return R.layout.activity_ascii_art;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ImageAsciiAdapter(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new AsciiArtAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
-        mPresenter = new EmoticonPresenter(this, this);
-
+        mPresenter = new AsciiArtPresenter(getContext(), this);
     }
 
     @Override
@@ -80,7 +85,7 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
     }
 
     @Override
-    public void setPresenter(EmoticonContract.Presenter presenter) {
+    public void setPresenter(AsciiArtContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
@@ -99,14 +104,5 @@ public class ImageAsciiActivity extends AppCompatActivity implements EmoticonCon
     public void onStart() {
         super.onStart();
         mPresenter.load(INDEX);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return false;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

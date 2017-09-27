@@ -14,33 +14,28 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emoticons;
+package com.duy.ascii.sharedcode.asciiart;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.duy.ascii.sharedcode.FileUtil;
-import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by Duy on 03-Jul-17.
  */
-
- class EmoticonPresenter implements EmoticonContract.Presenter {
+class AsciiArtPresenter implements AsciiArtContract.Presenter {
     private final Context context;
-    private final EmoticonContract.View view;
+    private final AsciiArtContract.View view;
     private AsyncTask<String, String, ArrayList<String>> loadData;
 
-    public EmoticonPresenter(Context context, EmoticonContract.View view) {
+    public AsciiArtPresenter(Context context, AsciiArtContract.View view) {
         this.context = context;
         this.view = view;
     }
@@ -74,9 +69,9 @@ import static android.content.ContentValues.TAG;
     private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
         private Context context;
         private Callback callback;
-        private EmoticonContract.View view;
+        private AsciiArtContract.View view;
 
-        LoadDataTask(Context context, Callback callback, EmoticonContract.View view) {
+        LoadDataTask(Context context, Callback callback, AsciiArtContract.View view) {
             this.context = context;
             this.callback = callback;
             this.view = view;
@@ -109,8 +104,6 @@ import static android.content.ContentValues.TAG;
         @Override
         protected void onPostExecute(ArrayList<String> list) {
             super.onPostExecute(list);
-            Log.d(TAG, "onPostExecute() called with: list = [" + list + "]");
-
             if (!isCancelled()) {
                 callback.onResult(list);
             }
