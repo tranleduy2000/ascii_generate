@@ -69,14 +69,14 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
 
     @Override
     protected int getRootLayout() {
-        return R.layout.activity_emoticons;
+        return R.layout.fragment_emoticons;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = getActivity().findViewById(R.id.toolbar);
         mHeader = (RecyclerView) findViewById(R.id.recycle_view_header);
         mHeader.setHasFixedSize(true);
         mHeader.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -129,7 +129,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
 
     @Override
     public void onHeaderClick(String path) {
-        mToolbar.setSubtitle(HeaderAdapter.refine(path.substring(path.lastIndexOf("/"))));
+        mToolbar.setSubtitle(HeaderAdapter.refine(path.substring(path.lastIndexOf("/") + 1)));
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         pref.edit().putString("last_path", path).apply();
         if (mLoadDataTask != null && !mLoadDataTask.isCancelled()) {

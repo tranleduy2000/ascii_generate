@@ -40,6 +40,10 @@
         <item
             android:id="@+id/action_symbol"
             android:title="@string/cool_symbol" />
+
+        <item
+            android:id="@+id/action_figlet"
+            android:title="@string/figlet" />
     </group>
 
 </menu>
