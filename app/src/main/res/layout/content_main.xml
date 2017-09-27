@@ -65,18 +65,7 @@
                 <FrameLayout
                     android:id="@+id/container_ad"
                     android:layout_width="match_parent"
-                    android:layout_height="301dp">
-                    <!--<com.google.android.gms.ads.NativeExpressAdView-->
-                    <!--android:id="@+id/native_ad_view"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:minHeight="250dp"-->
-                    <!--app:adSize="300x250"-->
-                    <!--app:adUnitId="@string/ad_unit_main">-->
-
-                    <!--</com.google.android.gms.ads.NativeExpressAdView>-->
-                </FrameLayout>
+                    android:layout_height="wrap_content"></FrameLayout>
 
             </android.support.v7.widget.CardView>
 

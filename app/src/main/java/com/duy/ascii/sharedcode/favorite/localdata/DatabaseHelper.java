@@ -73,10 +73,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT));
                 list.add(new TextItem(time, content));
             } catch (Exception ignored) {
-            } finally {
-                cursor.close();
             }
         }
+        cursor.close();
         Collections.sort(list, new Comparator<TextItem>() {
             @Override
             public int compare(TextItem textItem, TextItem t1) {

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AsciiGenerator.iml" filepath="$PROJECT_DIR$/AsciiGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ascii_generate.iml" filepath="$PROJECT_DIR$/ascii_generate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/floating-view/floating-view.iml" filepath="$PROJECT_DIR$/floating-view/floating-view.iml" />
     </modules>
   </component>
 </project>

@@ -35,7 +35,6 @@ public class ImageAsciiAdapter extends EmoticonsAdapter {
         super(context);
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_item_image_ascii, parent, false);

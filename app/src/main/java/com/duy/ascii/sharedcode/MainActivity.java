@@ -21,6 +21,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -59,12 +62,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NativeExpressAdView mAdView;
     private InterstitialAd mInterstitialAd = null;
     private ViewGroup mContainerAd;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        bindView();
+        setSupportActionBar(mToolbar);
         setTitle(R.string.app_name);
 
         loadAdView();
@@ -74,7 +81,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .apply(new RequestOptions().centerCrop())
                 .into((ImageView) findViewById(R.id.header_ascii));
         ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
+        addEvent();
+    }
 
+    private void addEvent() {
         findViewById(R.id.card_emoticons).setOnClickListener(this);
         findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
         findViewById(R.id.card_big_ascii).setOnClickListener(this);
@@ -83,6 +93,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.card_emoji).setOnClickListener(this);
         findViewById(R.id.card_symbol).setOnClickListener(this);
         findViewById(R.id.btn_remove_ads).setOnClickListener(this);
+    }
+
+    private void bindView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
+                R.string.open_drawer, R.string.close_drawer);
+        mDrawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
     }
 
     private void loadAdView() {
