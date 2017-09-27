@@ -24,28 +24,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="add" />
-
-            <Button
-                android:id="@+id/btn_more"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="load_more" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

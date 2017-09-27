@@ -22,9 +22,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
+import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emojiart.model.EmojiItem;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,10 +46,15 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     private final Context mContext;
     private LayoutInflater miInflater;
     private ArrayList<EmojiItem> mEmojiItems = new ArrayList<>();
+    private ClipboardManagerCompat mClipboard;
+    private DatabasePresenter mDatabasePresenter;
 
     public RecentAdapter(Context context) {
         this.mContext = context;
-        miInflater = LayoutInflater.from(mContext);
+        this.miInflater = LayoutInflater.from(context);
+        this.mClipboard = ClipboardManagerCompatFactory.getManager(context);
+        this.mDatabasePresenter = new DatabasePresenter(context, null);
+
     }
 
     public void addAll(List<EmojiItem> emojiItems) {
@@ -57,8 +68,30 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.txtContent.setText(position + " - " + mEmojiItems.get(position).getContent());
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final String text = mEmojiItems.get(position).getContent();
+        holder.txtContent.setText(text);
+        holder.txtName.setText(mEmojiItems.get(position).getName());
+        holder.imgCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClipboard.setText(holder.txtContent.getText().toString());
+                Toast.makeText(mContext, R.string.copied, Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.shareText(holder.txtContent.getText().toString(), mContext);
+            }
+        });
+        holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabasePresenter.insert(new TextItem(text));
+                Toast.makeText(mContext, R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -92,11 +125,16 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtContent;
+        TextView txtContent, txtName;
+        View imgCopy, imgShare, imgFavorite;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.txt_content);
+            txtName = itemView.findViewById(R.id.txt_name);
+            imgCopy = itemView.findViewById(R.id.img_copy);
+            imgShare = itemView.findViewById(R.id.img_share);
+            imgFavorite = itemView.findViewById(R.id.img_favorite);
         }
     }
 }

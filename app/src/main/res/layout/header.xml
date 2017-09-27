@@ -13,14 +13,27 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container_ad"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:minHeight="250dp"
     android:orientation="vertical">
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="250dp"
+        android:orientation="vertical">
 
-</FrameLayout>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_remove_ads"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/donate_for_develop_remove_ads_get_pro_version" />
+
+</LinearLayout>

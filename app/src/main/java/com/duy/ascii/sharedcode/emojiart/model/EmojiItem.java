@@ -38,12 +38,13 @@ public class EmojiItem implements Serializable {
     }
 
     public EmojiItem(String content, String name) {
-        this.category = category;
-        this.time = time;
+        this.category = 0;
+        this.time = System.currentTimeMillis();
         this.content = content;
         this.name = name;
-        this.star = star;
+        this.star = 0;
     }
+
     public EmojiItem() {
 
     }
@@ -91,11 +92,11 @@ public class EmojiItem implements Serializable {
         this.content = content;
     }
 
-    public String getAuthor() {
+    public String getName() {
         return name;
     }
 
-    public void setAuthor(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

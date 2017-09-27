@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, RecentFragment.newInstance())
+                .replace(R.id.content, AsciiArtFragment.newInstance())
                 .commit();
         loadAdView();
     }
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.btn_remove_ads).setVisibility(View.GONE);
         } else {
             mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
+            mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads).setOnClickListener(this);
             mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
