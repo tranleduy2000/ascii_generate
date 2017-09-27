@@ -37,6 +37,7 @@ import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoji.CategoriesEmojiFragment;
 import com.duy.ascii.sharedcode.emojiart.EmojiArtFragment;
+import com.duy.ascii.sharedcode.emojiart.fragments.RecentFragment;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsFragment;
 import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, AsciiArtFragment.newInstance())
+                .replace(R.id.content, RecentFragment.newInstance())
                 .commit();
     }
 

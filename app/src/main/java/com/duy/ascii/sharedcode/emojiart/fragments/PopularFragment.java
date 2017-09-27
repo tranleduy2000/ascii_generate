@@ -14,28 +14,11 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.emojiart;
-
-import android.os.Bundle;
-
-import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.SimpleFragment;
+package com.duy.ascii.sharedcode.emojiart.fragments;
 
 /**
  * Created by Duy on 9/27/2017.
  */
 
-public class EmojiArtFragment extends SimpleFragment {
-    public static EmojiArtFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        EmojiArtFragment fragment = new EmojiArtFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-    @Override
-    protected int getRootLayout() {
-        return R.layout.fragment_emoji_art;
-    }
+public class PopularFragment {
 }
