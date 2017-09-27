@@ -62,7 +62,7 @@ public class SymbolFragment extends SimpleFragment {
 
     @Override
     protected int getRootLayout() {
-        return R.layout.activity_symbol;
+        return R.layout.fragment_symbol;
     }
 
     @Override

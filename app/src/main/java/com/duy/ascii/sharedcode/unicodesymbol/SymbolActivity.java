@@ -55,7 +55,7 @@ public class SymbolActivity extends AdBannerActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_symbol);
+        setContentView(R.layout.fragment_symbol);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.cool_symbol);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

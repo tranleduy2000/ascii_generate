@@ -55,7 +55,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     protected HeaderAdapter mAdapter;
     protected EmoticonsAdapter mContentAdapter;
     protected ContentLoadingProgressBar mProgressBar;
-    private LoadDataTask loadDataTask;
+    private LoadDataTask mLoadDataTask;
     private Toolbar mToolbar;
 
     public static EmoticonsFragment newInstance() {
@@ -132,14 +132,19 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
         mToolbar.setSubtitle(HeaderAdapter.refine(path.substring(path.lastIndexOf("/"))));
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         pref.edit().putString("last_path", path).apply();
-        if (loadDataTask != null && !loadDataTask.isCancelled()) {
-            loadDataTask.cancel(true);
+        if (mLoadDataTask != null && !mLoadDataTask.isCancelled()) {
+            mLoadDataTask.cancel(true);
         }
         mContentAdapter.clear();
-        loadDataTask = new LoadDataTask(getContext(), this);
-        loadDataTask.execute(path);
+        mLoadDataTask = new LoadDataTask(getContext(), this);
+        mLoadDataTask.execute(path);
     }
 
+    @Override
+    public void onDestroyView() {
+        if (mLoadDataTask != null) mLoadDataTask.cancel(true);
+        super.onDestroyView();
+    }
 
     private static class LoadDataTask extends AsyncTask<String, String, Void> {
         private Context context;

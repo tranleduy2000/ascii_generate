@@ -77,7 +77,7 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
 
     @Override
     protected int getRootLayout() {
-        return R.layout.activity_image_to_ascii;
+        return R.layout.fragment_image_to_ascii;
     }
 
     @Override
@@ -203,6 +203,9 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
                         Toast.makeText(getContext(), "Capture failed", Toast.LENGTH_SHORT).show();
                     }
                 }
+                break;
+            case REQUEST_PERMISSION:
+                selectImage();
                 break;
         }
     }

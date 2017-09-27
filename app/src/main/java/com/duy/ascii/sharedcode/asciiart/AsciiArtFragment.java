@@ -50,7 +50,7 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
 
     @Override
     protected int getRootLayout() {
-        return R.layout.activity_ascii_art;
+        return R.layout.fragment_ascii_art;
     }
 
     @Override

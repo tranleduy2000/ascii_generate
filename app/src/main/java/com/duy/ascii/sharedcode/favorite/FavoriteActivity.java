@@ -44,7 +44,7 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteContr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ascii_art);
+        setContentView(R.layout.activity_favorite);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.favorite);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

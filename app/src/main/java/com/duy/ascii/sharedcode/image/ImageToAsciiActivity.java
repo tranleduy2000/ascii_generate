@@ -72,7 +72,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
             mResultFile = (File) savedInstanceState.getSerializable("result_file");
             mOriginalUri = savedInstanceState.getParcelable("origin_uri");
         }
-        setContentView(R.layout.activity_image_to_ascii);
+        setContentView(R.layout.fragment_image_to_ascii);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.image_to_ascii);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

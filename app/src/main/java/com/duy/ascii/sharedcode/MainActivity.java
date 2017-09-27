@@ -33,18 +33,13 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.duy.ascii.sharedcode.asciiart.AsciiArtActivity;
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
-import com.duy.ascii.sharedcode.bigtext.BigFontActivity;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
-import com.duy.ascii.sharedcode.emoji.EmojiActivity;
-import com.duy.ascii.sharedcode.emoticons.EmoticonsActivity;
+import com.duy.ascii.sharedcode.emojiart.EmojiArtFragment;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsFragment;
 import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
-import com.duy.ascii.sharedcode.figlet.FigletActivity;
-import com.duy.ascii.sharedcode.image.ImageToAsciiActivity;
+import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
-import com.duy.ascii.sharedcode.unicodesymbol.SymbolActivity;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -199,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_favorite:
                 startActivity(new Intent(this, FavoriteActivity.class));
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -242,14 +238,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
                 break;
             case R.id.action_emoji:
+//                fragmentTransaction.replace(R.id.content, EmojiFragment.newInstance()).commit();
                 break;
             case R.id.action_emoji_art:
+                fragmentTransaction.replace(R.id.content, EmojiArtFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
                 fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
                 break;
             case R.id.action_symbol:
                 fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance()).commit();
+                break;
+            case R.id.action_figlet:
+                fragmentTransaction.replace(R.id.content, FigletFragment.newInstance()).commit();
                 break;
         }
         return false;

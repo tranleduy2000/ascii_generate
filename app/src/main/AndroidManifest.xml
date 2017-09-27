@@ -39,30 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".emoticons.EmoticonsActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".image.ImageToAsciiActivity"
-            android:configChanges="orientation|screenSize"></activity>
         <activity
             android:name=".image.gallery.GalleryActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".bigtext.BigFontActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".figlet.FigletActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".asciiart.AsciiArtActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".emoji.EmojiActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".unicodesymbol.SymbolActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".favorite.FavoriteActivity"

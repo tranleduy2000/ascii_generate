@@ -57,7 +57,7 @@ public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_emoticon, parent, false);
+        View view = inflater.inflate(R.layout.list_item_image_ascii, parent, false);
         return new ViewHolder(view);
     }
 
