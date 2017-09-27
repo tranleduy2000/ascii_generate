@@ -181,22 +181,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more_app:
-                StoreUtil.moreApp(MainActivity.this);
-                return true;
-            case R.id.action_rate:
-                StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
-                return true;
-            case R.id.action_share:
-                StoreUtil.shareThisApp(MainActivity.this);
-                return true;
-            case R.id.action_text_converter:
-                StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
-                return true;
             case R.id.action_favorite:
                 startActivity(new Intent(this, FavoriteActivity.class));
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -254,6 +241,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_figlet:
                 fragmentTransaction.replace(R.id.content, FigletFragment.newInstance()).commit();
                 break;
+            case R.id.action_more_app:
+                StoreUtil.moreApp(MainActivity.this);
+                return true;
+            case R.id.action_rate:
+                StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
+                return true;
+            case R.id.action_share:
+                StoreUtil.shareThisApp(MainActivity.this);
+                return true;
+            case R.id.action_text_converter:
+                StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
+                return true;
+
         }
         return false;
     }
