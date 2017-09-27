@@ -18,23 +18,20 @@ package com.duy.ascii.sharedcode.emoji;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.ShareUtil;
+import com.duy.ascii.sharedcode.SimpleFragment;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.HeaderAdapter.EmojiClickListener;
 import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.util.ArrayList;
 
@@ -42,7 +39,7 @@ import java.util.ArrayList;
  * Created by Duy on 09-Aug-17.
  */
 
-public class EmojiFragment extends BottomSheetDialogFragment {
+public class EmojiFragment extends SimpleFragment {
     public static final String TAG = "EmojiFragment";
     private DatabasePresenter mDatabasePresenter;
     private EditText mEditInput;
@@ -56,11 +53,9 @@ public class EmojiFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(getContext(), getActivity().getTheme());
-        return LayoutInflater.from(contextThemeWrapper).inflate(R.layout.fragment_emoji, container, false);
+    protected int getRootLayout() {
+        return R.layout.fragment_emoji;
     }
 
     @SuppressWarnings("unchecked")
@@ -71,14 +66,13 @@ public class EmojiFragment extends BottomSheetDialogFragment {
 
         ArrayList<String> emojis = (ArrayList<String>) getArguments().getSerializable("data");
 
-        mEditInput = view.findViewById(R.id.edit_input);
-
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view_emoji);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         EmojiAdapter emojiAdapter = new EmojiAdapter(getActivity(), emojis);
         recyclerView.setAdapter(emojiAdapter);
 
+        mEditInput = view.findViewById(R.id.edit_input);
         emojiAdapter.setListener(new EmojiClickListener() {
             @Override
             public void onClick(String emoji) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode;
+package com.duy.ascii.sharedcode.utils;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

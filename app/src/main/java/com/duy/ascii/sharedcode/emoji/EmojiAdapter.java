@@ -37,7 +37,6 @@ import java.util.ArrayList;
  */
 
 public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
-    private static final String TAG = "ResultAdapter";
     protected LayoutInflater inflater;
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
@@ -85,9 +84,8 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
         this.listener = listener;
     }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtContent;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtContent;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -36,8 +36,8 @@ import com.duy.ascii.sharedcode.view.ArtViewGroup;
 
 public class ActivityCreator extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner spinnerHeight;
-    Spinner spinnerWidth;
+    private Spinner spinnerHeight;
+    private Spinner spinnerWidth;
     private Dialog dialog;
     private ArtViewGroup container;
 

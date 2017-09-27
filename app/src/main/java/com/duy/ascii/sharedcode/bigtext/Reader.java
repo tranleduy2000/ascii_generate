@@ -16,7 +16,7 @@
 
 package com.duy.ascii.sharedcode.bigtext;
 
-import com.duy.ascii.sharedcode.FileUtil;
+import com.duy.ascii.sharedcode.utils.FileUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

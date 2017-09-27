@@ -35,12 +35,14 @@ import android.widget.FrameLayout;
 
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
+import com.duy.ascii.sharedcode.emoji.CategoriesEmojiFragment;
 import com.duy.ascii.sharedcode.emojiart.EmojiArtFragment;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsFragment;
 import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
+import com.duy.ascii.sharedcode.utils.StoreUtil;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -238,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
                 break;
             case R.id.action_emoji:
-//                fragmentTransaction.replace(R.id.content, EmojiFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
                 break;
             case R.id.action_emoji_art:
                 fragmentTransaction.replace(R.id.content, EmojiArtFragment.newInstance()).commit();

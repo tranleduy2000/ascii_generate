@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.duy.ascii.sharedcode.FileUtil;
+import com.duy.ascii.sharedcode.utils.FileUtil;
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 
 import java.io.IOException;

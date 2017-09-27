@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
-import com.duy.ascii.sharedcode.FileUtil;
+import com.duy.ascii.sharedcode.utils.FileUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

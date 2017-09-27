@@ -20,7 +20,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -40,7 +39,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.ShareUtil;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.io.File;
 import java.util.ArrayList;

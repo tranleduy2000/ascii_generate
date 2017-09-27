@@ -39,7 +39,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.ShareUtil;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.SimpleFragment;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
 import com.duy.ascii.sharedcode.image.gallery.GalleryActivity;

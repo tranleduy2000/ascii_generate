@@ -28,9 +28,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.AdBannerActivity;
-import com.duy.ascii.sharedcode.FileUtil;
+import com.duy.ascii.sharedcode.utils.FileUtil;
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.ShareUtil;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.EmojiAdapter;
