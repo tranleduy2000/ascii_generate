@@ -16,8 +16,10 @@
 
 package com.duy.ascii.sharedcode.emojiart.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ import android.view.View;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.SimpleFragment;
+import com.duy.ascii.sharedcode.emojiart.activities.CreateEmojiActivity;
 import com.duy.ascii.sharedcode.emojiart.adapters.EndlessRecyclerOnScrollListener;
 import com.duy.ascii.sharedcode.emojiart.adapters.RecentAdapter;
 import com.duy.ascii.sharedcode.emojiart.database.FirebaseHelper;
@@ -49,6 +52,7 @@ public class RecentFragment extends SimpleFragment {
     private RecentAdapter mRecentAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FirebaseHelper mDatabase;
+    private FloatingActionButton mPull;
 
     public static RecentFragment newInstance() {
 
@@ -108,6 +112,14 @@ public class RecentFragment extends SimpleFragment {
             @Override
             public void onRefresh() {
                 reload();
+            }
+        });
+
+        mPull = (FloatingActionButton) findViewById(R.id.fab_add);
+        mPull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CreateEmojiActivity.class));
             }
         });
     }

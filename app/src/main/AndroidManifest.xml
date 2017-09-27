@@ -43,6 +43,9 @@
             android:name=".image.gallery.GalleryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
+            android:name=".emojiart.activities.CreateEmojiActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
             android:name=".favorite.FavoriteActivity"
             android:configChanges="orientation|screenSize" />
 

@@ -26,17 +26,24 @@ public class EmojiItem implements Serializable {
     public int category;
     public long time;
     public String content;
-    public String author;
+    public String name;
     public int star;
 
-    public EmojiItem(int category, long time, String content, String author, int star) {
+    public EmojiItem(int category, long time, String content, String name, int star) {
         this.category = category;
         this.time = time;
         this.content = content;
-        this.author = author;
+        this.name = name;
         this.star = star;
     }
 
+    public EmojiItem(String content, String name) {
+        this.category = category;
+        this.time = time;
+        this.content = content;
+        this.name = name;
+        this.star = star;
+    }
     public EmojiItem() {
 
     }
@@ -55,7 +62,7 @@ public class EmojiItem implements Serializable {
                 "category=" + category +
                 ", time=" + time +
                 ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
+                ", name='" + name + '\'' +
                 ", star=" + star +
                 '}';
     }
@@ -85,10 +92,10 @@ public class EmojiItem implements Serializable {
     }
 
     public String getAuthor() {
-        return author;
+        return name;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(String name) {
+        this.name = name;
     }
 }
