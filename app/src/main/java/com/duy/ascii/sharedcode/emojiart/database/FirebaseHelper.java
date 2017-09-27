@@ -52,6 +52,15 @@ public class FirebaseHelper {
         query.addListenerForSingleValueEvent(callback);
     }
 
+    public void popularLast(long lastTime, int size, ValueEventListener callback) {
+        DatabaseReference reference = mFirebaseDatabase.getReference();
+        DatabaseReference recent = reference.child(Constants.ROOT);
+        Query query = recent
+                .orderByChild("time")
+                .endAt(lastTime) //query item which time <= lastTime
+                .limitToLast(size); //select top
+        query.addListenerForSingleValueEvent(callback);
+    }
 
     public void recentFirst(long time, int size, ValueEventListener callback) {
         DatabaseReference reference = mFirebaseDatabase.getReference();

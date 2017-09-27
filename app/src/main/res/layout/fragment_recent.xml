@@ -13,34 +13,47 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_layout"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_add"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="add" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="load_more" />
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="add" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="load_more" />
 
-</android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:fabSize="normal" />
+</android.support.design.widget.CoordinatorLayout>

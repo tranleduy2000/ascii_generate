@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,6 @@ import android.widget.FrameLayout;
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoji.CategoriesEmojiFragment;
-import com.duy.ascii.sharedcode.emojiart.EmojiArtFragment;
 import com.duy.ascii.sharedcode.emojiart.fragments.RecentFragment;
 import com.duy.ascii.sharedcode.emoticons.EmoticonsFragment;
 import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
@@ -44,10 +44,8 @@ import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
 import com.duy.ascii.sharedcode.utils.StoreUtil;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -59,7 +57,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     private NativeExpressAdView mAdView;
-    private InterstitialAd mInterstitialAd = null;
     private ViewGroup mContainerAd;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
@@ -73,36 +70,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTitle(R.string.app_name);
 
         bindView();
-        addEvent();
 
-//        loadAdView();
-//        Glide.with(this)
-//                .load(R.drawable.header_image_to_ascii)
-//                .apply(new RequestOptions().centerCrop())
-//                .into((ImageView) findViewById(R.id.header_ascii));
-//        ((TextView) findViewById(R.id.header_figlet)).setTypeface(Typeface.MONOSPACE);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
                 .replace(R.id.content, RecentFragment.newInstance())
                 .commit();
+        loadAdView();
     }
 
-    private void addEvent() {
-//        findViewById(R.id.card_emoticons).setOnClickListener(this);
-//        findViewById(R.id.card_image_to_ascii).setOnClickListener(this);
-//        findViewById(R.id.card_big_ascii).setOnClickListener(this);
-//        findViewById(R.id.card_figlet).setOnClickListener(this);
-//        findViewById(R.id.card_image_ascii).setOnClickListener(this);
-//        findViewById(R.id.card_emoji).setOnClickListener(this);
-//        findViewById(R.id.card_symbol).setOnClickListener(this);
-//        findViewById(R.id.btn_remove_ads).setOnClickListener(this);
-    }
 
     private void bindView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mToolbar = findViewById(R.id.toolbar);
+        mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
                 R.string.open_drawer, R.string.close_drawer);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -114,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.card_ad_view).setVisibility(View.GONE);
             findViewById(R.id.btn_remove_ads).setVisibility(View.GONE);
         } else {
-            mContainerAd = (ViewGroup) findViewById(R.id.container_ad);
+            mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
             mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
@@ -195,21 +176,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
             return;
         }
-        if (mInterstitialAd != null) {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-                mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                        finish();
-                    }
-                });
-            } else {
-                super.onBackPressed();
-            }
-        } else {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             super.onBackPressed();
+        } else {
+            mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
 
@@ -220,31 +190,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.action_ascii_art:
                 fragmentTransaction.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.ascii_art);
                 break;
             case R.id.action_big_text:
                 fragmentTransaction.replace(R.id.content, BigFontFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.big_text);
                 break;
             case R.id.action_image_to_ascii:
                 fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.image_to_ascii);
                 break;
             case R.id.action_emoji:
                 fragmentTransaction.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.emoji);
                 break;
             case R.id.action_emoji_art:
-                fragmentTransaction.replace(R.id.content, EmojiArtFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.emoji_art);
+                fragmentTransaction.replace(R.id.content, RecentFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
                 fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.emoticons);
                 break;
             case R.id.action_symbol:
                 fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance()).commit();
                 break;
             case R.id.action_figlet:
+                mToolbar.setSubtitle(R.string.cool_symbol);
                 fragmentTransaction.replace(R.id.content, FigletFragment.newInstance()).commit();
                 break;
-            case R.id.action_more_app:
-                StoreUtil.moreApp(MainActivity.this);
-                return true;
             case R.id.action_rate:
                 StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
                 return true;

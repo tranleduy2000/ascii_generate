@@ -25,13 +25,14 @@ public class Constants {
     public static final String RECENT = "recent";
 
     public static class Category {
-        public static final String LOVE_AND_ROMANCE = "LOVE_AND_ROMANCE";
-        public static final String ASCII = "LOVE_AND_ROMANCE";
-        public static final String ANIMAL = "LOVE_AND_ROMANCE";
-        public static final String FOOD = "LOVE_AND_ROMANCE";
-        public static final String MUSIC = "LOVE_AND_ROMANCE";
-        public static final String SPORT = "LOVE_AND_ROMANCE";
-        public static final String MOVIE = "LOVE_AND_ROMANCE";
-        public static final String NATURE = "LOVE_AND_ROMANCE";
+        public static final int ALL = 0;
+        public static final int LOVE_AND_ROMANCE = 1;
+        public static final int ASCII = 2;
+        public static final int ANIMAL = 3;
+        public static final int FOOD = 4;
+        public static final int MUSIC = 5;
+        public static final int SPORT = 6;
+        public static final int MOVIE = 7;
+        public static final int NATURE = 8;
     }
 }

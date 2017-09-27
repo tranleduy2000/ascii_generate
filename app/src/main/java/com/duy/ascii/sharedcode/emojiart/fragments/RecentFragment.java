@@ -44,7 +44,7 @@ import java.util.Date;
 public class RecentFragment extends SimpleFragment {
 
     private static final String TAG = "RecentFragment";
-    private static final int COUNT_PER_LOAD = 3;
+    private static final int COUNT_PER_LOAD = 10;
     private RecyclerView mRecyclerView;
     private RecentAdapter mRecentAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -134,6 +134,7 @@ public class RecentFragment extends SimpleFragment {
     }
 
     private void loadMoreItem() {
+        mSwipeRefreshLayout.setRefreshing(true);
         long lastTime = System.currentTimeMillis();
         if (mRecentAdapter.getItemCount() > 0) {
             lastTime = mRecentAdapter.getLastItem().getTime() - 1;
@@ -156,7 +157,7 @@ public class RecentFragment extends SimpleFragment {
     }
 
 
-    private void addToRecyclerView(DataSnapshot dataSnapshot, boolean addToLast, boolean sort) {
+    private void addToRecyclerView(@Nullable DataSnapshot dataSnapshot, boolean addToLast, boolean sort) {
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
@@ -165,25 +166,25 @@ public class RecentFragment extends SimpleFragment {
                 }
             }, 100);
         }
-        if (dataSnapshot.getChildrenCount() == 0) {
+        if (dataSnapshot == null || dataSnapshot.getChildrenCount() == 0) {
             return;
         }
         Iterable<DataSnapshot> items = dataSnapshot.getChildren();
         ArrayList<EmojiItem> emojiItems = new ArrayList<>();
         for (DataSnapshot item : items) {
             Log.d(TAG, "addToRecyclerView() called with: dataSnapshot = [" + dataSnapshot + "]");
-            EmojiItem value = item.getValue(EmojiItem.class);
-            emojiItems.add(value);
+            try {
+                EmojiItem value = item.getValue(EmojiItem.class);
+                emojiItems.add(value);
+            } catch (Exception ignored) {
+            }
         }
         if (addToLast) {
             mRecentAdapter.addAll(emojiItems);
-            if (mRecentAdapter.getItemCount() > 0) {
-                mRecyclerView.scrollToPosition(0);
-            }
         } else {
             mRecentAdapter.addAll(0, emojiItems);
             if (mRecentAdapter.getItemCount() > 0) {
-                mRecyclerView.scrollToPosition(mRecentAdapter.getItemCount() - 1);
+                mRecyclerView.scrollToPosition(0);
             }
         }
     }
