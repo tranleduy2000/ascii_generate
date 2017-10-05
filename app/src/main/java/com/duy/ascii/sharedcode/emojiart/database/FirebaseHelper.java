@@ -20,6 +20,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.duy.ascii.sharedcode.emojiart.model.EmojiItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -83,4 +85,25 @@ public class FirebaseHelper {
         return null;
     }
 
+    public void delete(EmojiItem emojiItem) {
+        DatabaseReference ref = mFirebaseDatabase.getReference();
+        final DatabaseReference database = ref.child(Constants.ROOT);
+        Query query = database
+                .orderByChild("time")
+                .equalTo(emojiItem.getTime());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    snapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

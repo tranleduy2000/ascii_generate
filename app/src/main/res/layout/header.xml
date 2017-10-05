@@ -23,10 +23,7 @@
         android:id="@+id/container_ad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="250dp"
         android:orientation="vertical">
-
-
     </FrameLayout>
 
     <android.support.v7.widget.AppCompatButton

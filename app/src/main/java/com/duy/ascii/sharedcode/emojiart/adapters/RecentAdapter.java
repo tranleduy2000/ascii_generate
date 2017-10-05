@@ -24,9 +24,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.emojiart.database.FirebaseHelper;
 import com.duy.ascii.sharedcode.emojiart.model.EmojiItem;
 import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
@@ -48,13 +50,14 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     private ArrayList<EmojiItem> mEmojiItems = new ArrayList<>();
     private ClipboardManagerCompat mClipboard;
     private DatabasePresenter mDatabasePresenter;
+    private FirebaseHelper mFirebaseHelper;
 
     public RecentAdapter(Context context) {
         this.mContext = context;
         this.miInflater = LayoutInflater.from(context);
         this.mClipboard = ClipboardManagerCompatFactory.getManager(context);
         this.mDatabasePresenter = new DatabasePresenter(context, null);
-
+        this.mFirebaseHelper = new FirebaseHelper(context);
     }
 
     public void addAll(List<EmojiItem> emojiItems) {
@@ -70,6 +73,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final String text = mEmojiItems.get(position).getContent();
+        final EmojiItem emojiItem = mEmojiItems.get(position);
+
         holder.txtContent.setText(text);
         holder.txtName.setText(mEmojiItems.get(position).getName());
         holder.imgCopy.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +97,28 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                 Toast.makeText(mContext, R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (BuildConfig.DEBUG) {
+            holder.btnDelete.setVisibility(View.VISIBLE);
+            holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    delete(emojiItem);
+                }
+            });
+        } else {
+            holder.btnDelete.setVisibility(View.GONE);
+            holder.btnDelete.setOnClickListener(null);
+        }
+    }
+
+    private void delete(EmojiItem emojiItem) {
+        mFirebaseHelper.delete(emojiItem);
+        int index = mEmojiItems.indexOf(emojiItem);
+        if (index >= 0) {
+            mEmojiItems.remove(index);
+            notifyItemRemoved(index);
+        }
     }
 
     @Override
@@ -126,7 +153,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtContent, txtName;
-        View imgCopy, imgShare, imgFavorite;
+        View imgCopy, imgShare, imgFavorite, btnDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -135,6 +162,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             imgCopy = itemView.findViewById(R.id.img_copy);
             imgShare = itemView.findViewById(R.id.img_share);
             imgFavorite = itemView.findViewById(R.id.img_favorite);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
     }
 }

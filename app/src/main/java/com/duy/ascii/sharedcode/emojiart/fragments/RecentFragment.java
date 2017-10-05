@@ -79,18 +79,6 @@ public class RecentFragment extends SimpleFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bindView();
-//        view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                addTestData();
-//            }
-//        });
-//        view.findViewById(R.id.btn_more).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                loadMoreItem();
-//            }
-//        });
         loadMoreItem();
     }
 

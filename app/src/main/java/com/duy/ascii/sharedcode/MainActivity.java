@@ -17,6 +17,7 @@
 package com.duy.ascii.sharedcode;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,6 +57,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
+    @Nullable
     private NativeExpressAdView mAdView;
     private ViewGroup mContainerAd;
     private NavigationView mNavigationView;
@@ -74,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
                 .replace(R.id.content, AsciiArtFragment.newInstance())
-                .commit();
+
+                .commitAllowingStateLoss();
         loadAdView();
+
     }
 
 
@@ -91,16 +95,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadAdView() {
+        View btnRemoveAd = mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads);
         if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
-            findViewById(R.id.card_ad_view).setVisibility(View.GONE);
-            findViewById(R.id.btn_remove_ads).setVisibility(View.GONE);
+            btnRemoveAd.setVisibility(View.GONE);
         } else {
             mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
-            mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads).setOnClickListener(this);
+            btnRemoveAd.setOnClickListener(this);
+            btnRemoveAd.setVisibility(View.GONE);
             mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    mContainerAd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mContainerAd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        mContainerAd.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
                     createNativeAdView();
                 }
             });
@@ -190,35 +199,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_ascii_art:
-                fragmentTransaction.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, AsciiArtFragment.newInstance())
+                        .commitAllowingStateLoss();
                 mToolbar.setSubtitle(R.string.ascii_art);
                 break;
             case R.id.action_big_text:
-                fragmentTransaction.replace(R.id.content, BigFontFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, BigFontFragment.newInstance())
+                        .commitAllowingStateLoss();
                 mToolbar.setSubtitle(R.string.big_text);
                 break;
             case R.id.action_image_to_ascii:
-                fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance())
+                        .commitAllowingStateLoss();
                 mToolbar.setSubtitle(R.string.image_to_ascii);
                 break;
             case R.id.action_emoji:
-                fragmentTransaction.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, CategoriesEmojiFragment.newInstance())
+                        .commitAllowingStateLoss();
                 mToolbar.setSubtitle(R.string.emoji);
                 break;
             case R.id.action_emoji_art:
                 mToolbar.setSubtitle(R.string.emoji_art);
-                fragmentTransaction.replace(R.id.content, RecentFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, RecentFragment.newInstance())
+                        .commitAllowingStateLoss();
                 break;
             case R.id.action_emoticon:
-                fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance())
+                        .commitAllowingStateLoss();
                 mToolbar.setSubtitle(R.string.emoticons);
                 break;
             case R.id.action_symbol:
-                fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance())
+                        .commitAllowingStateLoss();
                 break;
             case R.id.action_figlet:
                 mToolbar.setSubtitle(R.string.cool_symbol);
-                fragmentTransaction.replace(R.id.content, FigletFragment.newInstance()).commit();
+                fragmentTransaction.replace(R.id.content, FigletFragment.newInstance())
+                        .commitAllowingStateLoss();
                 break;
             case R.id.action_rate:
                 StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
