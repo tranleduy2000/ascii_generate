@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
             btnRemoveAd.setOnClickListener(this);
-            btnRemoveAd.setVisibility(View.GONE);
+            btnRemoveAd.setVisibility(View.VISIBLE);
             mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
