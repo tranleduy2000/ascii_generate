@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
-import com.duy.ascii.sharedcode.emoji.HeaderAdapter;
+import com.duy.ascii.sharedcode.emoji.EmojiClickListener;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ class SymbolAdapter extends RecyclerView.Adapter<SymbolAdapter.ViewHolder> {
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
     private ArrayList<String> emojis;
-    private HeaderAdapter.EmojiClickListener listener;
+    private EmojiClickListener listener;
 
     public SymbolAdapter(@NonNull Context context, ArrayList<String> emojis) {
         this.context = context;
@@ -82,7 +82,7 @@ class SymbolAdapter extends RecyclerView.Adapter<SymbolAdapter.ViewHolder> {
         return emojis.size();
     }
 
-    public void setListener(HeaderAdapter.EmojiClickListener listener) {
+    public void setListener(EmojiClickListener listener) {
         this.listener = listener;
     }
 

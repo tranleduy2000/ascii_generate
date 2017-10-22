@@ -75,9 +75,6 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         return names.size();
     }
 
-    public interface EmojiClickListener {
-        void onClick(String name);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtName;

@@ -18,6 +18,7 @@ package com.duy.ascii.sharedcode.emoji;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,8 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
     private ArrayList<String> emojis;
-    private HeaderAdapter.EmojiClickListener listener;
+    @Nullable
+    private EmojiClickListener mListener;
 
     public EmojiAdapter(@NonNull Context context, ArrayList<String> emojis) {
         this.context = context;
@@ -70,7 +72,7 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) listener.onClick(emojis.get(holder.getAdapterPosition()));
+                if (mListener != null) mListener.onClick(emojis.get(holder.getAdapterPosition()));
             }
         });
     }
@@ -80,8 +82,8 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
         return emojis.size();
     }
 
-    public void setListener(HeaderAdapter.EmojiClickListener listener) {
-        this.listener = listener;
+    public void setListener(@Nullable EmojiClickListener listener) {
+        this.mListener = listener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

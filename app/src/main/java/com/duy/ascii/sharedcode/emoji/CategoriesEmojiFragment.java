@@ -26,9 +26,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.Pair;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.sharedcode.SimpleFragment;
+import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
+import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
+import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.view.ViewPager;
 
 import org.w3c.dom.Document;
@@ -43,15 +50,20 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import static android.support.v4.view.ViewPager.OnPageChangeListener;
+
 /**
  * Created by Duy on 9/27/2017.
  */
 
-public class CategoriesEmojiFragment extends SimpleFragment implements android.support.v4.view.ViewPager.OnPageChangeListener {
+public class CategoriesEmojiFragment extends SimpleFragment implements OnPageChangeListener,
+        View.OnClickListener {
     private static final String TAG = "CategoriesEmojiFragment";
     @Nullable
     private LoadDataTask mLoadDataTask;
     private ContentLoadingProgressBar mProgressBar;
+    private EditText mEditInput;
+    private DatabasePresenter mDatabasePresenter;
 
     public static CategoriesEmojiFragment newInstance() {
 
@@ -70,9 +82,38 @@ public class CategoriesEmojiFragment extends SimpleFragment implements android.s
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mDatabasePresenter = new DatabasePresenter(getContext(), null);
+
+        mEditInput = view.findViewById(R.id.edit_input);
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
+
         mLoadDataTask = new LoadDataTask(getContext());
         mLoadDataTask.execute();
+
+
+        view.findViewById(R.id.btn_copy).setOnClickListener(this);
+        view.findViewById(R.id.btn_share).setOnClickListener(this);
+        view.findViewById(R.id.img_favorite).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_copy:
+                ClipboardManagerCompat manager = ClipboardManagerCompatFactory.getManager(getContext());
+                manager.setText(mEditInput.getText());
+                Toast.makeText(getContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.img_share:
+                ShareUtil.shareText(mEditInput.getText().toString(), getContext());
+                break;
+            case R.id.img_favorite:
+                if (!mEditInput.getText().toString().isEmpty()) {
+                    mDatabasePresenter.insert(new TextItem(mEditInput.getText().toString()));
+                    Toast.makeText(getContext(), R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     @Override
@@ -83,11 +124,19 @@ public class CategoriesEmojiFragment extends SimpleFragment implements android.s
 
     private void initView(ArrayList<Pair<String, ArrayList<String>>> data) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        PagerSectionAdapter headerAdapter = new PagerSectionAdapter(getChildFragmentManager(), data);
+        EmojiClickListener listener = new EmojiClickListener() {
+            @Override
+            public void onClick(String name) {
+                mEditInput.getText().insert(Math.max(0, mEditInput.getSelectionStart()), name);
+            }
+        };
+        PagerSectionAdapter headerAdapter = new PagerSectionAdapter(getChildFragmentManager(), data, listener);
         viewPager.setAdapter(headerAdapter);
         ((TabLayout) findViewById(R.id.tab_layout)).setupWithViewPager(viewPager);
         viewPager.setCurrentItem(getLastPosition());
         viewPager.addOnPageChangeListener(this);
+
+
     }
 
     private int getLastPosition() {
@@ -110,6 +159,7 @@ public class CategoriesEmojiFragment extends SimpleFragment implements android.s
     public void onPageScrollStateChanged(int state) {
 
     }
+
 
     private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<Pair<String, ArrayList<String>>>> {
         private final Context context;

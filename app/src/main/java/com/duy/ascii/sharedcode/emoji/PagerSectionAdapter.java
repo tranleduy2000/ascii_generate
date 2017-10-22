@@ -27,17 +27,22 @@ import java.util.ArrayList;
  * Created by Duy on 9/27/2017.
  */
 
-public class PagerSectionAdapter extends FragmentPagerAdapter {
+class PagerSectionAdapter extends FragmentPagerAdapter {
     private ArrayList<Pair<String, ArrayList<String>>> mEmojis = new ArrayList<>();
+    private EmojiClickListener mListener;
 
-    public PagerSectionAdapter(FragmentManager fm, ArrayList<Pair<String, ArrayList<String>>> data) {
+    PagerSectionAdapter(FragmentManager fm, ArrayList<Pair<String, ArrayList<String>>> data,
+                        EmojiClickListener mListener) {
         super(fm);
         this.mEmojis = data;
+        this.mListener = mListener;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return EmojiFragment.newInstance(mEmojis.get(position).second);
+        EmojiFragment emojiFragment = EmojiFragment.newInstance(mEmojis.get(position).second);
+        emojiFragment.setListener(mListener);
+        return emojiFragment;
     }
 
     @Override

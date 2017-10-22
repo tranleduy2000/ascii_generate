@@ -25,16 +25,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.utils.FileUtil;
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.SimpleFragment;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.emoji.EmojiAdapter;
-import com.duy.ascii.sharedcode.emoji.HeaderAdapter;
+import com.duy.ascii.sharedcode.emoji.EmojiClickListener;
 import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.utils.FileUtil;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +80,7 @@ public class SymbolFragment extends SimpleFragment {
         EmojiAdapter emojiAdapter = new EmojiAdapter(getContext(), symbols);
         recyclerView.setAdapter(emojiAdapter);
 
-        emojiAdapter.setListener(new HeaderAdapter.EmojiClickListener() {
+        emojiAdapter.setListener(new EmojiClickListener() {
             @Override
             public void onClick(String emoji) {
                 mEditInput.getEditableText().insert(Math.max(mEditInput.getSelectionStart(), 0), emoji);
