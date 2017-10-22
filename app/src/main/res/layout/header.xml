@@ -19,12 +19,11 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:id="@+id/container_ad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </FrameLayout>
+        android:layout_height="250dp"
+       />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_remove_ads"

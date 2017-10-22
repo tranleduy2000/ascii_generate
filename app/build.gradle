@@ -42,12 +42,6 @@ android {
     }
 
     productFlavors {
-        dev {
-            minSdkVersion 21
-            buildConfigField "boolean", "IS_PREMIUM_USER", "false"
-            applicationId "com.duy.asciiart"
-            resValue "string", "app_name", "Ascii Art"
-        }
         free {
             minSdkVersion 14
             buildConfigField "boolean", "IS_PREMIUM_USER", "false"

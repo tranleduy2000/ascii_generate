@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
             btnRemoveAd.setOnClickListener(this);
             btnRemoveAd.setVisibility(View.VISIBLE);
-            mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -112,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     createNativeAdView();
                 }
-            });
+            };
+            mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(listener);
         }
 
     }
@@ -121,12 +121,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mContainerAd != null) {
             mAdView = new NativeExpressAdView(this);
             mAdView.setAdUnitId(getString(R.string.ad_unit_main));
-            int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().scaledDensity);
+            int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().density);
             mAdView.setAdSize(new AdSize(width, 250));
+
+
             mContainerAd.removeAllViews();
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT);
-            mContainerAd.addView(mAdView, params);
+            mContainerAd.addView(mAdView);
+
             mAdView.loadAd(new AdRequest.Builder().build());
         }
     }
