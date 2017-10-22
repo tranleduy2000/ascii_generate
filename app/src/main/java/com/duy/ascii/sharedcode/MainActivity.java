@@ -74,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
                 .replace(R.id.content, AsciiArtFragment.newInstance())
-
-                .commitAllowingStateLoss();
+                .commit();
         loadAdView();
 
     }
@@ -196,46 +195,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mDrawerLayout.closeDrawers();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_ascii_art:
-                fragmentTransaction.replace(R.id.content, AsciiArtFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.ascii_art);
                 break;
             case R.id.action_big_text:
-                fragmentTransaction.replace(R.id.content, BigFontFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, BigFontFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.big_text);
                 break;
             case R.id.action_image_to_ascii:
-                fragmentTransaction.replace(R.id.content, ImageToAsciiFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.image_to_ascii);
                 break;
             case R.id.action_emoji:
-                fragmentTransaction.replace(R.id.content, CategoriesEmojiFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoji);
                 break;
             case R.id.action_emoji_art:
                 mToolbar.setSubtitle(R.string.emoji_art);
-                fragmentTransaction.replace(R.id.content, RecentFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, RecentFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
-                fragmentTransaction.replace(R.id.content, EmoticonsFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoticons);
                 break;
             case R.id.action_symbol:
-                fragmentTransaction.replace(R.id.content, SymbolFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, SymbolFragment.newInstance()).commit();
+                mToolbar.setSubtitle(R.string.cool_symbol);
                 break;
             case R.id.action_figlet:
                 mToolbar.setSubtitle(R.string.cool_symbol);
-                fragmentTransaction.replace(R.id.content, FigletFragment.newInstance())
-                        .commitAllowingStateLoss();
+                ft.replace(R.id.content, FigletFragment.newInstance()).commit();
                 break;
             case R.id.action_rate:
                 StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);
@@ -246,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_text_converter:
                 StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
                 return true;
-
         }
         return false;
     }
