@@ -45,6 +45,7 @@ import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -99,13 +100,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadAdView() {
+        mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
         View btnRemoveAd = mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads);
-        if (BuildConfig.IS_PREMIUM_USER || hasPremiumApp()) {
+        if (BuildConfig.IS_PREMIUM_USER) {
             btnRemoveAd.setVisibility(View.GONE);
+            mContainerAd.setVisibility(View.GONE);
         } else {
-            mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
             btnRemoveAd.setOnClickListener(this);
             btnRemoveAd.setVisibility(View.VISIBLE);
+            mContainerAd.setVisibility(View.VISIBLE);
             ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
@@ -123,22 +126,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createNativeAdView() {
-        if (mContainerAd != null) {
-            mAdView = new NativeExpressAdView(this);
-            mAdView.setAdUnitId(getString(R.string.ad_unit_main));
-            int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().density);
-            mAdView.setAdSize(new AdSize(width, 250));
+        mAdView = new NativeExpressAdView(this);
+        mAdView.setAdUnitId(getString(R.string.ad_unit_main));
+        int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().density);
+        mAdView.setAdSize(new AdSize(width, 250));
 
-
-            mContainerAd.removeAllViews();
-            mContainerAd.addView(mAdView);
-
-//            mAdView.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
-    private boolean hasPremiumApp() {
-        return false;
+        mContainerAd.removeAllViews();
+        mContainerAd.addView(mAdView);
+        mAdView.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
