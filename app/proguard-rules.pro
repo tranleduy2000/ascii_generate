@@ -89,3 +89,4 @@
 }
 
 -keep class com.duy.ascii.sharedcode.image.converter.** {*; }
+-keep class com.duy.ascii.sharedcode.emojiart.model.** {*; }
