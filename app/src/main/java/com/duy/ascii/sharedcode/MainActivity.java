@@ -34,6 +34,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.duy.ads.StoreUtil;
+import com.duy.ads.app.Compass;
 import com.duy.ascii.sharedcode.asciiart.AsciiArtFragment;
 import com.duy.ascii.sharedcode.bigtext.BigFontFragment;
 import com.duy.ascii.sharedcode.emoji.CategoriesEmojiFragment;
@@ -43,10 +45,10 @@ import com.duy.ascii.sharedcode.favorite.FavoriteActivity;
 import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
-import com.duy.ascii.sharedcode.utils.StoreUtil;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.kobakei.ratethisapp.RateThisApp;
 
 
 /**
@@ -77,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
         loadAdView();
 
+
+        // Monitor launch times and interval from installation
+        RateThisApp.onCreate(this);
+        // If the condition is satisfied, "Rate this app" dialog will be shown
+        RateThisApp.showRateDialogIfNeeded(this);
     }
 
 
@@ -181,6 +188,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+
+        if (Compass.canShowDialog(this)) {
+            Compass.showGetAppDialog(this);
+            return;
+        }
+
         if (BuildConfig.IS_PREMIUM_USER) {
             super.onBackPressed();
             return;
@@ -235,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_share:
                 StoreUtil.shareThisApp(MainActivity.this);
                 return true;
-            case R.id.action_text_converter:
-                StoreUtil.gotoPlayStore(MainActivity.this, "duy.com.text_converter");
+            case R.id.action_more_app:
+                StoreUtil.moreApp(MainActivity.this);
                 return true;
         }
         return false;

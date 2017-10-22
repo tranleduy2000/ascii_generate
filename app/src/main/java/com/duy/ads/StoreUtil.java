@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.sharedcode.utils;
+package com.duy.ads;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 /**
- * update 1/9/2017
+ * update 21/10/2017
  */
 public class StoreUtil {
-    public static void gotoPlayStore(Activity context, String APP_ID) {
+    public static void gotoPlayStore(Context context, String APP_ID) {
         Uri uri = Uri.parse("market://details?id=" + APP_ID);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,

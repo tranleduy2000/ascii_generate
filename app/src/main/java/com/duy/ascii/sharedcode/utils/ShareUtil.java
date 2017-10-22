@@ -41,7 +41,7 @@ public class ShareUtil {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
+        intent.setType("images/*");
         context.startActivity(Intent.createChooser(intent, "Share image via"));
     }
 

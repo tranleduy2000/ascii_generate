@@ -134,9 +134,9 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
             return;
         }
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
+        getIntent.setType("images/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
+        pickIntent.setType("images/*");
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
         startActivityForResult(chooserIntent, PICK_IMAGE);
@@ -243,7 +243,7 @@ public class ImageToAsciiActivity extends AppCompatActivity implements View.OnCl
             ContentValues values = new ContentValues();
 
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+            values.put(MediaStore.Images.Media.MIME_TYPE, "images/png");
             values.put(MediaStore.MediaColumns.DATA, filePath);
 
             this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
