@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/img_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -41,7 +41,7 @@
                 android:padding="4dp"
                 android:src="@drawable/ic_content_copy_black_24dp" />
 
-            <ImageButton
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/img_share"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

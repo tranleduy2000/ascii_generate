@@ -26,11 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.sharedcode.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.sharedcode.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.sharedcode.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.util.ArrayList;
 
@@ -62,21 +62,20 @@ public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final String text = objects.get(position);
         holder.txtContent.setText(text);
-        holder.txtContent.setOnClickListener(new View.OnClickListener() {
+        holder.imgCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clipboardManagerCompat.setText(holder.txtContent.getText().toString());
+                clipboardManagerCompat.setText(text);
                 Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
-        holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                ShareUtil.shareText(holder.txtContent.getText().toString(), context);
-                return false;
+            public void onClick(View v) {
+                ShareUtil.shareText(text, context);
             }
         });
         holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
@@ -111,13 +110,15 @@ public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;
-        public View root, imgFavorite;
+        public View root, imgFavorite, imgCopy, imgShare;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
             root = itemView.findViewById(R.id.container);
             imgFavorite = itemView.findViewById(R.id.img_favorite);
+            imgCopy = itemView.findViewById(R.id.img_copy);
+            imgShare = itemView.findViewById(R.id.img_share);
         }
 
     }

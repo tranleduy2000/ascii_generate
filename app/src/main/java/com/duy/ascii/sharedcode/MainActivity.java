@@ -44,7 +44,6 @@ import com.duy.ascii.sharedcode.figlet.FigletFragment;
 import com.duy.ascii.sharedcode.image.ImageToAsciiFragment;
 import com.duy.ascii.sharedcode.unicodesymbol.SymbolFragment;
 import com.duy.ascii.sharedcode.utils.StoreUtil;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mContainerAd.removeAllViews();
             mContainerAd.addView(mAdView);
 
-            mAdView.loadAd(new AdRequest.Builder().build());
+//            mAdView.loadAd(new AdRequest.Builder().build());
         }
     }
 
