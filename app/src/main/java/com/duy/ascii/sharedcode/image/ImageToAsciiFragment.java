@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,10 +40,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.sharedcode.utils.ShareUtil;
 import com.duy.ascii.sharedcode.SimpleFragment;
 import com.duy.ascii.sharedcode.image.converter.AsciiConverter;
 import com.duy.ascii.sharedcode.image.gallery.GalleryActivity;
+import com.duy.ascii.sharedcode.utils.ShareUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -145,16 +146,13 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
     }
 
     private void selectImage() {
-        if (!permissionGrated()) {
-            return;
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        } catch (Exception ignored) {
         }
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("images/*");
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("images/*");
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-        startActivityForResult(chooserIntent, PICK_IMAGE);
     }
 
     @SuppressLint("ObsoleteSdkInt")
@@ -167,14 +165,26 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
             }
             if (state != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getContext(), "Permission denied, please enable permission", Toast.LENGTH_SHORT).show();
-                String[] permission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(permission, REQUEST_PERMISSION);
-                }
                 return false;
             }
         }
         return true;
+    }
+
+    private void requestPermissions() {
+        String[] permission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permission, REQUEST_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (permissionGrated()) {
+            selectImage();
+        }
     }
 
     @Override
@@ -204,9 +214,7 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
                     }
                 }
                 break;
-            case REQUEST_PERMISSION:
-                selectImage();
-                break;
+
         }
     }
 
@@ -235,7 +243,11 @@ public class ImageToAsciiFragment extends SimpleFragment implements View.OnClick
         if (i == R.id.btn_save) {
             saveImage();
         } else if (i == R.id.btn_select) {
-            selectImage();
+            if (!permissionGrated()) {
+                requestPermissions();
+            } else {
+                selectImage();
+            }
         } else if (i == R.id.btn_share) {
             shareCurrentImage();
         }

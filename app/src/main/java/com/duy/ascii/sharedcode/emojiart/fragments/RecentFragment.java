@@ -23,7 +23,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.duy.ascii.sharedcode.R;
@@ -38,7 +37,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Duy on 9/27/2017.
@@ -120,15 +118,15 @@ public class RecentFragment extends SimpleFragment {
         mDatabase.recentFirst(time, 100, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
+//                Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
                 long childrenCount = dataSnapshot.getChildrenCount();
-                Log.d(TAG, "onDataChange: childrenCount = " + childrenCount);
+//                Log.d(TAG, "onDataChange: childrenCount = " + childrenCount);
                 addToRecyclerView(dataSnapshot, false, true);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled() called with: databaseError = [" + databaseError + "]");
+//                Log.d(TAG, "onCancelled() called with: databaseError = [" + databaseError + "]");
             }
         });
     }
@@ -138,20 +136,20 @@ public class RecentFragment extends SimpleFragment {
         long lastTime = System.currentTimeMillis();
         if (mRecentAdapter.getItemCount() > 0) {
             lastTime = mRecentAdapter.getLastItem().getTime() - 1;
-            Log.d(TAG, "showData: " + new Date(lastTime).toString());
+//            Log.d(TAG, "showData: " + new Date(lastTime).toString());
         }
         mDatabase.recentLast(lastTime, COUNT_PER_LOAD, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
+//                Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
                 long childrenCount = dataSnapshot.getChildrenCount();
-                Log.d(TAG, "onDataChange: childrenCount = " + childrenCount);
+//                Log.d(TAG, "onDataChange: childrenCount = " + childrenCount);
                 addToRecyclerView(dataSnapshot, true, false);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled() called with: databaseError = [" + databaseError + "]");
+//                Log.d(TAG, "onCancelled() called with: databaseError = [" + databaseError + "]");
             }
         });
     }
@@ -172,7 +170,7 @@ public class RecentFragment extends SimpleFragment {
         Iterable<DataSnapshot> items = dataSnapshot.getChildren();
         ArrayList<EmojiItem> emojiItems = new ArrayList<>();
         for (DataSnapshot item : items) {
-            Log.d(TAG, "addToRecyclerView() called with: dataSnapshot = [" + dataSnapshot + "]");
+//            Log.d(TAG, "addToRecyclerView() called with: dataSnapshot = [" + dataSnapshot + "]");
             try {
                 EmojiItem value = item.getValue(EmojiItem.class);
                 emojiItems.add(value);
