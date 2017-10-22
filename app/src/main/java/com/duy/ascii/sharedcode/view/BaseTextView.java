@@ -20,8 +20,6 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import com.duy.ascii.sharedcode.FontManager;
-
 /**
  * Created by Duy on 11-Jul-17.
  */
@@ -43,6 +41,6 @@ public class BaseTextView extends AppCompatTextView {
     }
 
     private void setup(Context context) {
-        setTypeface(FontManager.getDefault(context.getAssets()));
+//        setTypeface(FontManager.getDefault(context.getAssets()));
     }
 }

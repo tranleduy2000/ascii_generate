@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
-    protected LayoutInflater inflater;
+    protected LayoutInflater mInflater;
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
     private DatabasePresenter mDatabasePresenter;
@@ -50,14 +50,14 @@ public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHo
 
     public AsciiArtAdapter(@NonNull Context context) {
         this.context = context;
-        this.inflater = LayoutInflater.from(context);
+        this.mInflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.mDatabasePresenter = new DatabasePresenter(context, null);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_image_ascii, parent, false);
+        View view = mInflater.inflate(R.layout.list_item_ascii_art, parent, false);
         return new ViewHolder(view);
     }
 

@@ -32,54 +32,51 @@ import java.util.regex.Matcher;
  */
 class AsciiArtPresenter implements AsciiArtContract.Presenter {
     private final Context context;
-    private final AsciiArtContract.View view;
-    private AsyncTask<String, String, ArrayList<String>> loadData;
+    private final AsciiArtContract.View mView;
+    private AsyncTask<String, String, ArrayList<String>> mLoadDataTask;
 
-    public AsciiArtPresenter(Context context, AsciiArtContract.View view) {
+    AsciiArtPresenter(Context context, AsciiArtContract.View view) {
         this.context = context;
-        this.view = view;
+        this.mView = view;
     }
 
     @Override
-    public void load(int index) {
-        view.showProgress();
-        if (loadData != null && !loadData.isCancelled()) {
-            loadData.cancel(true);
+    public void onStart() {
+        mView.showProgress();
+        if (mLoadDataTask != null) {
+            mLoadDataTask.cancel(true);
         }
-        loadData = new LoadDataTask(context, new LoadDataTask.Callback() {
+        LoadDataTask.Callback callback = new LoadDataTask.Callback() {
             @Override
             public void onResult(ArrayList<String> list) {
-                view.hideProgress();
+                mView.hideProgress();
             }
-        }, view);
-        switch (index) {
-            case AsciiArtFragment.INDEX:
-                loadData.execute("image.txt");
-                break;
-        }
+        };
+        mLoadDataTask = new LoadDataTask(context, callback, mView);
+        mLoadDataTask.execute("image.txt");
     }
 
     @Override
-    public void stop() {
-        if (loadData != null) {
-            loadData.cancel(true);
+    public void onStop() {
+        if (mLoadDataTask != null) {
+            mLoadDataTask.cancel(true);
         }
     }
 
     private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
-        private Context context;
-        private Callback callback;
-        private AsciiArtContract.View view;
+        private Context mContext;
+        private Callback mCallback;
+        private AsciiArtContract.View mView;
 
         LoadDataTask(Context context, Callback callback, AsciiArtContract.View view) {
-            this.context = context;
-            this.callback = callback;
-            this.view = view;
+            this.mContext = context;
+            this.mCallback = callback;
+            this.mView = view;
         }
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
-            AssetManager assets = context.getAssets();
+            AssetManager assets = mContext.getAssets();
             try {
                 InputStream stream = assets.open(params[0]);
                 String string = FileUtil.streamToString(stream);
@@ -98,14 +95,14 @@ class AsciiArtPresenter implements AsciiArtContract.Presenter {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            view.append(values[0]);
+            mView.append(values[0]);
         }
 
         @Override
         protected void onPostExecute(ArrayList<String> list) {
             super.onPostExecute(list);
             if (!isCancelled()) {
-                callback.onResult(list);
+                mCallback.onResult(list);
             }
         }
 

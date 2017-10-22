@@ -35,8 +35,8 @@ class AsciiArtContract {
     }
 
     public interface Presenter {
-        void load(int index);
+        void onStart();
 
-        void stop();
+        void onStop();
     }
 }

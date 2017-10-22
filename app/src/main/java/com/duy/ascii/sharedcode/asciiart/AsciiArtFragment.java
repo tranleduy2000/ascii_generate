@@ -19,8 +19,8 @@ package com.duy.ascii.sharedcode.asciiart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.duy.ascii.sharedcode.R;
@@ -59,7 +59,7 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new AsciiArtAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
@@ -97,12 +97,12 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
     @Override
     public void onStop() {
         super.onStop();
-        mPresenter.stop();
+        mPresenter.onStop();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.load(INDEX);
+        mPresenter.onStart();
     }
 }
