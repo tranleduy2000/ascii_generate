@@ -16,53 +16,16 @@
 
 <resources>
     <string name="donate_for_develop_remove_ads_get_pro_version">Donate for develop, remove ads</string>
-    <string name="interstitial_full_screen">ca-app-pub-9351804859208340/7588530318</string>
-    <string name="header_emoticon">"¯\\_(ツ)_/¯"</string>
-    <string name="header_ascii_image">
-        "─▄████▄████▄
-██▒▒▒▒█▒▒▒▒██
-▀██▒ ▒▒▒▒▒██▀
-─▀██▒▒▒▒▒██▀
-───▀██▒██▀
-─────▀█▀"
-    </string>
-    <string name="header_big_font">
-        "╔╗─╔╗╔═══╗╔╗───╔╗───╔═══╗
-║║─║║║╔══╝║║───║║───║╔═╗║
-║╚═╝║║╚══╗║║───║║───║║─║║
-║╔═╗║║╔══╝║║─╔╗║║─╔╗║║─║║
-║║─║║║╚══╗║╚═╝║║╚═╝║║╚═╝║
-╚╝─╚╝╚═══╝╚═══╝╚═══╝╚═══╝"
-    </string>
-    <string name="header_figlet">
-        "______  _         _        _
-|  ___|(_)       | |      | |
-| |_    _   __ _ | |  ___ | |_
-|  _|  | | / _` || | / _ \| __|
-| |    | || (_| || ||  __/| |_
-\_|    |_| \__, ||_| \___| \__|
-            __/ |
-           |___/"
-    </string>
-    <string name="summary_figlet">You cannot copy/paste with this tool because it will be skewed when pasted to a text box.\n FIGlet is a computer program that generates text banners, in a variety of typefaces, composed of letters made up of conglomerations of smaller ASCII characters.</string>
-    <string name="summary_big_text">Make a big letters generator for all social networks</string>
-    <string name="header_emmoj">😃 😄 😁</string>
 
     <string name="type_your_text">Type your text …</string>
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="please_enter_your_text_and_wait">Please enter your text and wait…</string>
-    <string name="save_as_image">Save as image</string>
-    <string name="permission_msg">Permission is Required for getting list of files</string>
     <string name="copied">Copied</string>
-    <string name="saved">Saved</string>
     <string name="rate_app">Rate app</string>
     <string name="more_app_from_dev">More app from Dev</string>
-    <string name="text">Text</string>
-    <string name="photo">Photo</string>
     <string name="select_file">Select file</string>
     <string name="emoticons">Emoticons</string>
-    <string name="text_image">Text image</string>
     <string name="figlet_msg">
         !! You can not copy/paste with \n
         this tool because it is only \n
@@ -71,10 +34,7 @@
     <string name="big_text">Big text</string>
     <string name="null_uri">Please select file and convert to image!</string>
     <string name="share_app">Share this app</string>
-    <string name="get_text_converter">Get Text Converter app</string>
-    <string name="ads">Ads</string>
     <string name="image_to_ascii">Image to ascii</string>
-    <string name="title_activity_main23">Main2Activity3</string>
     <string name="save">Save</string>
     <string name="gallery">Gallery</string>
     <string name="delete">Delete</string>
@@ -83,12 +43,8 @@
     <string name="latin_number_characters">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
     <string name="emoji">Emoji</string>
 
-    <string name="ad_emoticons">ca-app-pub-9351804859208340/5481653280</string>
-    <string name="ad_ascii_art">ca-app-pub-9351804859208340/8950125006</string>
     <string name="ad_unit_main">ca-app-pub-9351804859208340/1838914993</string>
-    <string name="ad_unit_emoji">ca-app-pub-9351804859208340/9334280145</string>
     <string name="cool_symbol">Cool symbol</string>
-    <string name="header_symbol">⇦ ⇧ ⇨ ⇩ ⇪ ⇹ ⇺ ⇻ ⇼</string>
     <string name="favorite">Favorite</string>
     <string name="added_to_favorite">Added to favorite</string>
     <string name="open_drawer">Open drawer</string>
