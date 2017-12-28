@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class PopularFragment extends SimpleFragment {
 
     private static final String TAG = "RecentFragment";
-    private static final int COUNT_PER_LOAD = 3;
+    private static final int COUNT_PER_LOAD = 50;
     private RecyclerView mRecyclerView;
     private RecentAdapter mRecentAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;

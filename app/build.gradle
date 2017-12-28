@@ -40,19 +40,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    flavorDimensions "default"
     productFlavors {
         free {
-            minSdkVersion 14
-            buildConfigField "boolean", "IS_PREMIUM_USER", "false"
             applicationId "com.duy.asciiart"
-            resValue "string", "app_name", "Ascii Art"
         }
         pro {
-            minSdkVersion 14
-            buildConfigField "boolean", "IS_PREMIUM_USER", "true"
             applicationId "com.duy.asciigenerator.pro"
-            resValue "string", "app_name", "Ascii Art (Pro)"
         }
     }
     externalNativeBuild {

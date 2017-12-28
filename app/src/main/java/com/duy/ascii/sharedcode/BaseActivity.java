@@ -23,7 +23,7 @@ import android.view.MenuItem;
  * Created by Duy on 9/27/2017.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

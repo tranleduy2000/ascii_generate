@@ -51,6 +51,8 @@ import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kobakei.ratethisapp.RateThisApp;
 
+import static com.duy.ads.app.Compass.isPremiumUser;
+
 
 /**
  * Created by Duy on 09-Aug-17.
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadAdView() {
         mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
         View btnRemoveAd = mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads);
-        if (BuildConfig.IS_PREMIUM_USER) {
+        if (isPremiumUser(this)) {
             btnRemoveAd.setVisibility(View.GONE);
             mContainerAd.setVisibility(View.GONE);
         } else {
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (BuildConfig.IS_PREMIUM_USER) {
+        if (isPremiumUser(this)) {
             super.onBackPressed();
             return;
         }

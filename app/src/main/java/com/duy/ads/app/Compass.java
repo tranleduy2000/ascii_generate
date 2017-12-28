@@ -28,7 +28,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.duy.ads.StoreUtil;
-import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
 
 import java.util.List;
@@ -62,7 +61,11 @@ public class Compass {
     public static boolean canShowDialog(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean saw = pref.getBoolean(KEY_HAS_SAW, false);
-        return hasSensor(context) && !saw && !BuildConfig.IS_PREMIUM_USER;
+        return hasSensor(context) && !saw && !isPremiumUser(context);
+    }
+
+    public static boolean isPremiumUser(Context context) {
+        return context.getPackageName().equals("com.duy.asciigenerate.pro");
     }
 
     public static AlertDialog showGetAppDialog(final Context context) {

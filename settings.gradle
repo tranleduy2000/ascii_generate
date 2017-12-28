@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-include ':app', ':floating-view'
+include ':app', ':floating-view', ':common'
