@@ -25,13 +25,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.emojiart.activities.CreateEmojiActivity;
-import com.duy.ascii.art.emojiart.adapters.EndlessRecyclerOnScrollListener;
 import com.duy.ascii.art.emojiart.adapters.RecentAdapter;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
 import com.duy.ascii.art.emojiart.model.EmojiItem;
+import com.duy.ascii.sharedcode.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -50,7 +49,7 @@ public class RecentFragment extends SimpleFragment {
     private RecentAdapter mRecentAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FirebaseHelper mDatabase;
-    private FloatingActionButton mPull;
+    private FloatingActionButton mFab;
 
     public static RecentFragment newInstance() {
 
@@ -77,7 +76,7 @@ public class RecentFragment extends SimpleFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bindView();
-        loadMoreItem();
+        loadAll();
     }
 
     private void bindView() {
@@ -86,10 +85,27 @@ public class RecentFragment extends SimpleFragment {
         mRecyclerView.setLayoutManager(layout);
         mRecentAdapter = new RecentAdapter(getContext());
         mRecyclerView.setAdapter(mRecentAdapter);
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layout) {
+        /*mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layout) {
             @Override
             public void onLoadMore(int current) {
-                loadMoreItem();
+                loadAll();
+            }
+        });*/
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && mFab.isShown()) {
+                    mFab.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    mFab.show();
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
             }
         });
 
@@ -97,15 +113,29 @@ public class RecentFragment extends SimpleFragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reload();
+                loadAll();
             }
         });
 
-        mPull = (FloatingActionButton) findViewById(R.id.fab_add);
-        mPull.setOnClickListener(new View.OnClickListener() {
+        mFab = (FloatingActionButton) findViewById(R.id.fab_add);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), CreateEmojiActivity.class));
+            }
+        });
+    }
+
+    private void loadAll() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mDatabase.getAll(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                addToRecyclerView(dataSnapshot, false, true);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
@@ -143,7 +173,6 @@ public class RecentFragment extends SimpleFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 //                Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
                 long childrenCount = dataSnapshot.getChildrenCount();
-//                Log.d(TAG, "onDataChange: childrenCount = " + childrenCount);
                 addToRecyclerView(dataSnapshot, true, false);
             }
 
@@ -170,7 +199,6 @@ public class RecentFragment extends SimpleFragment {
         Iterable<DataSnapshot> items = dataSnapshot.getChildren();
         ArrayList<EmojiItem> emojiItems = new ArrayList<>();
         for (DataSnapshot item : items) {
-//            Log.d(TAG, "addToRecyclerView() called with: dataSnapshot = [" + dataSnapshot + "]");
             try {
                 EmojiItem value = item.getValue(EmojiItem.class);
                 emojiItems.add(value);

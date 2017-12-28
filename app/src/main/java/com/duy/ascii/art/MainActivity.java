@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,10 +43,10 @@ import com.duy.ascii.art.purcharse.AsciiPremium;
 import com.duy.ascii.art.unicodesymbol.SymbolFragment;
 import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
+import com.duy.common.purchase.InAppPurchaseActivity;
 import com.duy.common.utils.StoreUtil;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kobakei.ratethisapp.RateThisApp;
 
 
@@ -55,7 +54,7 @@ import com.kobakei.ratethisapp.RateThisApp;
  * Created by Duy on 09-Aug-17.
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends InAppPurchaseActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     @Nullable
     private AdView mAdView;
@@ -135,11 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         switch (v.getId()) {
             case R.id.btn_remove_ads:
-                firebaseAnalytics.logEvent("btn_remove_ads", new Bundle());
-                StoreUtil.gotoPlayStore(this, "com.duy.asciigenerator.pro");
+                showDialogUpgrade();
                 break;
         }
     }

@@ -54,6 +54,23 @@ public class FirebaseHelper {
         query.addListenerForSingleValueEvent(callback);
     }
 
+
+    public void getAll(final ValueEventListener callback) {
+        DatabaseReference reference = mFirebaseDatabase.getReference();
+        DatabaseReference all = reference.child(Constants.ROOT);
+        all.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataChange(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void popularLast(long lastTime, int size, ValueEventListener callback) {
         DatabaseReference reference = mFirebaseDatabase.getReference();
         DatabaseReference recent = reference.child(Constants.ROOT);
