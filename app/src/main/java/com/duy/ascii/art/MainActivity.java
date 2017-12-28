@@ -111,6 +111,14 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void updateUi(boolean premium) {
+        super.updateUi(premium);
+        if (premium) {
+            //invalidate
+            loadAdView();
+        }
+    }
 
     @Override
     protected void onPause() {

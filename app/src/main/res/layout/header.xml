@@ -22,9 +22,9 @@
 
     <FrameLayout
         android:id="@+id/container_ad"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="250dp"
-        android:minWidth="300dp">
+        android:layout_gravity="center">
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/ad_view"
