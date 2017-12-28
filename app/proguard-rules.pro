@@ -88,5 +88,5 @@
     public *;
 }
 
--keep class com.duy.ascii.sharedcode.image.converter.** {*; }
--keep class com.duy.ascii.sharedcode.emojiart.model.** {*; }
+-keep class com.duy.ascii.art.image.converter.** {*; }
+-keep class com.duy.ascii.art.emojiart.model.** {*; }

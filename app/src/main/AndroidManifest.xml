@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.duy.ascii.art.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -40,13 +40,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".image.gallery.GalleryActivity"
+            android:name="com.duy.ascii.art.image.gallery.GalleryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".emojiart.activities.CreateEmojiActivity"
+            android:name="com.duy.ascii.art.emojiart.activities.CreateEmojiActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".favorite.FavoriteActivity"
+            android:name="com.duy.ascii.art.favorite.FavoriteActivity"
             android:configChanges="orientation|screenSize" />
 
         <provider

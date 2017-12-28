@@ -89,7 +89,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:scrollbarSize="4dp">
 
-            <com.duy.ascii.sharedcode.view.BaseTextView
+            <com.duy.ascii.art.view.BaseTextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
