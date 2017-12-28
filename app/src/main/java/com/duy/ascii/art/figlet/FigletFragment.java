@@ -38,8 +38,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.utils.ShareUtil;
+import com.duy.ascii.sharedcode.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,13 +48,13 @@ import java.util.ArrayList;
  * Created by Duy on 15-Jun-17.
  */
 
-public class FigletFragment extends Fragment implements ConvertContract.View, FigletAdapter.OnItemClickListener {
+public class FigletFragment extends Fragment implements FigletContract.View, FigletAdapter.OnItemClickListener {
     private static final String TAG = "FigletFragment";
     private ContentLoadingProgressBar mProgressBar;
     private Dialog dialog;
     private FigletAdapter mAdapter;
     @Nullable
-    private ConvertContract.Presenter mPresenter;
+    private FigletContract.Presenter mPresenter;
     private EditText mEditIn;
     private TextWatcher mInputTextWatcher = new TextWatcher() {
         @Override
@@ -99,7 +99,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
     }
 
     @Override
-    public void setPresenter(@Nullable ConvertContract.Presenter presenter) {
+    public void setPresenter(@Nullable FigletContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
@@ -130,12 +130,12 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_figlet, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEditIn = view.findViewById(R.id.edit_in);
 
@@ -145,7 +145,7 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         RecyclerView mRecyclerView = view.findViewById(R.id.listview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new FigletAdapter(getActivity(), view.findViewById(R.id.empty_view));
+        mAdapter = new FigletAdapter(getContext(), view.findViewById(R.id.empty_view));
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mEditIn.addTextChangedListener(mInputTextWatcher);
@@ -160,12 +160,6 @@ public class FigletFragment extends Fragment implements ConvertContract.View, Fi
         super.onStart();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mEditIn.setText(sharedPreferences.getString(TAG, ""));
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
 

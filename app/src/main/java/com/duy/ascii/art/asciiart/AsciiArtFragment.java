@@ -19,12 +19,13 @@ package com.duy.ascii.art.asciiart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.SimpleFragment;
+import com.duy.ascii.sharedcode.R;
 
 import java.util.ArrayList;
 
@@ -60,9 +61,9 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mAdapter = new AsciiArtAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
-
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mPresenter = new AsciiArtPresenter(getContext(), this);

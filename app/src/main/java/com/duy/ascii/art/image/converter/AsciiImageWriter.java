@@ -21,6 +21,8 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.duy.ascii.art.utils.FileUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,12 +36,11 @@ import java.util.Locale;
  */
 public class AsciiImageWriter {
 
-    public static final String PATH_IMAGE = new File(Environment.getExternalStorageDirectory(),
-            "AsciiArt" + File.separator + "Image").getPath();
-
-    public static final String PATH_FIGLET = new File(Environment.getExternalStorageDirectory(),
-            "AsciiArt" + File.separator + "Figlet").getPath();
     private static final DateFormat filenameDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+
+    static {
+        File sdCard = Environment.getExternalStorageDirectory();
+    }
 
     public static String saveImage(Context context, Bitmap image)
             throws IOException {
@@ -47,7 +48,7 @@ public class AsciiImageWriter {
         Boolean isSDPresent = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
         File imageFile;
         if (isSDPresent) {
-            imageFile = new File(PATH_IMAGE, datestr + ".png");
+            imageFile = new File(FileUtil.getImageDirectory(context), datestr + ".png");
             if (!imageFile.exists()) {
                 imageFile.getParentFile().mkdirs();
                 imageFile.createNewFile();

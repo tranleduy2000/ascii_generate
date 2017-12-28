@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -44,9 +45,8 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
 
     private ContentLoadingProgressBar mProgressBar;
     private BigFontAdapter mAdapter;
-    @Nullable
     private BigFontContract.Presenter mPresenter;
-    private EditText mEditIn;
+    private EditText mEditInput;
     private TextWatcher mInputTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,26 +121,27 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_bigfont, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEditIn = view.findViewById(R.id.edit_in);
+        mEditInput = view.findViewById(R.id.edit_in);
 
         mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setIndeterminate(false);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.listview);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new BigFontAdapter(getActivity(), view.findViewById(R.id.empty_view));
-        mRecyclerView.setAdapter(mAdapter);
+        RecyclerView recyclerView = view.findViewById(R.id.listview);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        mEditIn.addTextChangedListener(mInputTextWatcher);
+        mAdapter = new BigFontAdapter(getContext(), view.findViewById(R.id.empty_view));
+        recyclerView.setAdapter(mAdapter);
 
+        mEditInput.addTextChangedListener(mInputTextWatcher);
         createPresenter();
     }
 
@@ -152,7 +153,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
             InputStream[] inputStreams = new InputStream[names.length];
             for (int i = 0; i < names.length; i++) {
                 String name = names[i];
-                inputStreams[i] = assets.open("bigtext" + "/" + name);
+                inputStreams[i] = assets.open("bigtext/" + name);
             }
             mPresenter = new BigFontPresenter(inputStreams, this);
         } catch (Exception e) {
@@ -164,7 +165,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     @Override
     public void onResume() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditIn.setText(sharedPreferences.getString(TAG, ""));
+        mEditInput.setText(sharedPreferences.getString(TAG, ""));
         super.onResume();
     }
 
@@ -178,7 +179,7 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
     public void onPause() {
         super.onPause();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        sharedPreferences.edit().putString(TAG, mEditIn.getText().toString()).apply();
+        sharedPreferences.edit().putString(TAG, mEditInput.getText().toString()).apply();
         if (mPresenter != null) {
             mPresenter.cancel();
         }

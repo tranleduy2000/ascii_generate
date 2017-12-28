@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *         www.rigaut.com benoit@rigaut.com
  *         released with GPL the 13th of november 2000 (my birthday!)
  */
-public class ConvertModel {
+public class FigletModel {
     final public static int MAX_CHARS = 1024;
     public char hardblank;
     public int height = -1;
@@ -55,7 +55,7 @@ public class ConvertModel {
      * @param stream
      * @throws IOException
      */
-    public ConvertModel(InputStream stream) throws IOException {
+    public FigletModel(InputStream stream) throws IOException {
         font = new char[MAX_CHARS][][];
         BufferedReader data = null;
         String dummyS;

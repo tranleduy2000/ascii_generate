@@ -21,7 +21,8 @@
     android:layout_height="wrap_content"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:paddingEnd="8dp"
+    android:paddingRight="8dp">
 
     <HorizontalScrollView
         android:layout_width="0dp"
@@ -38,7 +39,7 @@
             android:focusable="true"
             android:foreground="?attr/selectableBackground"
             android:gravity="center_vertical"
-            android:padding="4dp"
+            android:padding="8dp"
             android:scrollbars="horizontal"
             android:textColor="?android:attr/textColorPrimary"
             tools:text="hello" />

@@ -25,8 +25,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.duy.ascii.art.utils.FileUtil;
 import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.art.image.converter.AsciiImageWriter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,9 +66,9 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void loadImage() {
-        File file = new File(AsciiImageWriter.PATH_IMAGE);
-        if (file.exists()) {
-            File[] files = file.listFiles();
+        File folder = (FileUtil.getImageDirectory(this));
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
             ArrayList<File> paths = new ArrayList<>();
             if (files != null) {
                 for (File f : files) {

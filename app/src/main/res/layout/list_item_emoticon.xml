@@ -22,6 +22,7 @@
     android:layout_height="wrap_content"
     android:minHeight="50dp"
     android:orientation="vertical"
+    app:cardCornerRadius="4dp"
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
 
@@ -62,6 +63,7 @@
             android:layout_gravity="right|top"
             android:background="?attr/selectableBackground"
             android:contentDescription="@string/copy"
+            android:padding="4dp"
             android:src="@drawable/ic_favorite_border_black_24dp"
             android:tint="?colorAccent" />
     </LinearLayout>

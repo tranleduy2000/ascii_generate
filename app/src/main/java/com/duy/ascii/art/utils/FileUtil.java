@@ -16,9 +16,12 @@
 
 package com.duy.ascii.art.utils;
 
+import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +34,7 @@ import java.util.regex.Pattern;
 public class FileUtil {
     public static final Pattern PATTERN_SLIP = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
     private static final String TAG = "FileUtil";
+    private static final String IMAGE_FOLDER_NAME = "Image";
 
     public static String streamToString(@NonNull InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -40,5 +44,20 @@ public class FileUtil {
             result.append(line).append("\n");
         }
         return result.toString();
+    }
+
+    public static File getImageDirectory(Context context) {
+        if (hasSdCard(context)) {
+            File file = new File(Environment.getExternalStorageDirectory(), IMAGE_FOLDER_NAME);
+            if (!file.exists()) file.mkdir();
+            return file;
+        }
+        File file = new File(context.getFilesDir(), IMAGE_FOLDER_NAME);
+        if (!file.exists()) file.mkdir();
+        return file;
+    }
+
+    private static boolean hasSdCard(Context context) {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 }

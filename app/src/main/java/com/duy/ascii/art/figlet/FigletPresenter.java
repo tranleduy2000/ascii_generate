@@ -30,21 +30,21 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Duy on 06-May-17.
  */
 
-public class FigletPresenter implements ConvertContract.Presenter {
+public class FigletPresenter implements FigletContract.Presenter {
     /**
-     * this maps wil be store {@link ConvertModel} created
+     * this maps wil be store {@link FigletModel} created
      */
-    private HashMap<String, ConvertModel> caches = new HashMap<>();
+    private HashMap<String, FigletModel> caches = new HashMap<>();
 
     private AssetManager assetManager;
-    private ConvertContract.View mView;
-    private ConvertModel mConvertModel;
+    private FigletContract.View mView;
+    private FigletModel mFigletModel;
     private long updateTime;
     private Handler handler = new Handler();
     private TaskGenerateData mTaskGenerateData;
     private ProcessData process = new ProcessData();
 
-    public FigletPresenter(AssetManager assetManager, @NonNull ConvertContract.View view) {
+    public FigletPresenter(AssetManager assetManager, @NonNull FigletContract.View view) {
         this.assetManager = assetManager;
         this.mView = view;
     }
@@ -54,7 +54,7 @@ public class FigletPresenter implements ConvertContract.Presenter {
             return caches.get(fontName).convert(data);
         } else {
             try {
-                caches.put(fontName, new ConvertModel(assetManager.open("fonts/" + fontName)));
+                caches.put(fontName, new FigletModel(assetManager.open("fonts/" + fontName)));
                 return caches.get(fontName).convert(data);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,7 +77,7 @@ public class FigletPresenter implements ConvertContract.Presenter {
     }
 
     @Nullable
-    public ConvertContract.View getView() {
+    public FigletContract.View getView() {
         return mView;
     }
 

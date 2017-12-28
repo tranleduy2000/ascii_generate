@@ -27,12 +27,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.R;
-import com.duy.ascii.art.utils.ShareUtil;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
+import com.duy.ascii.art.utils.ShareUtil;
+import com.duy.ascii.sharedcode.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ import java.util.List;
  * Created by Duy on 06-May-17.
  */
 
-public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHolder> {
+class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHolder> {
     private final List<String> objects = new ArrayList<>();
     private Context context;
     private LayoutInflater inflater;
@@ -51,7 +51,7 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
     private View emptyView;
     private DatabasePresenter mDatabasePresenter;
 
-    public BigFontAdapter(@NonNull Context context, @Nullable View emptyView) {
+    BigFontAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
@@ -144,7 +144,6 @@ public class BigFontAdapter extends RecyclerView.Adapter<BigFontAdapter.ViewHold
         notifyItemInserted(objects.size() - 1);
         invalidateEmptyView();
     }
-
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {

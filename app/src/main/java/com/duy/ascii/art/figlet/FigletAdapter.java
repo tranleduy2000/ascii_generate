@@ -27,25 +27,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duy.ascii.art.ImageFactory;
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
-import com.duy.ascii.art.image.converter.AsciiImageWriter;
+import com.duy.ascii.art.utils.FileUtil;
+import com.duy.ascii.sharedcode.R;
+import com.duy.common.media.ImageUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * Created by Duy on 06-May-17.
  */
 
-public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
+class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
-    private final List<String> objects = new ArrayList<>();
+    private final ArrayList<String> items = new ArrayList<>();
     private Context context;
     private LayoutInflater inflater;
     private ClipboardManagerCompat clipboardManagerCompat;
@@ -55,19 +57,18 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     private OnItemClickListener onItemClickListener;
     private int color;
 
-    public FigletAdapter(@NonNull Context context, @Nullable View emptyView) {
+    FigletAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.emptyView = emptyView;
         invalidateEmptyView();
         this.color = context.getResources().getColor(android.R.color.primary_text_dark);
-
-        objects.add(context.getString(R.string.figlet_msg));
+        items.add(context.getString(R.string.figlet_msg));
     }
 
     private void invalidateEmptyView() {
-        if (objects.size() > 0) {
+        if (items.size() > 0) {
             if (emptyView != null) {
                 emptyView.setVisibility(View.GONE);
             }
@@ -87,20 +88,13 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.txtContent.setTypeface(Typeface.MONOSPACE);
-        holder.txtContent.setText(objects.get(position));
-        holder.share.setOnClickListener(new View.OnClickListener() {
+        holder.txtContent.setText(items.get(position));
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
                     try {
-                        Bitmap image = ImageFactory.createImageFromView(holder.txtContent, Color.WHITE);
-                        File file = new File(AsciiImageWriter.PATH_FIGLET, System.currentTimeMillis() + ".png");
-                        if (!file.exists()) {
-                            file.getParentFile().mkdirs();
-                            file.createNewFile();
-                        }
-                        ImageFactory.writeToFile(image, file);
-                        image.recycle();
+                        File file = getImage(holder.txtContent);
                         onItemClickListener.onShareImage(file);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -109,15 +103,38 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
                 }
             }
         });
+        holder.imgSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    File file = getImage(holder.txtContent);
+                    if (ImageUtils.addImageToGallery(file, context)) {
+                        Toast.makeText(context, "Save in " + file.getPath(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //IO exception
+                }
+            }
+        });
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private File getImage(View view) throws IOException {
+        Bitmap image = ImageFactory.createImageFromView(view, Color.WHITE);
+        File file = new File(FileUtil.getImageDirectory(context), System.currentTimeMillis() + ".png");
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+        ImageFactory.writeToFile(image, file);
+        image.recycle();
+        return file;
     }
 
     @Override
     public int getItemCount() {
-        return objects.size();
-    }
-
-    public OnItemClickListener getOnItemClickListener() {
-        return onItemClickListener;
+        return items.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -125,15 +142,15 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     }
 
     public void clear() {
-        this.objects.clear();
-        objects.add(context.getString(R.string.figlet_msg));
+        this.items.clear();
+        items.add(context.getString(R.string.figlet_msg));
         notifyDataSetChanged();
         invalidateEmptyView();
     }
 
     public void add(String value) {
-        this.objects.add(value);
-        notifyItemInserted(objects.size() - 1);
+        this.items.add(value);
+        notifyItemInserted(items.size() - 1);
         invalidateEmptyView();
     }
 
@@ -146,13 +163,14 @@ public class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtContent;
-        public View share;
+        TextView txtContent;
+        View imgShare, imgSave;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.content);
-            share = itemView.findViewById(R.id.share);
+            imgShare = itemView.findViewById(R.id.img_share);
+            imgSave = itemView.findViewById(R.id.img_save);
         }
     }
 }

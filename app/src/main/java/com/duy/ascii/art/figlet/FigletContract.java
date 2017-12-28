@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Created by Duy on 15-Jun-17.
  */
 
-public class ConvertContract {
+public class FigletContract {
     public interface View {
         void showResult(@NonNull ArrayList<String> result);
 
