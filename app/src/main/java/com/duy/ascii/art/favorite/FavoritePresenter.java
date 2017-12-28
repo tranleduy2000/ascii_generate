@@ -45,18 +45,19 @@ public class FavoritePresenter implements FavoriteContract.Presenter {
     }
 
     @Override
-    public void load(int index) {
+    public void loadData() {
         view.showProgress();
         if (mLoadData != null && !mLoadData.isCancelled()) {
             mLoadData.cancel(true);
         }
-        mLoadData = new LoadDataTask(new LoadDataTask.Callback() {
+        LoadDataTask.Callback finish = new LoadDataTask.Callback() {
             @Override
             public void onResult(ArrayList<TextItem> list) {
                 view.hideProgress();
                 view.display(list);
             }
-        }, view, mDatabaseHelper);
+        };
+        mLoadData = new LoadDataTask(finish, view, mDatabaseHelper);
         mLoadData.execute();
     }
 

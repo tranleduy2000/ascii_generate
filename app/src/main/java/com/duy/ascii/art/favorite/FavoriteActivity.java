@@ -20,13 +20,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.R;
 
 import java.util.ArrayList;
 
@@ -49,15 +50,15 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteContr
         setTitle(R.string.favorite);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        mRecyclerView = findViewById(R.id.recycle_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mProgressBar = findViewById(R.id.progress_bar);
         mPresenter = new FavoritePresenter(this, this);
         mAdapter = new FavoriteAdapter(this, mPresenter.getDatabaseHelper());
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter.load(INDEX);
+        mPresenter.loadData();
     }
 
 

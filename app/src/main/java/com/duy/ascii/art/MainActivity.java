@@ -17,7 +17,6 @@
 package com.duy.ascii.art;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,7 +31,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import com.duy.ascii.art.asciiart.AsciiArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
@@ -48,12 +46,9 @@ import com.duy.ascii.sharedcode.BuildConfig;
 import com.duy.ascii.sharedcode.R;
 import com.duy.common.utils.StoreUtil;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kobakei.ratethisapp.RateThisApp;
-
-import static com.duy.common.purchase.Premium.isPremiumUser;
 
 
 /**
@@ -63,8 +58,7 @@ import static com.duy.common.purchase.Premium.isPremiumUser;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     @Nullable
-    private NativeExpressAdView mAdView;
-    private ViewGroup mContainerAd;
+    private AdView mAdView;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -104,43 +98,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadAdView() {
-        mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
+        ViewGroup mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
         View btnRemoveAd = mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads);
-        if (isPremiumUser(this)) {
+        if (AsciiPremium.isPremiumUser(this)) {
             btnRemoveAd.setVisibility(View.GONE);
             mContainerAd.setVisibility(View.GONE);
         } else {
             btnRemoveAd.setOnClickListener(this);
             btnRemoveAd.setVisibility(View.VISIBLE);
             mContainerAd.setVisibility(View.VISIBLE);
-            ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        mContainerAd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    } else {
-                        mContainerAd.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    }
-                    createNativeAdView();
-                }
-            };
-            mContainerAd.getViewTreeObserver().addOnGlobalLayoutListener(listener);
+            mAdView = mContainerAd.findViewById(R.id.ad_view);
+            AdRequest.Builder builder = new AdRequest.Builder();
+            if (BuildConfig.DEBUG) builder.addTestDevice("D2281648CE409430157A9596175BF172");
+            mAdView.loadAd(builder.build());
         }
-
     }
 
-    private void createNativeAdView() {
-        mAdView = new NativeExpressAdView(this);
-        mAdView.setAdUnitId(getString(R.string.ad_unit_main));
-        int width = (int) (mContainerAd.getWidth() / getResources().getDisplayMetrics().density);
-        mAdView.setAdSize(new AdSize(width, 250));
-
-        mContainerAd.removeAllViews();
-        mContainerAd.addView(mAdView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-        if (BuildConfig.DEBUG) builder.addTestDevice("D2281648CE409430157A9596175BF172");
-        mAdView.loadAd(builder.build());
-    }
 
     @Override
     protected void onPause() {

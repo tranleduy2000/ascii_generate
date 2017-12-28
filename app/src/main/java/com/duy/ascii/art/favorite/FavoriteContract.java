@@ -39,7 +39,7 @@ public class FavoriteContract {
     }
 
     public interface Presenter {
-        void load(int index);
+        void loadData();
 
         void stop();
     }

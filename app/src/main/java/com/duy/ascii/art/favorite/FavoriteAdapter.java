@@ -26,11 +26,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.favorite.localdata.DatabaseHelper;
 import com.duy.ascii.art.favorite.localdata.TextItem;
+import com.duy.ascii.sharedcode.R;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * Created by Duy on 06-May-17.
  */
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
     private static final String TAG = "ResultAdapter";
     private final ArrayList<TextItem> mObjects = new ArrayList<>();
@@ -48,7 +48,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     private ClipboardManagerCompat mClipboard;
     private DatabaseHelper mDatabaseHelper;
 
-    public FavoriteAdapter(@NonNull Context context, DatabaseHelper databaseHelper) {
+    FavoriteAdapter(@NonNull Context context, DatabaseHelper databaseHelper) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.mClipboard = ClipboardManagerCompatFactory.getManager(context);
@@ -121,15 +121,15 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtContent;
-        public View root, imgDelete;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtContent;
+        View root, imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.text);
-            root = itemView.findViewById(R.id.container);
             imgDelete = itemView.findViewById(R.id.img_delete);
+            root = itemView.findViewById(R.id.container);
         }
 
     }

@@ -67,7 +67,7 @@ dependencies {
 
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
-    compile 'com.google.firebase:firebase-database:11.0.4'
+    compile 'com.google.firebase:firebase-database:11.8.0'
 
     compile 'com.sothree.slidinguppanel:library:3.3.1'
     compile 'me.grantland:autofittextview:0.2.+'
