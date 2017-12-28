@@ -55,7 +55,8 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
     private View emptyView;
     @Nullable
     private OnItemClickListener onItemClickListener;
-    private int color;
+    private int backgroundColor;
+    private int textColor;
 
     FigletAdapter(@NonNull Context context, @Nullable View emptyView) {
         this.context = context;
@@ -63,7 +64,8 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
         this.emptyView = emptyView;
         invalidateEmptyView();
-        this.color = context.getResources().getColor(android.R.color.primary_text_dark);
+        this.textColor = context.getResources().getColor(android.R.color.primary_text_light);
+        this.backgroundColor = context.getResources().getColor(android.R.color.background_light);
         items.add(context.getString(R.string.figlet_msg));
     }
 
@@ -89,6 +91,8 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.txtContent.setTypeface(Typeface.MONOSPACE);
         holder.txtContent.setText(items.get(position));
+        holder.txtContent.setTextColor(textColor);
+        holder.txtContent.setBackgroundColor(backgroundColor);
         holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,8 +158,15 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
         invalidateEmptyView();
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        notifyDataSetChanged();
+
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
@@ -164,13 +175,15 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtContent;
-        View imgShare, imgSave;
+        View imgShare, imgSave, imgTextColor, imgBackgroundColor;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.content);
             imgShare = itemView.findViewById(R.id.img_share);
             imgSave = itemView.findViewById(R.id.img_save);
+            imgTextColor = itemView.findViewById(R.id.img_text_color);
+            imgBackgroundColor = itemView.findViewById(R.id.img_background_color);
         }
     }
 }

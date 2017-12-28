@@ -50,4 +50,6 @@
 
     <string name="ad_unit_main">ca-app-pub-9351804859208340/8950125006</string>
     <string name="remove_ads">Remove ads</string>
+    <string name="bg_color">Background color</string>
+    <string name="text_color">Text color</string>
 </resources>

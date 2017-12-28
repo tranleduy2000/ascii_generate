@@ -39,7 +39,6 @@ public class FigletContract {
 
         int getMaxProgress();
 
-        void setColor(int color);
 
         void showProgress();
 

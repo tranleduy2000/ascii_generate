@@ -17,6 +17,8 @@
 package com.duy.ascii.art;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
 
@@ -30,11 +32,15 @@ import java.io.IOException;
 
 public class ImageFactory {
 
-    public static Bitmap createImageFromView(View v, int background) {
-        v.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(v.getDrawingCache());
-        v.setDrawingCacheEnabled(false);
-        return bitmap;
+    public static Bitmap createImageFromView(View view, int background) {
+        Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(b);
+        Drawable bg = view.getBackground();
+        if (bg == null) {
+            canvas.drawColor(background);
+        }
+        view.draw(canvas);
+        return b;
     }
 
     public static Uri writeToFile(Bitmap bitmap, File out) throws IOException {

@@ -18,8 +18,10 @@ package com.duy.ascii.art.figlet;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +35,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -40,6 +45,8 @@ import android.widget.Toast;
 
 import com.duy.ascii.art.utils.ShareUtil;
 import com.duy.ascii.sharedcode.R;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -113,10 +120,6 @@ public class FigletFragment extends Fragment implements FigletContract.View, Fig
         return mProgressBar.getMax();
     }
 
-    @Override
-    public void setColor(int color) {
-        mAdapter.setColor(color);
-    }
 
     @Override
     public void showProgress() {
@@ -137,6 +140,7 @@ public class FigletFragment extends Fragment implements FigletContract.View, Fig
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
         mEditIn = view.findViewById(R.id.edit_in);
 
         mProgressBar = view.findViewById(R.id.progressBar);
@@ -201,4 +205,49 @@ public class FigletFragment extends Fragment implements FigletContract.View, Fig
         super.onDestroy();
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_figlet, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_background_color:
+                selectBackgroundColor();
+                break;
+            case R.id.action_text_color:
+                selectTextColor();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void selectTextColor() {
+        ColorPickerDialogBuilder.with(getContext())
+                .setPositiveButton("Select", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int color, Integer[] integers) {
+                        mAdapter.setTextColor(color);
+                    }
+                })
+                .initialColor(Color.BLACK)
+                .build()
+                .show();
+    }
+
+    private void selectBackgroundColor() {
+        ColorPickerDialogBuilder.with(getContext())
+                .setPositiveButton("Select", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int color, Integer[] integers) {
+                        mAdapter.setBackgroundColor(color);
+                    }
+                })
+                .initialColor(Color.WHITE)
+                .build()
+                .show();
+    }
 }

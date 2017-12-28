@@ -43,6 +43,7 @@ public class FigletActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.content, FigletFragment.newInstance()).commit();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
