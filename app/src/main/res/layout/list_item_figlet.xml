@@ -55,27 +55,6 @@
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_save_black_24dp" />
 
-            <ImageView
-                android:id="@+id/img_text_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:contentDescription="@string/share"
-                android:focusable="true"
-                android:foreground="?attr/selectableBackground"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_format_color_text_black_24dp" />
-
-            <ImageView
-                android:id="@+id/img_background_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:contentDescription="@string/share"
-                android:focusable="true"
-                android:foreground="?attr/selectableBackground"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_format_color_fill_black_24dp" />
         </LinearLayout>
 
         <HorizontalScrollView

@@ -14,13 +14,16 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_text_color"
-        android:icon="@drawable/ic_format_color_text_black_24dp"
-        android:title="@string/text_color" />
+        android:icon="@drawable/ic_format_color_text_white_24dp"
+        android:title="@string/text_color"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_background_color"
-        android:icon="@drawable/ic_format_color_fill_black_24dp"
-        android:title="@string/bg_color" />
+        android:icon="@drawable/ic_format_color_fill_white_24dp"
+        android:title="@string/bg_color"
+        app:showAsAction="ifRoom" />
 </menu>

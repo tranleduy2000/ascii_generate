@@ -158,15 +158,23 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
         invalidateEmptyView();
     }
 
-    public void setBackgroundColor(int backgroundColor) {
-        this.backgroundColor = backgroundColor;
-        notifyDataSetChanged();
-
+    public int getTextColor() {
+        return textColor;
     }
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
         notifyDataSetChanged();
+    }
+
+    int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        notifyDataSetChanged();
+
     }
 
     public interface OnItemClickListener {
@@ -175,15 +183,13 @@ class FigletAdapter extends RecyclerView.Adapter<FigletAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtContent;
-        View imgShare, imgSave, imgTextColor, imgBackgroundColor;
+        View imgShare, imgSave;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtContent = itemView.findViewById(R.id.content);
             imgShare = itemView.findViewById(R.id.img_share);
             imgSave = itemView.findViewById(R.id.img_save);
-            imgTextColor = itemView.findViewById(R.id.img_text_color);
-            imgBackgroundColor = itemView.findViewById(R.id.img_background_color);
         }
     }
 }

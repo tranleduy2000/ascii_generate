@@ -21,7 +21,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -233,7 +232,7 @@ public class FigletFragment extends Fragment implements FigletContract.View, Fig
                         mAdapter.setTextColor(color);
                     }
                 })
-                .initialColor(Color.BLACK)
+                .initialColor(mAdapter.getTextColor())
                 .build()
                 .show();
     }
@@ -246,7 +245,7 @@ public class FigletFragment extends Fragment implements FigletContract.View, Fig
                         mAdapter.setBackgroundColor(color);
                     }
                 })
-                .initialColor(Color.WHITE)
+                .initialColor(mAdapter.getBackgroundColor())
                 .build()
                 .show();
     }
