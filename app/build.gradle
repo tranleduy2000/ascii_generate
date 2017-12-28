@@ -29,6 +29,25 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    signingConfigs {
+        proRelease {
+        }
+        freeRelease {
+        }
+    }
+    flavorDimensions "applicationId"
+    productFlavors {
+        free {
+            signingConfig signingConfigs.freeRelease
+            applicationId "com.duy.asciiart"
+
+        }
+        pro {
+            signingConfig signingConfigs.proRelease
+            applicationId "com.duy.asciigenerator.pro"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -41,20 +60,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions "default"
-    productFlavors {
-        free {
-            applicationId "com.duy.asciiart"
-        }
-        pro {
-            applicationId "com.duy.asciigenerator.pro"
-        }
-    }
+
     externalNativeBuild {
         ndkBuild {
             path 'src/main/jni/Android.mk'
         }
     }
+}
+
+def Properties props = new Properties()
+def propFile = new File('common/signing.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+    android.signingConfigs.proRelease.storeFile = file(props['PRO_RELEASE_STORE_FILE'])
+    android.signingConfigs.proRelease.storePassword = props['PRO_RELEASE_STORE_PASSWORD']
+    android.signingConfigs.proRelease.keyAlias = props['PRO_RELEASE_KEY_ALIAS']
+    android.signingConfigs.proRelease.keyPassword = props['PRO_RELEASE_KEY_PASSWORD']
+
+    android.signingConfigs.freeRelease.storeFile = file(props['RELEASE_STORE_FILE'])
+    android.signingConfigs.freeRelease.storePassword = props['RELEASE_STORE_PASSWORD']
+    android.signingConfigs.freeRelease.keyAlias = props['RELEASE_KEY_ALIAS']
+    android.signingConfigs.freeRelease.keyPassword = props['RELEASE_KEY_PASSWORD']
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
+    throw new GradleException('signing.properties not found')
 }
 
 repositories {
@@ -70,7 +100,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.8.0'
 
     compile 'com.sothree.slidinguppanel:library:3.3.1'
-    compile 'me.grantland:autofittextview:0.2.+'
+    compile 'me.grantland:autofittextview:0.2.1'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
     compile 'io.github.kobakei:ratethisapp:1.2.0'
 }

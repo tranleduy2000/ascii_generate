@@ -33,7 +33,7 @@ import com.duy.ascii.art.ImageFactory;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.utils.FileUtil;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.common.media.ImageUtils;
 
 import java.io.File;

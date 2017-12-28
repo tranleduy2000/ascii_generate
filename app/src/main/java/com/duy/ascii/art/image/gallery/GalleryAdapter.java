@@ -26,7 +26,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.utils.ShareUtil;
 
 import java.io.File;

@@ -30,7 +30,7 @@ import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.favorite.localdata.DatabaseHelper;
 import com.duy.ascii.art.favorite.localdata.TextItem;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.util.ArrayList;
 

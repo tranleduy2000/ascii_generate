@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.BuildConfig;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.BuildConfig;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;

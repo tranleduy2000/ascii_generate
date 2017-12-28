@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.purcharse;
+package com.duy.ascii.art.purchase;
 
 import android.content.Context;
+
+import com.duy.common.purchase.Premium;
 
 /**
  * Created by Duy on 28-Dec-17.
@@ -24,14 +26,18 @@ import android.content.Context;
 
 public class AsciiPremium {
     public static boolean isPremiumUser(Context context) {
-        return isProPackage(context) || isPurcharse(context);
+        return isProPackage(context) || isPurchase(context);
     }
 
     private static boolean isProPackage(Context context) {
-        return false;
+        return context.getPackageName().equals("com.duy.asciigenerator.pro");
     }
 
-    private static boolean isPurcharse(Context context) {
-        return false;
+    private static boolean isPurchase(Context context) {
+        return Premium.isPremiumUser(context);
+    }
+
+    public static boolean isFreeUser(Context context) {
+        return !isPremiumUser(context);
     }
 }

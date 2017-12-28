@@ -25,7 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.duy.ascii.art.SimpleFragment;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.util.ArrayList;
 

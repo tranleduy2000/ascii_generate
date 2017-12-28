@@ -30,7 +30,7 @@ import com.duy.ascii.art.emojiart.activities.CreateEmojiActivity;
 import com.duy.ascii.art.emojiart.adapters.RecentAdapter;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
 import com.duy.ascii.art.emojiart.model.EmojiItem;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

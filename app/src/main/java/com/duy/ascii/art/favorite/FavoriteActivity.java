@@ -27,7 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.duy.ascii.art.favorite.localdata.TextItem;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.util.ArrayList;
 

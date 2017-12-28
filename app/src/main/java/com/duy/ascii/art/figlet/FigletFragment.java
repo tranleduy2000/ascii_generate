@@ -43,7 +43,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.duy.ascii.art.utils.ShareUtil;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 

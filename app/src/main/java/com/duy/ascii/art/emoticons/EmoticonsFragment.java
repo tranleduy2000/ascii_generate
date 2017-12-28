@@ -31,7 +31,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 
 import org.w3c.dom.Document;

@@ -22,7 +22,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 
 import java.util.ArrayList;

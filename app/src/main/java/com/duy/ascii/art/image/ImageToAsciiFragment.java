@@ -39,7 +39,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.image.converter.AsciiConverter;
 import com.duy.ascii.art.image.gallery.GalleryActivity;

@@ -23,7 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 /**
  * Created by Duy on 09-Aug-17.

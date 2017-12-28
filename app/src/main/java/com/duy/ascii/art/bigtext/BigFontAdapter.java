@@ -32,7 +32,7 @@ import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
 import com.duy.ascii.art.utils.ShareUtil;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.util.ArrayList;
 import java.util.List;

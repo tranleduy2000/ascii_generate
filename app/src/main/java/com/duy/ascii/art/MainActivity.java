@@ -39,10 +39,8 @@ import com.duy.ascii.art.emoticons.EmoticonsFragment;
 import com.duy.ascii.art.favorite.FavoriteActivity;
 import com.duy.ascii.art.figlet.FigletFragment;
 import com.duy.ascii.art.image.ImageToAsciiFragment;
-import com.duy.ascii.art.purcharse.AsciiPremium;
+import com.duy.ascii.art.purchase.AsciiPremium;
 import com.duy.ascii.art.unicodesymbol.SymbolFragment;
-import com.duy.ascii.sharedcode.BuildConfig;
-import com.duy.ascii.sharedcode.R;
 import com.duy.common.purchase.InAppPurchaseActivity;
 import com.duy.common.utils.StoreUtil;
 import com.google.android.gms.ads.AdRequest;
@@ -97,16 +95,16 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
     }
 
     private void loadAdView() {
-        ViewGroup mContainerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
+        ViewGroup containerAd = mNavigationView.getHeaderView(0).findViewById(R.id.container_ad);
         View btnRemoveAd = mNavigationView.getHeaderView(0).findViewById(R.id.btn_remove_ads);
         if (AsciiPremium.isPremiumUser(this)) {
             btnRemoveAd.setVisibility(View.GONE);
-            mContainerAd.setVisibility(View.GONE);
+            containerAd.setVisibility(View.GONE);
         } else {
             btnRemoveAd.setOnClickListener(this);
             btnRemoveAd.setVisibility(View.VISIBLE);
-            mContainerAd.setVisibility(View.VISIBLE);
-            mAdView = mContainerAd.findViewById(R.id.ad_view);
+            containerAd.setVisibility(View.VISIBLE);
+            mAdView = containerAd.findViewById(R.id.ad_view);
             AdRequest.Builder builder = new AdRequest.Builder();
             if (BuildConfig.DEBUG) builder.addTestDevice("D2281648CE409430157A9596175BF172");
             mAdView.loadAd(builder.build());
@@ -159,10 +157,6 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        if (AsciiPremium.isPremiumUser(this)) {
-            super.onBackPressed();
-            return;
-        }
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             super.onBackPressed();
         } else {

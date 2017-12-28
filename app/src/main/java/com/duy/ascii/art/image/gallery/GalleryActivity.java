@@ -26,7 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.duy.ascii.art.utils.FileUtil;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 
 import java.io.File;
 import java.util.ArrayList;

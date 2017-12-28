@@ -24,7 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.duy.ascii.art.BaseActivity;
-import com.duy.ascii.sharedcode.R;
+import com.duy.ascii.art.R;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
 import com.duy.ascii.art.emojiart.model.EmojiItem;
 
