@@ -14,6 +14,7 @@
   ~ limitations under the License.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
@@ -22,13 +23,22 @@
     <FrameLayout
         android:id="@+id/container_ad"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="250dp">
+
+        <com.google.android.gms.ads.AdView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adSize="MEDIUM_RECTANGLE"
+            app:adUnitId="@string/ad_unit_main">
+
+        </com.google.android.gms.ads.AdView>
+    </FrameLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_remove_ads"
         style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/donate_for_develop_remove_ads_get_pro_version" />
+        android:text="@string/remove_ads" />
 
 </LinearLayout>

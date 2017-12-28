@@ -137,7 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mContainerAd.removeAllViews();
         mContainerAd.addView(mAdView);
-        mAdView.loadAd(new AdRequest.Builder().build());
+        AdRequest.Builder builder = new AdRequest.Builder();
+        if (BuildConfig.DEBUG) builder.addTestDevice("D2281648CE409430157A9596175BF172");
+        mAdView.loadAd(builder.build());
     }
 
     @Override

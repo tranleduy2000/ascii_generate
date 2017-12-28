@@ -23,14 +23,14 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
-
     android:minHeight="50dp"
-    android:orientation="vertical"
+    app:cardCornerRadius="4dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <HorizontalScrollView
@@ -45,7 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:focusable="true"
+                android:foreground="?attr/selectableBackground"
                 android:gravity="center_vertical"
                 android:padding="4dp"
                 android:scrollbars="horizontal"
@@ -64,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:foreground="?attr/selectableBackground"
                 android:padding="4dp"
                 android:src="@drawable/ic_content_copy_black_24dp"
                 android:tint="?colorAccent" />
@@ -74,9 +76,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:foreground="?attr/selectableBackground"
                 android:padding="4dp"
-
                 android:src="@drawable/ic_share_black_24dp"
                 android:tint="?colorAccent" />
 
@@ -86,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:contentDescription="@string/copy"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:foreground="?attr/selectableBackground"
                 android:padding="4dp"
                 android:src="@drawable/ic_favorite_border_black_24dp"
                 android:tint="?colorAccent" />

@@ -24,7 +24,7 @@
     android:clickable="true"
     android:editable="false"
     android:focusableInTouchMode="false"
-    android:foreground="?attr/selectableItemBackground"
+    android:foreground="?attr/selectableBackground"
     android:gravity="center"
     android:padding="8dp"
     android:scrollbars="horizontal"

@@ -20,5 +20,6 @@
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="selectableBackground">?selectableItemBackgroundBorderless</item>
     </style>
 </resources>

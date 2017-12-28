@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:contentDescription="@string/share"
-                android:foreground="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableBackground"
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_share_black_24dp" />
 
