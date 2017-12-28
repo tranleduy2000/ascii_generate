@@ -1,6 +1,6 @@
 #include <jni.h>
 
-JNIEXPORT void JNICALL Java_com_duy_ascii_sharedcode_image_converter_AsciiConverter_getAsciiValuesBWNative(JNIEnv *env,
+JNIEXPORT void JNICALL Java_com_duy_ascii_art_image_converter_AsciiConverter_getAsciiValuesBWNative(JNIEnv *env,
                                                                                       jobject thiz,
                                                                                       jbyteArray jdata,
                                                                                       jint imageWidth,
@@ -44,7 +44,7 @@ JNIEXPORT void JNICALL Java_com_duy_ascii_sharedcode_image_converter_AsciiConver
 
 
 JNIEXPORT void JNICALL
-Java_com_duy_ascii_sharedcode_image_converter_AsciiConverter_getAsciiValuesWithColorNative(JNIEnv *env,
+Java_com_duy_ascii_art_image_converter_AsciiConverter_getAsciiValuesWithColorNative(JNIEnv *env,
                                                                                         jobject thiz,
                                                                                         jbyteArray jdata,
                                                                                         jint imageWidth,
@@ -143,7 +143,7 @@ Java_com_duy_ascii_sharedcode_image_converter_AsciiConverter_getAsciiValuesWithC
  * charsBitmap: array of pixels (grayscale) from a bitmap of each possible character.
  *     Width is (numValues * charWidth) and height is charHeight.
  */
-JNIEXPORT void JNICALL Java_com_duy_ascii_sharedcode_image_converter_AsciiRenderer_fillPixelsInRowNative(
+JNIEXPORT void JNICALL Java_com_duy_ascii_art_image_converter_AsciiRenderer_fillPixelsInRowNative(
         JNIEnv *env, jobject thiz,
         jintArray jrowPixels, jint numRowPixels,
         jintArray jasciiValues, jintArray jcolorValues, jint numValues,

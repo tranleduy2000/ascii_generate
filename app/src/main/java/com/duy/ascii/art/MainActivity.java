@@ -34,10 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.duy.ads.StoreUtil;
-import com.duy.ads.app.Compass;
-import com.duy.ascii.sharedcode.BuildConfig;
-import com.duy.ascii.sharedcode.R;
 import com.duy.ascii.art.asciiart.AsciiArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
 import com.duy.ascii.art.emoji.CategoriesEmojiFragment;
@@ -46,14 +42,18 @@ import com.duy.ascii.art.emoticons.EmoticonsFragment;
 import com.duy.ascii.art.favorite.FavoriteActivity;
 import com.duy.ascii.art.figlet.FigletFragment;
 import com.duy.ascii.art.image.ImageToAsciiFragment;
+import com.duy.ascii.art.purcharse.AsciiPremium;
 import com.duy.ascii.art.unicodesymbol.SymbolFragment;
+import com.duy.ascii.sharedcode.BuildConfig;
+import com.duy.ascii.sharedcode.R;
+import com.duy.common.utils.StoreUtil;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kobakei.ratethisapp.RateThisApp;
 
-import static com.duy.ads.app.Compass.isPremiumUser;
+import static com.duy.common.purchase.Premium.isPremiumUser;
 
 
 /**
@@ -187,13 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-
-        if (Compass.canShowDialog(this)) {
-            Compass.showGetAppDialog(this);
-            return;
-        }
-
-        if (isPremiumUser(this)) {
+        if (AsciiPremium.isPremiumUser(this)) {
             super.onBackPressed();
             return;
         }

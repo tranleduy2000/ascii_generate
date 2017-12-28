@@ -27,12 +27,10 @@ import com.duy.common.utils.DLog;
  */
 
 public class Premium {
-    public static final String BASE64_KEY = BuildConfig.BASE64_KEY;
-
+    static final String BASE64_KEY = BuildConfig.BASE64_KEY;
     //SKU for my product: the premium upgrade
-    public static final String SKU_PREMIUM = BuildConfig.SKU_PREMIUM;
+    static final String SKU_PREMIUM = BuildConfig.SKU_PREMIUM;
     private static final String TAG = "Premium";
-
     /**
      * Faster
      */
@@ -50,7 +48,7 @@ public class Premium {
     /**
      * Purchase user
      */
-    public static void setPremiumUser(Context context, boolean isPremium) {
+    static void setPremiumUser(Context context, boolean isPremium) {
         DLog.d(TAG, "setPremiumUser() called with: context = [" + context + "], isPremium = [" + isPremium + "]");
         IS_PREMIUM = isPremium;
         if (isPremium) {

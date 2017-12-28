@@ -41,7 +41,7 @@ public class FileUtil {
     public static boolean existFile(String file) {
         try {
             return new File(file).exists();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return false;
         }
     }
@@ -78,7 +78,8 @@ public class FileUtil {
         return s == null ? null : s.toString().trim();
     }
 
-    public static void saveLicence(Context context) {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    static void saveLicence(Context context) {
         String content = StringXor.encode(Installation.id(context));
         File file = new File(context.getCacheDir(), LICENSE_FILE_NAME);
         try {
@@ -86,9 +87,9 @@ public class FileUtil {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(content.getBytes());
-            fileOutputStream.close();
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(content.getBytes());
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,7 +98,7 @@ public class FileUtil {
     /**
      * Write licenced cache
      */
-    public static boolean licenseCached(Context context) {
+    static boolean licenseCached(Context context) {
         File file = new File(context.getCacheDir(), LICENSE_FILE_NAME);
         if (file.exists()) {
             String content = readFile(file);
@@ -111,11 +112,9 @@ public class FileUtil {
         return false;
     }
 
-    public static boolean clearLicence(Context context) {
+    @SuppressWarnings("UnusedReturnValue")
+    static boolean clearLicence(Context context) {
         File file = new File(context.getCacheDir(), LICENSE_FILE_NAME);
-        if (file.exists()) {
-            return file.delete();
-        }
-        return false;
+        return file.exists() && file.delete();
     }
 }
