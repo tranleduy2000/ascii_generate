@@ -26,11 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duy.ascii.art.R;
-import com.duy.ascii.art.utils.ShareUtil;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
+import com.duy.ascii.art.utils.ShareUtil;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
-    private final ArrayList<String> objects = new ArrayList<>();
+    private final ArrayList<String> mItems = new ArrayList<>();
     protected LayoutInflater inflater;
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
@@ -63,7 +63,7 @@ class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final String text = objects.get(position);
+        final String text = mItems.get(position);
         holder.txtContent.setText(text);
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,24 +90,25 @@ class EmoticonsAdapter extends RecyclerView.Adapter<EmoticonsAdapter.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return objects.size();
+        return mItems.size();
     }
 
     public void clear() {
-        this.objects.clear();
+        this.mItems.clear();
         notifyDataSetChanged();
     }
 
     public void add(String value) {
-        this.objects.add(value);
-        notifyItemInserted(objects.size() - 1);
+        this.mItems.add(value);
+        notifyItemInserted(mItems.size() - 1);
     }
 
     public void addAll(ArrayList<String> list) {
-        this.objects.clear();
-        this.objects.addAll(list);
+        this.mItems.clear();
+        this.mItems.addAll(list);
         notifyDataSetChanged();
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtContent;

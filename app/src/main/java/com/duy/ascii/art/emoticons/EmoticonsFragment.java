@@ -17,46 +17,41 @@
 package com.duy.ascii.art.emoticons;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
+import com.duy.ascii.art.emoticons.model.EmoticonCategory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by Duy on 9/27/2017.
  */
 
-public class EmoticonsFragment extends SimpleFragment implements EmoticonContract.View, HeaderAdapter.HeaderClickListener {
+public class EmoticonsFragment extends SimpleFragment implements EmoticonContract.View, EmoticonCategoriesAdapter.OnCategoryClickListener {
     protected EmoticonContract.Presenter mPresenter;
-    protected RecyclerView mHeader, mContent;
-    protected HeaderAdapter mAdapter;
+    protected RecyclerView mCategoriesView, mContentView;
+    protected EmoticonCategoriesAdapter mCategoriesAdapter;
     protected EmoticonsAdapter mContentAdapter;
     protected ContentLoadingProgressBar mProgressBar;
     private LoadDataTask mLoadDataTask;
-    private Toolbar mToolbar;
 
     public static EmoticonsFragment newInstance() {
 
@@ -75,31 +70,24 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mToolbar = getActivity().findViewById(R.id.toolbar);
-        mHeader = (RecyclerView) findViewById(R.id.recycle_view_header);
-        mHeader.setHasFixedSize(true);
-        mHeader.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new HeaderAdapter(getContext());
-        mHeader.setAdapter(mAdapter);
-        mHeader.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        mAdapter.setListener(this);
+        mCategoriesView = (RecyclerView) findViewById(R.id.recycle_view_header);
+        mCategoriesView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mCategoriesAdapter = new EmoticonCategoriesAdapter(getContext());
+        mCategoriesView.setAdapter(mCategoriesAdapter);
+        mCategoriesView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mCategoriesAdapter.setOnCategoryClickListener(this);
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.hide();
 
-        mContent = (RecyclerView) findViewById(R.id.recycle_view_content);
-        mContent.setHasFixedSize(true);
-        mContent.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        mContentView = (RecyclerView) findViewById(R.id.recycle_view_content);
+        mContentView.setHasFixedSize(true);
+        mContentView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         mContentAdapter = new EmoticonsAdapter(getContext());
-        mContent.setAdapter(mContentAdapter);
+        mContentView.setAdapter(mContentAdapter);
 
-
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String lastPath = pref.getString("last_path", "");
-        if (!lastPath.isEmpty()) {
-            onHeaderClick(lastPath);
-        }
+        mLoadDataTask = new LoadDataTask(getContext(), this);
+        mLoadDataTask.execute();
     }
 
     @Override
@@ -113,8 +101,8 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     }
 
     @Override
-    public void display(ArrayList<String> list) {
-
+    public void display(ArrayList<EmoticonCategory> list) {
+        mCategoriesAdapter.setData(list);
     }
 
     @Override
@@ -123,21 +111,9 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     }
 
     @Override
-    public void append(String value) {
-        mContentAdapter.add(value);
-    }
-
-    @Override
-    public void onHeaderClick(String path) {
-        mToolbar.setSubtitle(HeaderAdapter.refine(path.substring(path.lastIndexOf("/") + 1)));
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        pref.edit().putString("last_path", path).apply();
-        if (mLoadDataTask != null && !mLoadDataTask.isCancelled()) {
-            mLoadDataTask.cancel(true);
-        }
+    public void onHeaderClick(EmoticonCategory category) {
         mContentAdapter.clear();
-        mLoadDataTask = new LoadDataTask(getContext(), this);
-        mLoadDataTask.execute(path);
+        mContentAdapter.addAll(category.getData());
     }
 
     @Override
@@ -146,7 +122,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
         super.onDestroyView();
     }
 
-    private static class LoadDataTask extends AsyncTask<String, String, Void> {
+    private static class LoadDataTask extends AsyncTask<Void, Void, ArrayList<EmoticonCategory>> {
         private Context context;
         private EmoticonContract.View view;
 
@@ -162,44 +138,53 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected ArrayList<EmoticonCategory> doInBackground(Void... params) {
             AssetManager assets = context.getAssets();
+            ArrayList<EmoticonCategory> categories = new ArrayList<>();
             try {
-                InputStream stream = assets.open(params[0]);
-                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-                Document doc = documentBuilder.parse(stream);
-                Element root = doc.getDocumentElement();
-                NodeList name = root.getElementsByTagName("name");
-                NodeList data = root.getElementsByTagName("data");
-                for (int i = 0; i < data.getLength(); i++) {
-                    Element list = (Element) data.item(i);
-                    NodeList items = list.getElementsByTagName("item");
-                    for (int j = 0; j < items.getLength(); j++) {
-                        if (isCancelled()) return null;
-                        Node item = items.item(j);
-                        String string = item.getChildNodes().item(0).getTextContent();
-                        publishProgress(string);
+                String[] files = assets.list("emoticons2");
+                for (String fileName : files) {
+                    if (isCancelled()) break;
+                    InputStream stream = assets.open("emoticons2" + "/" + fileName);
+                    JSONObject object = new JSONObject(streamToString(stream));
+                    JSONArray jsonArray = object.getJSONArray("data");
+                    ArrayList<String> data = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        data.add(jsonArray.getString(i));
                     }
+                    EmoticonCategory item = new EmoticonCategory(
+                            object.getString("title"),
+                            object.getString("description"),
+                            data);
+                    categories.add(item);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
+            return categories;
         }
 
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            if (!isCancelled()) {
-                view.append(values[0]);
+        private String streamToString(InputStream stream) throws IOException {
+            final int bufferSize = 1024;
+            final char[] buffer = new char[bufferSize];
+            final StringBuilder out = new StringBuilder();
+            Reader in = new InputStreamReader(stream, "UTF-8");
+            for (; ; ) {
+                int rsz = in.read(buffer, 0, buffer.length);
+                if (rsz < 0)
+                    break;
+                out.append(buffer, 0, rsz);
             }
+            return out.toString();
         }
 
+
         @Override
-        protected void onPostExecute(Void list) {
+        protected void onPostExecute(ArrayList<EmoticonCategory> list) {
             super.onPostExecute(list);
+            if (isCancelled()) return;
             view.hideProgress();
+            view.display(list);
         }
     }
 }

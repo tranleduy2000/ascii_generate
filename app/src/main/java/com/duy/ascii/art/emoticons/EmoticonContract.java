@@ -16,23 +16,24 @@
 
 package com.duy.ascii.art.emoticons;
 
+import com.duy.ascii.art.emoticons.model.EmoticonCategory;
+
 import java.util.ArrayList;
 
 /**
  * Created by Duy on 03-Jul-17.
  */
 
- class EmoticonContract {
+class EmoticonContract {
     public interface View {
         void showProgress();
 
         void hideProgress();
 
-        void display(ArrayList<String> list);
+        void display(ArrayList<EmoticonCategory> list);
 
         void setPresenter(Presenter presenter);
 
-        void append(String value);
     }
 
     public interface Presenter {

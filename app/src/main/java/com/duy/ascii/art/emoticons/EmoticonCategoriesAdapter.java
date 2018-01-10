@@ -25,81 +25,65 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.duy.ascii.art.R;
+import com.duy.ascii.art.emoticons.model.EmoticonCategory;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 
 /**
  * Created by Duy on 06-May-17.
  */
 
- class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> {
+class EmoticonCategoriesAdapter extends RecyclerView.Adapter<EmoticonCategoriesAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private static final String PATH = "emoticons";
-    private final ArrayList<String> objects = new ArrayList<>();
-    protected LayoutInflater inflater;
-    private Context context;
-    private HeaderClickListener listener;
+    private final ArrayList<EmoticonCategory> mCategories = new ArrayList<>();
+    protected LayoutInflater mInflater;
+    private OnCategoryClickListener mOnCategoryClickListener;
 
 
-    public HeaderAdapter(@NonNull Context context) {
-        this.context = context;
-        this.inflater = LayoutInflater.from(context);
-        try {
-            String[] list = context.getAssets().list(PATH);
-            Collections.addAll(objects, list);
-            Collections.sort(objects);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public EmoticonCategoriesAdapter(@NonNull Context context) {
+        this.mInflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<EmoticonCategory> categories) {
+        mCategories.clear();
+        mCategories.addAll(categories);
+        notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_header_emoticons, parent, false);
+        View view = mInflater.inflate(R.layout.list_item_header_emoticons, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final String text = objects.get(position);
-        holder.txtContent.setText(refine(text));
+        final EmoticonCategory category = mCategories.get(position);
+        holder.txtContent.setText(category.getTitle());
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null) listener.onHeaderClick(PATH + "/" + text);
+                if (mOnCategoryClickListener != null) {
+                    mOnCategoryClickListener.onHeaderClick(category);
+                }
             }
         });
     }
 
-    public static String refine(String text) {
-        if (text.contains(".")) {
-            text = text.substring(0, text.indexOf("."));
-        }
-        String name = Character.toUpperCase(text.charAt(0)) + "";
-        for (int i = 1; i < text.length(); i++) {
-            if (Character.isUpperCase(text.charAt(i))) {
-                name += " " + text.charAt(i);
-            } else {
-                name += text.charAt(i);
-            }
-        }
-        return name;
-    }
-
     @Override
     public int getItemCount() {
-        return objects.size();
+        return mCategories.size();
     }
 
-    public void setListener(HeaderClickListener listener) {
-        this.listener = listener;
+    public void setOnCategoryClickListener(OnCategoryClickListener onCategoryClickListener) {
+        this.mOnCategoryClickListener = onCategoryClickListener;
     }
 
-    public interface HeaderClickListener {
-        void onHeaderClick(String path);
+    public interface OnCategoryClickListener {
+        void onHeaderClick(EmoticonCategory category);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
