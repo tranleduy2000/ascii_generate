@@ -29,6 +29,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     signingConfigs {
         proRelease {
         }
@@ -93,6 +98,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    testCompile 'org.json:json:20140107'
     compile project(':common')
 
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
@@ -103,5 +109,7 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.1'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
     compile 'io.github.kobakei:ratethisapp:1.2.0'
+
+    debugCompile 'org.jsoup:jsoup:1.11.2'
 }
 apply plugin: 'com.google.gms.google-services'
