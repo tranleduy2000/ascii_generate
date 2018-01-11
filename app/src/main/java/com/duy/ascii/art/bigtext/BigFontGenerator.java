@@ -28,11 +28,11 @@ import java.util.regex.Matcher;
  * Created by Duy on 07-Jul-17.
  */
 
-public class Reader {
+public class BigFontGenerator {
     private boolean loaded = false;
     private ArrayList<HashMap<Character, String>> fonts;
 
-    public Reader() {
+    public BigFontGenerator() {
         fonts = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class Reader {
         return loaded;
     }
 
-    public void loadAndClose(InputStream[] inputStream) {
+    public void load(InputStream[] inputStream) {
         for (InputStream stream : inputStream) {
             try {
                 Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
@@ -54,12 +54,6 @@ public class Reader {
                 fonts.add(font);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         }
         loaded = true;
@@ -69,30 +63,42 @@ public class Reader {
         return fonts.size();
     }
 
+    /**
+     * Convert simple text to big text
+     *
+     * @param text     - input
+     * @param position - font position
+     * @return the big text
+     */
     public String convert(String text, int position) {
 
-        HashMap<Character, String> hashMap = fonts.get(position);
-        ArrayList<String> chars = new ArrayList<>();
+        //prepare all characters
+        HashMap<Character, String> font = fonts.get(position);
+        ArrayList<String> characters = new ArrayList<>();
         for (int i = 0; i < text.length(); i++) {
-            String s = hashMap.get(Character.toUpperCase(text.charAt(i)));
-            if (s == null) {
+            String cChar = font.get(Character.toUpperCase(text.charAt(i)));
+            if (cChar == null) {
                 throw new UnsupportedOperationException("Invalid character " + text.charAt(i));
             }
-            chars.add(s);
+            characters.add(cChar);
         }
+
+        //make result
         StringBuilder result = new StringBuilder();
-        String[][] maps = new String[chars.size()][chars.get(0).split("\\n").length];
-        for (int i = 0; i < chars.size(); i++) {
-            maps[i] = chars.get(i).split("\\n");
+        int row = characters.size();
+        int column = characters.get(0).split("\\n").length;
+
+        String[][] data = new String[row][column];
+        for (int i = 0; i < row; i++) {
+            data[i] = characters.get(i).split("\\n");
         }
 
-        for (int j = 0; j < maps[0].length; j++) {
-            for (int i = 0; i < chars.size(); i++) {
-                result.append(maps[i][j]);
+        for (int j = 0; j < column; j++) {
+            for (int i = 0; i < row; i++) {
+                result.append(data[i][j]);
             }
-            result.append("\n");
+            if (j != column - 1) result.append("\n");
         }
-
 
         return result.toString();
     }

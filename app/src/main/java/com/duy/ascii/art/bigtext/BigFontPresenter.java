@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 public class BigFontPresenter implements BigFontContract.Presenter {
-    private Reader cache = new Reader();
+    private BigFontGenerator cache = new BigFontGenerator();
     private InputStream[] inputStreams;
     private BigFontContract.View view;
     private ProcessData process = new ProcessData();
@@ -74,7 +75,14 @@ public class BigFontPresenter implements BigFontContract.Presenter {
         @Override
         protected Void doInBackground(String... params) {
             if (!cache.isLoaded()) {
-                cache.loadAndClose(inputStreams);
+                cache.load(inputStreams);
+                for (InputStream inputStream : inputStreams) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             int size = cache.getSize();
 

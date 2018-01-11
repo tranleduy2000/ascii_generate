@@ -66,16 +66,19 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.app_name);
-
         bindView();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
                 .replace(R.id.content, EmojiCategoriesFragment.newInstance())
                 .commit();
-        loadAdView();
+        loadAdView();*/
 
 
+        showDialogRate();
+    }
+
+    private void showDialogRate() {
         // Monitor launch times and interval from installation
         RateThisApp.onCreate(this);
         // If the condition is satisfied, "Rate this app" dialog will be shown
