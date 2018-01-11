@@ -42,7 +42,7 @@ import javax.xml.transform.TransformerException;
 public class GetEmoticons extends TestCase {
 
     private File getDataDir() {
-        String path = System.getProperty("user.dir") + File.separator + "data" + File.separator + "emoticons";
+        String path = "C:\\github\\ascii_generate\\app\\src\\main\\assets\\emoticons";
         return new File(path);
     }
 
@@ -99,7 +99,9 @@ public class GetEmoticons extends TestCase {
                         for (Element value : td) {
                             if (value.childNodeSize() > 0) {
                                 if (!(value.childNode(0) instanceof Comment)) {
-                                    list.add(value.childNode(0).toString().trim());
+                                    TextNode emoticonNode = (TextNode) value.childNode(0);
+                                    String text = emoticonNode.text();
+                                    list.add(text);
                                 }
                             }
                         }
@@ -117,7 +119,7 @@ public class GetEmoticons extends TestCase {
 
         if (title == null || content == null || content.isEmpty()) return;
 
-        String fileName =  title.replaceAll("[^a-zA-Z0-9-_\\.]", "") + ".json";
+        String fileName = title.replaceAll("[^a-zA-Z0-9-_\\.]", "") + ".json";
         File file = new File(getDataDir(), fileName);
 
         if (!file.getParentFile().exists()) {

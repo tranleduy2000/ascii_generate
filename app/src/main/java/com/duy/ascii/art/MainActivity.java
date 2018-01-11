@@ -71,7 +71,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, AsciiArtFragment.newInstance())
+                .replace(R.id.content, EmoticonsFragment.newInstance())
                 .commit();
         loadAdView();
 
