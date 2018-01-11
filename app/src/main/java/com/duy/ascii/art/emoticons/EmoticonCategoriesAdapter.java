@@ -71,6 +71,15 @@ class EmoticonCategoriesAdapter extends RecyclerView.Adapter<EmoticonCategoriesA
                 }
             }
         });
+        holder.root.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnCategoryClickListener != null) {
+                    mOnCategoryClickListener.onHeaderLongClick(holder.root, category);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -84,6 +93,8 @@ class EmoticonCategoriesAdapter extends RecyclerView.Adapter<EmoticonCategoriesA
 
     public interface OnCategoryClickListener {
         void onHeaderClick(EmoticonCategory category);
+
+        void onHeaderLongClick(View view, EmoticonCategory category);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

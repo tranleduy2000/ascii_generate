@@ -26,6 +26,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.duy.ascii.art.R;
@@ -41,6 +42,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
+
 /**
  * Created by Duy on 9/27/2017.
  */
@@ -52,6 +55,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     protected EmoticonsAdapter mContentAdapter;
     protected ContentLoadingProgressBar mProgressBar;
     private LoadDataTask mLoadDataTask;
+    private Toolbar mToolbar;
 
     public static EmoticonsFragment newInstance() {
 
@@ -70,6 +74,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mToolbar = getActivity().findViewById(R.id.toolbar);
         mCategoriesView = (RecyclerView) findViewById(R.id.recycle_view_header);
         mCategoriesView.setLayoutManager(new LinearLayoutManager(getContext()));
         mCategoriesAdapter = new EmoticonCategoriesAdapter(getContext());
@@ -112,9 +117,31 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
 
     @Override
     public void onHeaderClick(EmoticonCategory category) {
+        mToolbar.setSubtitle(category.getTitle());
         mContentAdapter.clear();
         mContentAdapter.addAll(category.getData());
     }
+
+    @Override
+    public void onHeaderLongClick(View view, EmoticonCategory category) {
+        bottomToolTipDialogBox(view, category.getDescription());
+    }
+
+    public void bottomToolTipDialogBox(View view, String description) {
+        Tooltip.Builder builder = new Tooltip.Builder(101)
+                .anchor(view, Tooltip.Gravity.BOTTOM)
+                .closePolicy(new Tooltip.ClosePolicy()
+                        .insidePolicy(true, false)
+                        .outsidePolicy(true, false), 4000)
+                .activateDelay(900)
+                .showDelay(400)
+                .text(description)
+                .maxWidth(600)
+                .withArrow(true)
+                .withOverlay(true);
+        Tooltip.make(getContext(), builder.build()).show();
+    }
+
 
     @Override
     public void onDestroyView() {

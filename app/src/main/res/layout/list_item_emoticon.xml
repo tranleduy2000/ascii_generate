@@ -31,30 +31,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <HorizontalScrollView
-            android:layout_width="0dp"
+        <com.duy.ascii.art.view.BaseTextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_weight="1"
-            android:fillViewport="true"
-            android:scrollbarSize="4dp">
+            android:clickable="true"
+            android:editable="false"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:foreground="?attr/selectableBackground"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="?android:attr/textColorPrimary"
+            tools:text="hello" />
 
-            <com.duy.ascii.art.view.BaseTextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:editable="false"
-                android:focusableInTouchMode="false"
-                android:foreground="?attr/selectableBackground"
-                android:gravity="center"
-                android:padding="8dp"
-                android:scrollbars="horizontal"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="?android:attr/textColorPrimary"
-                tools:text="hello" />
-
-        </HorizontalScrollView>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/img_favorite"
