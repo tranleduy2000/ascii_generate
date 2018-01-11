@@ -1,0 +1,506 @@
+{
+  "data": [
+    {
+      "emoji": "🚣",
+      "desc": " Person Rowing Boat"
+    },
+    {
+      "emoji": "🏎",
+      "desc": " Racing Car"
+    },
+    {
+      "emoji": "🏍",
+      "desc": " Motorcycle"
+    },
+    {
+      "emoji": "🗾",
+      "desc": " Map of Japan"
+    },
+    {
+      "emoji": "🏔",
+      "desc": " Snow-Capped Mountain"
+    },
+    {
+      "emoji": "⛰",
+      "desc": " Mountain"
+    },
+    {
+      "emoji": "🌋",
+      "desc": " Volcano"
+    },
+    {
+      "emoji": "🗻",
+      "desc": " Mount Fuji"
+    },
+    {
+      "emoji": "🏕",
+      "desc": " Camping"
+    },
+    {
+      "emoji": "🏖",
+      "desc": " Beach With Umbrella"
+    },
+    {
+      "emoji": "🏜",
+      "desc": " Desert"
+    },
+    {
+      "emoji": "🏝",
+      "desc": " Desert Island"
+    },
+    {
+      "emoji": "🏞",
+      "desc": " National Park"
+    },
+    {
+      "emoji": "🏟",
+      "desc": " Stadium"
+    },
+    {
+      "emoji": "🏛",
+      "desc": " Classical Building"
+    },
+    {
+      "emoji": "🏗",
+      "desc": " Building Construction"
+    },
+    {
+      "emoji": "🏘",
+      "desc": " Houses"
+    },
+    {
+      "emoji": "🏚",
+      "desc": " Derelict House"
+    },
+    {
+      "emoji": "🏠",
+      "desc": " House"
+    },
+    {
+      "emoji": "🏡",
+      "desc": " House With Garden"
+    },
+    {
+      "emoji": "🏢",
+      "desc": " Office Building"
+    },
+    {
+      "emoji": "🏣",
+      "desc": " Japanese Post Office"
+    },
+    {
+      "emoji": "🏤",
+      "desc": " Post Office"
+    },
+    {
+      "emoji": "🏥",
+      "desc": " Hospital"
+    },
+    {
+      "emoji": "🏦",
+      "desc": " Bank"
+    },
+    {
+      "emoji": "🏨",
+      "desc": " Hotel"
+    },
+    {
+      "emoji": "🏩",
+      "desc": " Love Hotel"
+    },
+    {
+      "emoji": "🏪",
+      "desc": " Convenience Store"
+    },
+    {
+      "emoji": "🏫",
+      "desc": " School"
+    },
+    {
+      "emoji": "🏬",
+      "desc": " Department Store"
+    },
+    {
+      "emoji": "🏭",
+      "desc": " Factory"
+    },
+    {
+      "emoji": "🏯",
+      "desc": " Japanese Castle"
+    },
+    {
+      "emoji": "🏰",
+      "desc": " Castle"
+    },
+    {
+      "emoji": "💒",
+      "desc": " Wedding"
+    },
+    {
+      "emoji": "🗼",
+      "desc": " Tokyo Tower"
+    },
+    {
+      "emoji": "🗽",
+      "desc": " Statue of Liberty"
+    },
+    {
+      "emoji": "⛪",
+      "desc": " Church"
+    },
+    {
+      "emoji": "🕌",
+      "desc": " Mosque"
+    },
+    {
+      "emoji": "🕍",
+      "desc": " Synagogue"
+    },
+    {
+      "emoji": "⛩",
+      "desc": " Shinto Shrine"
+    },
+    {
+      "emoji": "🕋",
+      "desc": " Kaaba"
+    },
+    {
+      "emoji": "⛲",
+      "desc": " Fountain"
+    },
+    {
+      "emoji": "⛺",
+      "desc": " Tent"
+    },
+    {
+      "emoji": "🌁",
+      "desc": " Foggy"
+    },
+    {
+      "emoji": "🌃",
+      "desc": " Night With Stars"
+    },
+    {
+      "emoji": "🏙",
+      "desc": " Cityscape"
+    },
+    {
+      "emoji": "🌄",
+      "desc": " Sunrise Over Mountains"
+    },
+    {
+      "emoji": "🌅",
+      "desc": " Sunrise"
+    },
+    {
+      "emoji": "🌆",
+      "desc": " Cityscape at Dusk"
+    },
+    {
+      "emoji": "🌇",
+      "desc": " Sunset"
+    },
+    {
+      "emoji": "🌉",
+      "desc": " Bridge at Night"
+    },
+    {
+      "emoji": "🌌",
+      "desc": " Milky Way"
+    },
+    {
+      "emoji": "🎠",
+      "desc": " Carousel Horse"
+    },
+    {
+      "emoji": "🎡",
+      "desc": " Ferris Wheel"
+    },
+    {
+      "emoji": "🎢",
+      "desc": " Roller Coaster"
+    },
+    {
+      "emoji": "🚂",
+      "desc": " Locomotive"
+    },
+    {
+      "emoji": "🚃",
+      "desc": " Railway Car"
+    },
+    {
+      "emoji": "🚄",
+      "desc": " High-Speed Train"
+    },
+    {
+      "emoji": "🚅",
+      "desc": " Bullet Train"
+    },
+    {
+      "emoji": "🚆",
+      "desc": " Train"
+    },
+    {
+      "emoji": "🚇",
+      "desc": " Metro"
+    },
+    {
+      "emoji": "🚈",
+      "desc": " Light Rail"
+    },
+    {
+      "emoji": "🚉",
+      "desc": " Station"
+    },
+    {
+      "emoji": "🚊",
+      "desc": " Tram"
+    },
+    {
+      "emoji": "🚝",
+      "desc": " Monorail"
+    },
+    {
+      "emoji": "🚞",
+      "desc": " Mountain Railway"
+    },
+    {
+      "emoji": "🚋",
+      "desc": " Tram Car"
+    },
+    {
+      "emoji": "🚌",
+      "desc": " Bus"
+    },
+    {
+      "emoji": "🚍",
+      "desc": " Oncoming Bus"
+    },
+    {
+      "emoji": "🚎",
+      "desc": " Trolleybus"
+    },
+    {
+      "emoji": "🚐",
+      "desc": " Minibus"
+    },
+    {
+      "emoji": "🚑",
+      "desc": " Ambulance"
+    },
+    {
+      "emoji": "🚒",
+      "desc": " Fire Engine"
+    },
+    {
+      "emoji": "🚓",
+      "desc": " Police Car"
+    },
+    {
+      "emoji": "🚔",
+      "desc": " Oncoming Police Car"
+    },
+    {
+      "emoji": "🚕",
+      "desc": " Taxi"
+    },
+    {
+      "emoji": "🚖",
+      "desc": " Oncoming Taxi"
+    },
+    {
+      "emoji": "🚗",
+      "desc": " Automobile"
+    },
+    {
+      "emoji": "🚘",
+      "desc": " Oncoming Automobile"
+    },
+    {
+      "emoji": "🚚",
+      "desc": " Delivery Truck"
+    },
+    {
+      "emoji": "🚛",
+      "desc": " Articulated Lorry"
+    },
+    {
+      "emoji": "🚜",
+      "desc": " Tractor"
+    },
+    {
+      "emoji": "🚲",
+      "desc": " Bicycle"
+    },
+    {
+      "emoji": "🛴",
+      "desc": " Kick Scooter"
+    },
+    {
+      "emoji": "🛵",
+      "desc": " Motor Scooter"
+    },
+    {
+      "emoji": "🚏",
+      "desc": " Bus Stop"
+    },
+    {
+      "emoji": "🛤",
+      "desc": " Railway Track"
+    },
+    {
+      "emoji": "⛽",
+      "desc": " Fuel Pump"
+    },
+    {
+      "emoji": "🚨",
+      "desc": " Police Car Light"
+    },
+    {
+      "emoji": "🚥",
+      "desc": " Horizontal Traffic Light"
+    },
+    {
+      "emoji": "🚦",
+      "desc": " Vertical Traffic Light"
+    },
+    {
+      "emoji": "🚧",
+      "desc": " Construction"
+    },
+    {
+      "emoji": "⚓",
+      "desc": " Anchor"
+    },
+    {
+      "emoji": "⛵",
+      "desc": " Sailboat"
+    },
+    {
+      "emoji": "🚤",
+      "desc": " Speedboat"
+    },
+    {
+      "emoji": "🛳",
+      "desc": " Passenger Ship"
+    },
+    {
+      "emoji": "⛴",
+      "desc": " Ferry"
+    },
+    {
+      "emoji": "🛥",
+      "desc": " Motor Boat"
+    },
+    {
+      "emoji": "🚢",
+      "desc": " Ship"
+    },
+    {
+      "emoji": "✈",
+      "desc": " Airplane"
+    },
+    {
+      "emoji": "🛩",
+      "desc": " Small Airplane"
+    },
+    {
+      "emoji": "🛫",
+      "desc": " Airplane Departure"
+    },
+    {
+      "emoji": "🛬",
+      "desc": " Airplane Arrival"
+    },
+    {
+      "emoji": "💺",
+      "desc": " Seat"
+    },
+    {
+      "emoji": "🚁",
+      "desc": " Helicopter"
+    },
+    {
+      "emoji": "🚟",
+      "desc": " Suspension Railway"
+    },
+    {
+      "emoji": "🚠",
+      "desc": " Mountain Cableway"
+    },
+    {
+      "emoji": "🚡",
+      "desc": " Aerial Tramway"
+    },
+    {
+      "emoji": "🛰",
+      "desc": " Satellite"
+    },
+    {
+      "emoji": "🚀",
+      "desc": " Rocket"
+    },
+    {
+      "emoji": "🛸",
+      "desc": " Flying Saucer"
+    },
+    {
+      "emoji": "🌠",
+      "desc": " Shooting Star"
+    },
+    {
+      "emoji": "⛱",
+      "desc": " Umbrella on Ground"
+    },
+    {
+      "emoji": "🎆",
+      "desc": " Fireworks"
+    },
+    {
+      "emoji": "🎇",
+      "desc": " Sparkler"
+    },
+    {
+      "emoji": "🎑",
+      "desc": " Moon Viewing Ceremony"
+    },
+    {
+      "emoji": "💴",
+      "desc": " Yen Banknote"
+    },
+    {
+      "emoji": "💵",
+      "desc": " Dollar Banknote"
+    },
+    {
+      "emoji": "💶",
+      "desc": " Euro Banknote"
+    },
+    {
+      "emoji": "💷",
+      "desc": " Pound Banknote"
+    },
+    {
+      "emoji": "🗿",
+      "desc": " Moai"
+    },
+    {
+      "emoji": "🛂",
+      "desc": " Passport Control"
+    },
+    {
+      "emoji": "🛃",
+      "desc": " Customs"
+    },
+    {
+      "emoji": "🛄",
+      "desc": " Baggage Claim"
+    },
+    {
+      "emoji": "🛅",
+      "desc": " Left Luggage"
+    }
+  ],
+  "description": "Emojis for varied scenes, locations, buildings and modes of transport.",
+  "title": "🌇 Travel & Places"
+}

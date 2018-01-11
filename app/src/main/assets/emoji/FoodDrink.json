@@ -1,0 +1,394 @@
+{
+  "data": [
+    {
+      "emoji": "🍇",
+      "desc": " Grapes"
+    },
+    {
+      "emoji": "🍈",
+      "desc": " Melon"
+    },
+    {
+      "emoji": "🍉",
+      "desc": " Watermelon"
+    },
+    {
+      "emoji": "🍊",
+      "desc": " Tangerine"
+    },
+    {
+      "emoji": "🍋",
+      "desc": " Lemon"
+    },
+    {
+      "emoji": "🍌",
+      "desc": " Banana"
+    },
+    {
+      "emoji": "🍍",
+      "desc": " Pineapple"
+    },
+    {
+      "emoji": "🍎",
+      "desc": " Red Apple"
+    },
+    {
+      "emoji": "🍏",
+      "desc": " Green Apple"
+    },
+    {
+      "emoji": "🍐",
+      "desc": " Pear"
+    },
+    {
+      "emoji": "🍑",
+      "desc": " Peach"
+    },
+    {
+      "emoji": "🍒",
+      "desc": " Cherries"
+    },
+    {
+      "emoji": "🍓",
+      "desc": " Strawberry"
+    },
+    {
+      "emoji": "🥝",
+      "desc": " Kiwi Fruit"
+    },
+    {
+      "emoji": "🍅",
+      "desc": " Tomato"
+    },
+    {
+      "emoji": "🥥",
+      "desc": " Coconut"
+    },
+    {
+      "emoji": "🥑",
+      "desc": " Avocado"
+    },
+    {
+      "emoji": "🍆",
+      "desc": " Eggplant"
+    },
+    {
+      "emoji": "🥔",
+      "desc": " Potato"
+    },
+    {
+      "emoji": "🥕",
+      "desc": " Carrot"
+    },
+    {
+      "emoji": "🌽",
+      "desc": " Ear of Corn"
+    },
+    {
+      "emoji": "🌶",
+      "desc": " Hot Pepper"
+    },
+    {
+      "emoji": "🥒",
+      "desc": " Cucumber"
+    },
+    {
+      "emoji": "🥦",
+      "desc": " Broccoli"
+    },
+    {
+      "emoji": "🍄",
+      "desc": " Mushroom"
+    },
+    {
+      "emoji": "🥜",
+      "desc": " Peanuts"
+    },
+    {
+      "emoji": "🌰",
+      "desc": " Chestnut"
+    },
+    {
+      "emoji": "🍞",
+      "desc": " Bread"
+    },
+    {
+      "emoji": "🥐",
+      "desc": " Croissant"
+    },
+    {
+      "emoji": "🥖",
+      "desc": " Baguette Bread"
+    },
+    {
+      "emoji": "🥨",
+      "desc": " Pretzel"
+    },
+    {
+      "emoji": "🥞",
+      "desc": " Pancakes"
+    },
+    {
+      "emoji": "🧀",
+      "desc": " Cheese Wedge"
+    },
+    {
+      "emoji": "🍖",
+      "desc": " Meat on Bone"
+    },
+    {
+      "emoji": "🍗",
+      "desc": " Poultry Leg"
+    },
+    {
+      "emoji": "🥩",
+      "desc": " Cut of Meat"
+    },
+    {
+      "emoji": "🥓",
+      "desc": " Bacon"
+    },
+    {
+      "emoji": "🍔",
+      "desc": " Hamburger"
+    },
+    {
+      "emoji": "🍟",
+      "desc": " French Fries"
+    },
+    {
+      "emoji": "🍕",
+      "desc": " Pizza"
+    },
+    {
+      "emoji": "🌭",
+      "desc": " Hot Dog"
+    },
+    {
+      "emoji": "🥪",
+      "desc": " Sandwich"
+    },
+    {
+      "emoji": "🌮",
+      "desc": " Taco"
+    },
+    {
+      "emoji": "🌯",
+      "desc": " Burrito"
+    },
+    {
+      "emoji": "🍳",
+      "desc": " Cooking"
+    },
+    {
+      "emoji": "🍲",
+      "desc": " Pot of Food"
+    },
+    {
+      "emoji": "🥣",
+      "desc": " Bowl With Spoon"
+    },
+    {
+      "emoji": "🥗",
+      "desc": " Green Salad"
+    },
+    {
+      "emoji": "🍿",
+      "desc": " Popcorn"
+    },
+    {
+      "emoji": "🥫",
+      "desc": " Canned Food"
+    },
+    {
+      "emoji": "🍱",
+      "desc": " Bento Box"
+    },
+    {
+      "emoji": "🍘",
+      "desc": " Rice Cracker"
+    },
+    {
+      "emoji": "🍙",
+      "desc": " Rice Ball"
+    },
+    {
+      "emoji": "🍚",
+      "desc": " Cooked Rice"
+    },
+    {
+      "emoji": "🍛",
+      "desc": " Curry Rice"
+    },
+    {
+      "emoji": "🍜",
+      "desc": " Steaming Bowl"
+    },
+    {
+      "emoji": "🍝",
+      "desc": " Spaghetti"
+    },
+    {
+      "emoji": "🍠",
+      "desc": " Roasted Sweet Potato"
+    },
+    {
+      "emoji": "🍢",
+      "desc": " Oden"
+    },
+    {
+      "emoji": "🍣",
+      "desc": " Sushi"
+    },
+    {
+      "emoji": "🍤",
+      "desc": " Fried Shrimp"
+    },
+    {
+      "emoji": "🍥",
+      "desc": " Fish Cake With Swirl"
+    },
+    {
+      "emoji": "🍡",
+      "desc": " Dango"
+    },
+    {
+      "emoji": "🥟",
+      "desc": " Dumpling"
+    },
+    {
+      "emoji": "🥠",
+      "desc": " Fortune Cookie"
+    },
+    {
+      "emoji": "🥡",
+      "desc": " Takeout Box"
+    },
+    {
+      "emoji": "🍦",
+      "desc": " Soft Ice Cream"
+    },
+    {
+      "emoji": "🍧",
+      "desc": " Shaved Ice"
+    },
+    {
+      "emoji": "🍨",
+      "desc": " Ice Cream"
+    },
+    {
+      "emoji": "🍩",
+      "desc": " Doughnut"
+    },
+    {
+      "emoji": "🍪",
+      "desc": " Cookie"
+    },
+    {
+      "emoji": "🎂",
+      "desc": " Birthday Cake"
+    },
+    {
+      "emoji": "🍰",
+      "desc": " Shortcake"
+    },
+    {
+      "emoji": "🥧",
+      "desc": " Pie"
+    },
+    {
+      "emoji": "🍫",
+      "desc": " Chocolate Bar"
+    },
+    {
+      "emoji": "🍬",
+      "desc": " Candy"
+    },
+    {
+      "emoji": "🍭",
+      "desc": " Lollipop"
+    },
+    {
+      "emoji": "🍮",
+      "desc": " Custard"
+    },
+    {
+      "emoji": "🍯",
+      "desc": " Honey Pot"
+    },
+    {
+      "emoji": "🍼",
+      "desc": " Baby Bottle"
+    },
+    {
+      "emoji": "🥛",
+      "desc": " Glass of Milk"
+    },
+    {
+      "emoji": "☕",
+      "desc": " Hot Beverage"
+    },
+    {
+      "emoji": "🍵",
+      "desc": " Teacup Without Handle"
+    },
+    {
+      "emoji": "🍶",
+      "desc": " Sake"
+    },
+    {
+      "emoji": "🍾",
+      "desc": " Bottle With Popping Cork"
+    },
+    {
+      "emoji": "🍷",
+      "desc": " Wine Glass"
+    },
+    {
+      "emoji": "🍸",
+      "desc": " Cocktail Glass"
+    },
+    {
+      "emoji": "🍹",
+      "desc": " Tropical Drink"
+    },
+    {
+      "emoji": "🍺",
+      "desc": " Beer Mug"
+    },
+    {
+      "emoji": "🍻",
+      "desc": " Clinking Beer Mugs"
+    },
+    {
+      "emoji": "🥂",
+      "desc": " Clinking Glasses"
+    },
+    {
+      "emoji": "🥃",
+      "desc": " Tumbler Glass"
+    },
+    {
+      "emoji": "🥤",
+      "desc": " Cup With Straw"
+    },
+    {
+      "emoji": "🥢",
+      "desc": " Chopsticks"
+    },
+    {
+      "emoji": "🍽",
+      "desc": " Fork and Knife With Plate"
+    },
+    {
+      "emoji": "🍴",
+      "desc": " Fork and Knife"
+    },
+    {
+      "emoji": "🥄",
+      "desc": " Spoon"
+    }
+  ],
+  "description": "Emojis for fruit, vegetables, meals, beverages and utensils.",
+  "title": "🍔 Food & Drink"
+}
