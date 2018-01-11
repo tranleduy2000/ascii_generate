@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
 import android.graphics.Paint;
 import android.os.Build;
 
-import com.duy.ascii.art.utils.FileUtil;
+import com.duy.ascii.art.database.JsonBridge;
 import com.duy.common.utils.DLog;
 
 import org.json.JSONArray;
@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -50,9 +49,7 @@ public class EmojiReader {
         Paint paint = new Paint();
 
         for (String fileName : fileNames) {
-            InputStream stream = assets.open("emoji/" + fileName);
-            String jsonStr = FileUtil.streamToString(stream);
-            JSONObject jsonObject = new JSONObject(jsonStr);
+            JSONObject jsonObject = JsonBridge.getJson(assets, "emoji/" + fileName);
             String title = jsonObject.getString(EmojiCategory.TITLE);
             String desc = jsonObject.getString(EmojiCategory.DESCRIPTION);
             EmojiCategory category = new EmojiCategory(title, desc);
@@ -62,14 +59,12 @@ public class EmojiReader {
                 JSONObject emoji = jsonArray.getJSONObject(i);
                 String emojiChar = emoji.getString(EmojiItem.CHARACTER);
                 String emojiDesc = emoji.getString(EmojiItem.DESCRIPTION);
-                if (emojiChar.length() == 1) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (paint.hasGlyph(emojiChar)) {
-                            category.add(new EmojiItem(emojiChar, emojiDesc));
-                        }
-                    } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (paint.hasGlyph(emojiChar)) {
                         category.add(new EmojiItem(emojiChar, emojiDesc));
                     }
+                } else if (emojiChar.length() <= 3) {
+                    category.add(new EmojiItem(emojiChar, emojiDesc));
                 }
             }
             emojiList.add(category);

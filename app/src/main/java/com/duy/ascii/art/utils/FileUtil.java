@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,4 +66,15 @@ public class FileUtil {
         }
         return out.toString();
     }
+
+    private static byte[] streamToByteArray(@NonNull InputStream input) throws IOException {
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        while ((bytesRead = input.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+        return output.toByteArray();
+    }
+
 }

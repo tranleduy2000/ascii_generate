@@ -31,17 +31,15 @@ import android.view.View;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
+import com.duy.ascii.art.database.JsonBridge;
 import com.duy.ascii.art.emoticons.model.EmoticonCategory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import it.sephiroth.android.library.tooltip.Tooltip;
-
-import static com.duy.ascii.art.utils.FileUtil.streamToString;
 
 /**
  * Created by Duy on 9/27/2017.
@@ -171,8 +169,7 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
                 String[] files = assets.list("emoticons");
                 for (String fileName : files) {
                     if (isCancelled()) break;
-                    InputStream stream = assets.open("emoticons/" + fileName);
-                    JSONObject object = new JSONObject(streamToString(stream));
+                    JSONObject object = JsonBridge.getJson(assets, "emoticons/" + fileName);
                     JSONArray jsonArray = object.getJSONArray("data");
                     ArrayList<String> data = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
