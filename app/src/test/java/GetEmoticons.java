@@ -32,14 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 /**
  * Created by Duy on 27-Aug-17.
@@ -47,9 +41,8 @@ import javax.xml.transform.stream.StreamResult;
 
 public class GetEmoticons extends TestCase {
 
-
     private File getDataDir() {
-        String path = System.getProperty("user.dir") + File.separator + "emoticons";
+        String path = System.getProperty("user.dir") + File.separator + "data" + File.separator + "emoticons";
         return new File(path);
     }
 
@@ -116,51 +109,15 @@ public class GetEmoticons extends TestCase {
         }
     }
 
-    private void writeFile(String title, ArrayList<String> content) throws IOException, ParserConfigurationException, TransformerException {
-        System.out.println("GetEmoticons.writeFile");
-        System.out.println("title = " + title);
-        System.out.println("list = " + content);
-
-        if (title == null || content == null || content.isEmpty()) return;
-
-        String fileName = title.replaceAll("\\W", "") + ".xml";
-        File file = new File(getDataDir(), fileName);
-        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        org.w3c.dom.Document document = builder.newDocument();
-        org.w3c.dom.Element root = document.createElement("root");
-        document.appendChild(root);
-
-        org.w3c.dom.Element name = document.createElement("name");
-        name.appendChild(document.createTextNode(title));
-        root.appendChild(name);
-
-        org.w3c.dom.Element data = document.createElement("data");
-
-        for (String s : content) {
-            org.w3c.dom.Element item = document.createElement("item");
-            item.appendChild(document.createTextNode(s));
-            data.appendChild(item);
-        }
-        root.appendChild(data);
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(file);
-        transformer.transform(domSource, streamResult);
-    }
 
     private void writeFile2(String title, String description, ArrayList<String> content) throws IOException, ParserConfigurationException, TransformerException, JSONException {
-        System.out.println("GetEmoticons.writeFile");
         System.out.println("title = " + title);
         System.out.println("description = " + description);
         System.out.println("list = " + content);
 
         if (title == null || content == null || content.isEmpty()) return;
 
-        String fileName = System.currentTimeMillis() + "_" + title.replaceAll("[^a-zA-Z0-9-_\\.]", "") + ".json";
+        String fileName =  title.replaceAll("[^a-zA-Z0-9-_\\.]", "") + ".json";
         File file = new File(getDataDir(), fileName);
 
         if (!file.getParentFile().exists()) {
@@ -177,7 +134,7 @@ public class GetEmoticons extends TestCase {
         }
         root.put("data", data);
         FileOutputStream fos = new FileOutputStream(file);
-        fos.write(root.toString(4).getBytes());
+        fos.write(root.toString(2).getBytes());
         fos.flush();
         fos.close();
         System.out.println("GetEmoticons.writeFile2");
