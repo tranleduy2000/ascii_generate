@@ -72,32 +72,31 @@ public class BigFontGenerator {
      */
     public String convert(String text, int position) {
 
-        //prepare all characters
-        HashMap<Character, String> font = fonts.get(position);
-        ArrayList<String> characters = new ArrayList<>();
+        HashMap<Character, String> hashMap = fonts.get(position);
+        ArrayList<String> chars = new ArrayList<>();
         for (int i = 0; i < text.length(); i++) {
-            String cChar = font.get(Character.toUpperCase(text.charAt(i)));
-            if (cChar == null) {
+            String s = hashMap.get(Character.toUpperCase(text.charAt(i)));
+            if (s == null) {
                 throw new UnsupportedOperationException("Invalid character " + text.charAt(i));
             }
-            characters.add(cChar);
+            chars.add(s);
         }
 
-        //make result
         StringBuilder result = new StringBuilder();
-        int row = characters.size();
-        int column = characters.get(0).split("\\n").length;
+        String[][] maps = new String[chars.size()][chars.get(0).split("\\n").length];
 
-        String[][] data = new String[row][column];
-        for (int i = 0; i < row; i++) {
-            data[i] = characters.get(i).split("\\n");
+        for (int i = 0; i < chars.size(); i++) {
+            String str = chars.get(i);
+            maps[i] = str.split("\\r?\\n");
         }
 
-        for (int j = 0; j < column; j++) {
-            for (int i = 0; i < row; i++) {
-                result.append(data[i][j]);
+        for (int j = 0; j < maps[0].length; j++) {
+            for (int i = 0; i < chars.size(); i++) {
+                result.append(maps[i][j]);
             }
-            if (j != column - 1) result.append("\n");
+            if (j != maps[0].length - 1) {
+                result.append("\n");
+            }
         }
 
         return result.toString();
