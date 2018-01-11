@@ -31,11 +31,10 @@ class PagerSectionAdapter extends FragmentPagerAdapter {
     private ArrayList<EmojiCategory> mEmojis = new ArrayList<>();
     private EmojiClickListener mListener;
 
-    PagerSectionAdapter(FragmentManager fm, ArrayList<EmojiCategory> data,
-                        EmojiClickListener mListener) {
+    PagerSectionAdapter(FragmentManager fm, ArrayList<EmojiCategory> data, EmojiClickListener listener) {
         super(fm);
         this.mEmojis = data;
-        this.mListener = mListener;
+        this.mListener = listener;
     }
 
     @Override

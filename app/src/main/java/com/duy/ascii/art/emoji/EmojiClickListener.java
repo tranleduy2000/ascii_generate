@@ -16,8 +16,12 @@
 
 package com.duy.ascii.art.emoji;
 
+import android.view.View;
+
 import com.duy.ascii.art.emoji.model.EmojiItem;
 
 interface EmojiClickListener {
     void onClick(EmojiItem emojiItem);
+
+    void onLongClick(View view, EmojiItem emojiItem);
 }

@@ -44,8 +44,8 @@ public class EmojiFragment extends SimpleFragment {
         return fragment;
     }
 
-    public void setListener(EmojiClickListener mListener) {
-        this.mListener = mListener;
+    public void setListener(EmojiClickListener listener) {
+        this.mListener = listener;
     }
 
     @Override

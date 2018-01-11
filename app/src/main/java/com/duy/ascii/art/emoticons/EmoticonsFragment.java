@@ -33,13 +33,12 @@ import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.database.JsonBridge;
 import com.duy.ascii.art.emoticons.model.EmoticonCategory;
+import com.duy.ascii.art.utils.TooltipUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import it.sephiroth.android.library.tooltip.Tooltip;
 
 /**
  * Created by Duy on 9/27/2017.
@@ -121,24 +120,8 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
 
     @Override
     public void onHeaderLongClick(View view, EmoticonCategory category) {
-        bottomToolTipDialogBox(view, category.getDescription());
+        TooltipUtil.bottomToolTipDialogBox(view, category.getDescription());
     }
-
-    public void bottomToolTipDialogBox(View view, String description) {
-        Tooltip.Builder builder = new Tooltip.Builder(101)
-                .anchor(view, Tooltip.Gravity.BOTTOM)
-                .closePolicy(new Tooltip.ClosePolicy()
-                        .insidePolicy(true, false)
-                        .outsidePolicy(true, false), 4000)
-                .activateDelay(900)
-                .showDelay(400)
-                .text(description)
-                .maxWidth(600)
-                .withArrow(true)
-                .withOverlay(true);
-        Tooltip.make(getContext(), builder.build()).show();
-    }
-
 
     @Override
     public void onDestroyView() {

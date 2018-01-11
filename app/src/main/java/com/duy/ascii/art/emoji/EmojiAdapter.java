@@ -24,12 +24,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.emoji.model.EmojiCategory;
+import com.duy.ascii.art.emoji.model.EmojiItem;
 
 
 /**
@@ -59,20 +59,23 @@ class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final EmojiItem emojiItem = mCategory.get(position);
         holder.txtContent.setText(mCategory.get(position).getEmojiChar());
-        holder.txtContent.setOnClickListener(new View.OnClickListener() {
+        holder.txtContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                mClipboardManagerCompat.setText(holder.txtContent.getText().toString());
-                Toast.makeText(mContext, R.string.copied, Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View v) {
+                if (mListener != null) {
+                    mListener.onLongClick(holder.txtContent, emojiItem);
+                }
+                return true;
             }
         });
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onClick(mCategory.get(holder.getAdapterPosition()));
+                    mListener.onClick(emojiItem);
                 }
             }
         });

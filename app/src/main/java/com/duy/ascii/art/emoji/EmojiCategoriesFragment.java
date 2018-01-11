@@ -39,6 +39,7 @@ import com.duy.ascii.art.emoji.model.EmojiReader;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
 import com.duy.ascii.art.utils.ShareUtil;
+import com.duy.ascii.art.utils.TooltipUtil;
 import com.duy.ascii.art.view.ViewPager;
 
 import org.json.JSONException;
@@ -126,14 +127,17 @@ public class EmojiCategoriesFragment extends SimpleFragment implements OnPageCha
                 String text = emojiItem.getEmojiChar();
                 mEditInput.getText().insert(Math.max(0, mEditInput.getSelectionStart()), text);
             }
+
+            @Override
+            public void onLongClick(View view, EmojiItem emojiItem) {
+                TooltipUtil.bottomToolTipDialogBox(view, emojiItem.getDesc());
+            }
         };
         PagerSectionAdapter headerAdapter = new PagerSectionAdapter(getChildFragmentManager(), data, listener);
         viewPager.setAdapter(headerAdapter);
         ((TabLayout) findViewById(R.id.tab_layout)).setupWithViewPager(viewPager);
         viewPager.setCurrentItem(getLastPosition());
         viewPager.addOnPageChangeListener(this);
-
-
     }
 
     private int getLastPosition() {
