@@ -25,9 +25,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
@@ -40,9 +42,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import static com.duy.ascii.art.database.JavaSerialObject.readObject;
 
 /**
  * Created by Duy on 9/27/2017.
@@ -89,12 +94,12 @@ public class RecentFragment extends SimpleFragment {
     }
 
     private void bindView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(layout);
         mRecentAdapter = new RecentAdapter(getContext());
-        mRecyclerView.setAdapter(mRecentAdapter);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.setAdapter(mRecentAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -112,6 +117,8 @@ public class RecentFragment extends SimpleFragment {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -132,32 +139,58 @@ public class RecentFragment extends SimpleFragment {
     private void loadAll(boolean force) {
         mSwipeRefreshLayout.setRefreshing(true);
         if (showLoadNewData() || force) {
-            mDatabase.getAll(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    setData(dataSnapshot);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+            loadFromFirebase();
         } else {
-            try {
-                ArrayList<EmojiItem> object = (ArrayList<EmojiItem>)
-                        JavaSerialObject.readObject(getContext().openFileInput(EXTRA_LAST_TIME));
-                setData(object);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                loadAll(true);
+            loadFromLocal();
+        }
+    }
+
+    private void loadFromFirebase() {
+        Toast.makeText(getContext(), "Updating database", Toast.LENGTH_SHORT).show();
+        mDatabase.getAll(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hideProgress();
+                setData(dataSnapshot);
             }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                hideProgress();
+                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadFromLocal() {
+        try {
+            FileInputStream inputStream = getContext().openFileInput(LOCAL_FILE);
+            ArrayList<EmojiItem> object = (ArrayList<EmojiItem>) readObject(inputStream);
+            if (object == null) {
+                loadFromFirebase();
+                return;
+            }
+            setData(object);
+            hideProgress();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void hideProgress() {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }, 100);
         }
     }
 
     private boolean showLoadNewData() {
-        boolean time = System.currentTimeMillis() - getLastTimeLoadData() >= 3600000;
-        boolean dataEmpty = false;
-        return time || dataEmpty;
+        return System.currentTimeMillis() - getLastTimeLoadData() >= 3600000;
     }
 
     private long getLastTimeLoadData() {
@@ -172,14 +205,6 @@ public class RecentFragment extends SimpleFragment {
 
 
     private void setData(@Nullable DataSnapshot dataSnapshot) {
-        if (mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-            }, 100);
-        }
         if (dataSnapshot == null || dataSnapshot.getChildrenCount() == 0) {
             return;
         }
@@ -206,8 +231,8 @@ public class RecentFragment extends SimpleFragment {
     }
 
     private void setData(ArrayList<EmojiItem> emojiItems) {
-
-        mRecentAdapter.addAll(0, emojiItems);
+        mRecentAdapter.clearAll();
+        mRecentAdapter.addAll(emojiItems);
         if (mRecentAdapter.getItemCount() > 0) {
             mRecyclerView.scrollToPosition(0);
         }

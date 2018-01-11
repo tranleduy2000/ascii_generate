@@ -60,9 +60,6 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         this.mFirebaseHelper = new FirebaseHelper(context);
     }
 
-    public void addAll(List<EmojiItem> emojiItems) {
-        addAll(mEmojiItems.size(), emojiItems);
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -139,7 +136,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         return mEmojiItems.get(0);
     }
 
-    public void addAll(int index, List<EmojiItem> emojiItems) {
+    public void addAll(List<EmojiItem> emojiItems) {
         //sort decrease
         Collections.sort(emojiItems, new Comparator<EmojiItem>() {
             @Override
@@ -147,8 +144,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                 return -emojiItem.getTime().compareTo(t1.getTime());
             }
         });
-        mEmojiItems.addAll(index, emojiItems);
-        notifyItemRangeInserted(index, emojiItems.size());
+        mEmojiItems.addAll( emojiItems);
+        notifyDataSetChanged();
+    }
+
+    public void clearAll() {
+        mEmojiItems.clear();
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
