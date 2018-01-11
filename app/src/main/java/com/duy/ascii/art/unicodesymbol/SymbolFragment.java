@@ -29,8 +29,6 @@ import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
-import com.duy.ascii.art.emoji.EmojiAdapter;
-import com.duy.ascii.art.emoji.EmojiClickListener;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
 import com.duy.ascii.art.utils.FileUtil;
@@ -50,6 +48,8 @@ public class SymbolFragment extends SimpleFragment {
     private ArrayList<String> symbols = new ArrayList<>();
     private EditText mEditInput;
     private DatabasePresenter mDatabasePresenter;
+    private RecyclerView mRecyclerView;
+    private SymbolAdapter mSymbolAdapter;
 
     public static SymbolFragment newInstance() {
 
@@ -74,18 +74,19 @@ public class SymbolFragment extends SimpleFragment {
 
         mEditInput = (EditText) findViewById(R.id.edit_input);
         Button btnCopy = (Button) findViewById(R.id.btn_copy);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 6));
-        EmojiAdapter emojiAdapter = new EmojiAdapter(getContext(), symbols);
-        recyclerView.setAdapter(emojiAdapter);
 
-        emojiAdapter.setListener(new EmojiClickListener() {
+        mSymbolAdapter = new SymbolAdapter(getContext(), symbols);
+        mSymbolAdapter.setListener(new SymbolClickListener() {
             @Override
-            public void onClick(String emoji) {
-                mEditInput.getEditableText().insert(Math.max(mEditInput.getSelectionStart(), 0), emoji);
+            public void onClick(String text) {
+                mEditInput.getEditableText().insert(Math.max(mEditInput.getSelectionStart(), 0), text);
             }
         });
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 6));
+        mRecyclerView.setAdapter(mSymbolAdapter);
 
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override

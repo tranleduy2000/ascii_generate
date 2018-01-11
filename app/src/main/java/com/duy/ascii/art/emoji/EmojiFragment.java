@@ -24,8 +24,7 @@ import android.view.View;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
-
-import java.util.ArrayList;
+import com.duy.ascii.art.emoji.model.EmojiCategory;
 
 /**
  * Created by Duy on 09-Aug-17.
@@ -33,12 +32,13 @@ import java.util.ArrayList;
 
 public class EmojiFragment extends SimpleFragment {
     public static final String TAG = "EmojiFragment";
+    private static final String EXTRA_DATA = "data";
     private EmojiClickListener mListener;
 
-    public static EmojiFragment newInstance(ArrayList<String> emoji) {
+    public static EmojiFragment newInstance(EmojiCategory emoji) {
 
         Bundle args = new Bundle();
-        args.putSerializable("data", emoji);
+        args.putSerializable(EXTRA_DATA, emoji);
         EmojiFragment fragment = new EmojiFragment();
         fragment.setArguments(args);
         return fragment;
@@ -58,7 +58,7 @@ public class EmojiFragment extends SimpleFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<String> emojis = (ArrayList<String>) getArguments().getSerializable("data");
+        EmojiCategory emojis = (EmojiCategory) getArguments().getSerializable(EXTRA_DATA);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view_emoji);
         recyclerView.setHasFixedSize(true);

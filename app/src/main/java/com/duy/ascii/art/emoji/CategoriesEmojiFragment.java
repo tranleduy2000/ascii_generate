@@ -18,13 +18,13 @@ package com.duy.ascii.art.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,22 +33,21 @@ import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
+import com.duy.ascii.art.emoji.model.EmojiCategory;
+import com.duy.ascii.art.emoji.model.EmojiItem;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
+import com.duy.ascii.art.utils.FileUtil;
 import com.duy.ascii.art.utils.ShareUtil;
 import com.duy.ascii.art.view.ViewPager;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 
@@ -122,12 +121,13 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
         super.onDestroyView();
     }
 
-    private void initView(ArrayList<Pair<String, ArrayList<String>>> data) {
+    private void initView(ArrayList<EmojiCategory> data) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         EmojiClickListener listener = new EmojiClickListener() {
             @Override
-            public void onClick(String name) {
-                mEditInput.getText().insert(Math.max(0, mEditInput.getSelectionStart()), name);
+            public void onClick(EmojiItem emojiItem) {
+                String text = emojiItem.getEmojiChar();
+                mEditInput.getText().insert(Math.max(0, mEditInput.getSelectionStart()), text);
             }
         };
         PagerSectionAdapter headerAdapter = new PagerSectionAdapter(getChildFragmentManager(), data, listener);
@@ -161,7 +161,7 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
     }
 
 
-    private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<Pair<String, ArrayList<String>>>> {
+    private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<EmojiCategory>> {
         private final Context context;
 
         private LoadDataTask(Context context) {
@@ -179,12 +179,19 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
         }
 
         @Override
-        protected ArrayList<Pair<String, ArrayList<String>>> doInBackground(Void... voids) {
-            return parseData();
+        protected ArrayList<EmojiCategory> doInBackground(Void... voids) {
+            try {
+                return readData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return new ArrayList<>();
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Pair<String, ArrayList<String>>> pairs) {
+        protected void onPostExecute(ArrayList<EmojiCategory> pairs) {
             super.onPostExecute(pairs);
             mProgressBar.setVisibility(View.GONE);
             if (!isCancelled()) {
@@ -192,43 +199,28 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
             }
         }
 
-        private ArrayList<Pair<String, ArrayList<String>>> parseData() {
-            ArrayList<Pair<String, ArrayList<String>>> emojis = new ArrayList<>();
-            try {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                Document document = builder.parse(getContext().getAssets().open("emoji/emoji.xml"));
-                Element root = document.getDocumentElement();
-                NodeList items = root.getElementsByTagName("item");
-                for (int i = 0; i < items.getLength(); i++) {
+        private ArrayList<EmojiCategory> readData() throws IOException, JSONException {
+            ArrayList<EmojiCategory> emojis = new ArrayList<>();
+            AssetManager assets = getContext().getAssets();
+            String[] fileNames = assets.list("emoji");
+            for (String fileName : fileNames) {
+                InputStream stream = assets.open("emoji/" + fileName);
+                String jsonStr = FileUtil.streamToString(stream);
+                JSONObject jsonObject = new JSONObject(jsonStr);
+                String title = jsonObject.getString(EmojiCategory.TITLE);
+                String desc = jsonObject.getString(EmojiCategory.DESCRIPTION);
+                EmojiCategory category = new EmojiCategory(title, desc);
 
-                    Element item = (Element) items.item(i);
-                    String name = item.getElementsByTagName("name").item(0).getChildNodes().item(0).getNodeValue();
-                    String data = item.getElementsByTagName("data").item(0).getChildNodes().item(0).getNodeValue();
-                    String[] split = data.split("\\n");
-                    ArrayList<String> list = new ArrayList<>();
-                    for (String s : split) {
-                        s = s.trim();
-                        if (!s.isEmpty() && s.contains(" ")) {
-                            list.add(s.substring(0, s.indexOf(" ")));
-                        }
-                    }
-                    emojis.add(new Pair<>(name, list));
-                    if (isCancelled()) {
-                        return emojis;
-                    }
+                JSONArray jsonArray = jsonObject.getJSONArray(EmojiCategory.DATA);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject emoji = jsonArray.getJSONObject(i);
+                    String emojiChar = emoji.getString(EmojiItem.CHARACTER);
+                    String emojiDesc = emoji.getString(EmojiItem.DESCRIPTION);
+                    category.add(new EmojiItem(emojiChar, emojiDesc));
                 }
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
             }
             return emojis;
         }
-
     }
 
 

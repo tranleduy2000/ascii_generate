@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 by Tran Le Duy
+ * Copyright (c) 2018 by Tran Le Duy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@ package com.duy.ascii.art.emoji;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Pair;
+
+import com.duy.ascii.art.emoji.model.EmojiCategory;
 
 import java.util.ArrayList;
 
 /**
  * Created by Duy on 9/27/2017.
  */
-
 class PagerSectionAdapter extends FragmentPagerAdapter {
-    private ArrayList<Pair<String, ArrayList<String>>> mEmojis = new ArrayList<>();
+    private ArrayList<EmojiCategory> mEmojis = new ArrayList<>();
     private EmojiClickListener mListener;
 
-    PagerSectionAdapter(FragmentManager fm, ArrayList<Pair<String, ArrayList<String>>> data,
+    PagerSectionAdapter(FragmentManager fm, ArrayList<EmojiCategory> data,
                         EmojiClickListener mListener) {
         super(fm);
         this.mEmojis = data;
@@ -40,14 +40,14 @@ class PagerSectionAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        EmojiFragment emojiFragment = EmojiFragment.newInstance(mEmojis.get(position).second);
+        EmojiFragment emojiFragment = EmojiFragment.newInstance(mEmojis.get(position));
         emojiFragment.setListener(mListener);
         return emojiFragment;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mEmojis.get(position).first;
+        return mEmojis.get(position).getName();
     }
 
     @Override

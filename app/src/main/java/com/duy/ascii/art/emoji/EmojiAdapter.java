@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 by Tran Le Duy
+ * Copyright (c) 2018 by Tran Le Duy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,57 +29,58 @@ import android.widget.Toast;
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
-
-import java.util.ArrayList;
+import com.duy.ascii.art.emoji.model.EmojiCategory;
 
 
 /**
  * Created by Duy on 06-May-17.
  */
 
-public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
-    protected LayoutInflater inflater;
-    private Context context;
-    private ClipboardManagerCompat clipboardManagerCompat;
-    private ArrayList<String> emojis;
+class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
+    protected LayoutInflater mInflater;
+    private Context mContext;
+    private ClipboardManagerCompat mClipboardManagerCompat;
+    private EmojiCategory mCategory;
     @Nullable
     private EmojiClickListener mListener;
 
-    public EmojiAdapter(@NonNull Context context, ArrayList<String> emojis) {
-        this.context = context;
-        this.inflater = LayoutInflater.from(context);
-        this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
-        this.emojis = emojis;
+    EmojiAdapter(@NonNull Context context, EmojiCategory category) {
+        this.mContext = context;
+        this.mInflater = LayoutInflater.from(context);
+        this.mClipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
+        this.mCategory = category;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_emoji, parent, false);
+        View view = mInflater.inflate(R.layout.list_item_emoji, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.txtContent.setText(emojis.get(position));
+        holder.txtContent.setText(mCategory.get(position).getEmojiChar());
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clipboardManagerCompat.setText(holder.txtContent.getText().toString());
-                Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show();
+                mClipboardManagerCompat.setText(holder.txtContent.getText().toString());
+                Toast.makeText(mContext, R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) mListener.onClick(emojis.get(holder.getAdapterPosition()));
+                if (mListener != null) {
+                    mListener.onClick(mCategory.get(holder.getAdapterPosition()));
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return emojis.size();
+        return mCategory.size();
     }
 
     public void setListener(@Nullable EmojiClickListener listener) {

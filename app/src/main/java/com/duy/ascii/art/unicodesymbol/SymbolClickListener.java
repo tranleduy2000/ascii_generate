@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 by Tran Le Duy
+ * Copyright (c) 2018 by Tran Le Duy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emoji;
+package com.duy.ascii.art.unicodesymbol;
 
-import com.duy.ascii.art.emoji.model.EmojiItem;
-
-interface EmojiClickListener {
-    void onClick(EmojiItem emojiItem);
+ interface SymbolClickListener {
+    void onClick(String name);
 }

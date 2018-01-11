@@ -18,6 +18,7 @@ package com.duy.ascii.art.unicodesymbol;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,6 @@ import android.widget.Toast;
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
-import com.duy.ascii.art.emoji.EmojiClickListener;
 
 import java.util.ArrayList;
 
@@ -38,18 +38,18 @@ import java.util.ArrayList;
  */
 
 class SymbolAdapter extends RecyclerView.Adapter<SymbolAdapter.ViewHolder> {
-    private static final String TAG = "ResultAdapter";
     protected LayoutInflater inflater;
     private Context context;
     private ClipboardManagerCompat clipboardManagerCompat;
-    private ArrayList<String> emojis;
-    private EmojiClickListener listener;
+    private ArrayList<String> symbols;
+    @Nullable
+    private SymbolClickListener mListener;
 
-    public SymbolAdapter(@NonNull Context context, ArrayList<String> emojis) {
+    SymbolAdapter(@NonNull Context context, ArrayList<String> symbols) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
-        this.emojis = emojis;
+        this.symbols = symbols;
     }
 
 
@@ -61,7 +61,7 @@ class SymbolAdapter extends RecyclerView.Adapter<SymbolAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.txtContent.setText(emojis.get(position));
+        holder.txtContent.setText(symbols.get(position));
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,23 +72,22 @@ class SymbolAdapter extends RecyclerView.Adapter<SymbolAdapter.ViewHolder> {
         holder.txtContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) listener.onClick(emojis.get(holder.getAdapterPosition()));
+                if (mListener != null) mListener.onClick(symbols.get(holder.getAdapterPosition()));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return emojis.size();
+        return symbols.size();
     }
 
-    public void setListener(EmojiClickListener listener) {
-        this.listener = listener;
+    public void setListener(@Nullable SymbolClickListener listener) {
+        this.mListener = listener;
     }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtContent;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtContent;
 
         public ViewHolder(View itemView) {
             super(itemView);

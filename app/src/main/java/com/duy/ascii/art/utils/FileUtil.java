@@ -20,11 +20,11 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.regex.Pattern;
 
 /**
@@ -36,15 +36,6 @@ public class FileUtil {
     private static final String TAG = "FileUtil";
     private static final String IMAGE_FOLDER_NAME = "Image";
 
-    public static String streamToString(@NonNull InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            result.append(line).append("\n");
-        }
-        return result.toString();
-    }
 
     public static File getImageDirectory(Context context) {
         if (hasSdCard(context)) {
@@ -59,5 +50,19 @@ public class FileUtil {
 
     private static boolean hasSdCard(Context context) {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static String streamToString(@NonNull InputStream stream) throws IOException {
+        final int bufferSize = 1024;
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(stream, "UTF-8");
+        for (; ; ) {
+            int rsz = in.read(buffer, 0, buffer.length);
+            if (rsz < 0)
+                break;
+            out.append(buffer, 0, rsz);
+        }
+        return out.toString();
     }
 }
