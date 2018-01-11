@@ -22,7 +22,7 @@ import java.io.Serializable;
  * Created by Duy on 9/27/2017.
  */
 
-public class EmojiItem implements Serializable {
+public class EmojiItem implements Serializable, Cloneable {
     public int category;
     public long time;
     public String content;

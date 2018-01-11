@@ -41,7 +41,8 @@ public class BigFontGenerator {
     }
 
     public void load(InputStream[] inputStream) {
-        for (InputStream stream : inputStream) {
+        for (int i1 = 0; i1 < inputStream.length; i1++) {
+            InputStream stream = inputStream[i1];
             try {
                 Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
                 HashMap<Character, String> font = new HashMap<>();
@@ -51,6 +52,17 @@ public class BigFontGenerator {
                 if (matcher.find()) {
                     font.put(' ', matcher.group(2));
                 }
+              /*  File file = new File("C:\\github\\ascii_generate\\app\\src\\main\\assets\\bigtext2\\" + "font" + i1 + ".json");
+                file.createNewFile();
+                JSONObject jsonObject = new JSONObject(font);
+                FileOutputStream fos = new FileOutputStream(file);
+                try {
+                    fos.write(jsonObject.toString(2).getBytes());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                fos.flush();
+                fos.close();*/
                 fonts.add(font);
             } catch (IOException e) {
                 e.printStackTrace();
