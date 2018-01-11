@@ -175,39 +175,39 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mDrawerLayout.closeDrawers();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_ascii_art:
-                ft.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
+                transaction.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.ascii_art);
                 break;
             case R.id.action_big_text:
-                ft.replace(R.id.content, BigFontFragment.newInstance()).commit();
+                transaction.replace(R.id.content, BigFontFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.big_text);
                 break;
             case R.id.action_image_to_ascii:
-                ft.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
+                transaction.replace(R.id.content, ImageToAsciiFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.image_to_ascii);
                 break;
             case R.id.action_emoji:
-                ft.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
+                transaction.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoji);
                 break;
             case R.id.action_emoji_art:
                 mToolbar.setSubtitle(R.string.emoji_art);
-                ft.replace(R.id.content, RecentFragment.newInstance()).commit();
+                transaction.replace(R.id.content, RecentFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
-                ft.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
+                transaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoticons);
                 break;
             case R.id.action_symbol:
-                ft.replace(R.id.content, SymbolFragment.newInstance()).commit();
+                transaction.replace(R.id.content, SymbolFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.cool_symbol);
                 break;
             case R.id.action_figlet:
                 mToolbar.setSubtitle(R.string.cool_symbol);
-                ft.replace(R.id.content, FigletFragment.newInstance()).commit();
+                transaction.replace(R.id.content, FigletFragment.newInstance()).commit();
                 break;
             case R.id.action_rate:
                 StoreUtil.gotoPlayStore(MainActivity.this, BuildConfig.APPLICATION_ID);

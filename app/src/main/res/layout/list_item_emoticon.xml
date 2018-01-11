@@ -43,7 +43,8 @@
             android:foreground="?attr/selectableBackground"
             android:gravity="center"
             android:padding="8dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:singleLine="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorPrimary"
             tools:text="hello" />
 

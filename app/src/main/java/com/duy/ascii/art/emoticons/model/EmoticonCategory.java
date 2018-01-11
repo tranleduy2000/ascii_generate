@@ -24,6 +24,8 @@ import java.util.ArrayList;
  */
 
 public class EmoticonCategory implements Serializable {
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
     private String title, description;
     private ArrayList<String> data;
 

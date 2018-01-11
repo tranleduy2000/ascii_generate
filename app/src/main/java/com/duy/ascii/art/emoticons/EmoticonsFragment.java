@@ -169,10 +169,10 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
             AssetManager assets = context.getAssets();
             ArrayList<EmoticonCategory> categories = new ArrayList<>();
             try {
-                String[] files = assets.list("emoticons2");
+                String[] files = assets.list("emoticons");
                 for (String fileName : files) {
                     if (isCancelled()) break;
-                    InputStream stream = assets.open("emoticons2" + "/" + fileName);
+                    InputStream stream = assets.open("emoticons/" + fileName);
                     JSONObject object = new JSONObject(streamToString(stream));
                     JSONArray jsonArray = object.getJSONArray("data");
                     ArrayList<String> data = new ArrayList<>();
@@ -180,8 +180,8 @@ public class EmoticonsFragment extends SimpleFragment implements EmoticonContrac
                         data.add(jsonArray.getString(i));
                     }
                     EmoticonCategory item = new EmoticonCategory(
-                            object.getString("title"),
-                            object.getString("description"),
+                            object.getString(EmoticonCategory.TITLE),
+                            object.getString(EmoticonCategory.DESCRIPTION),
                             data);
                     categories.add(item);
                 }
