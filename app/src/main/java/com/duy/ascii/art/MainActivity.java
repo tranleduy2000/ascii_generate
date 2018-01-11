@@ -33,7 +33,7 @@ import android.view.ViewGroup;
 
 import com.duy.ascii.art.asciiart.AsciiArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
-import com.duy.ascii.art.emoji.CategoriesEmojiFragment;
+import com.duy.ascii.art.emoji.EmojiCategoriesFragment;
 import com.duy.ascii.art.emojiart.fragments.RecentFragment;
 import com.duy.ascii.art.emoticons.EmoticonsFragment;
 import com.duy.ascii.art.favorite.FavoriteActivity;
@@ -71,7 +71,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, EmoticonsFragment.newInstance())
+                .replace(R.id.content, EmojiCategoriesFragment.newInstance())
                 .commit();
         loadAdView();
 
@@ -190,7 +190,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
                 mToolbar.setSubtitle(R.string.image_to_ascii);
                 break;
             case R.id.action_emoji:
-                transaction.replace(R.id.content, CategoriesEmojiFragment.newInstance()).commit();
+                transaction.replace(R.id.content, EmojiCategoriesFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoji);
                 break;
             case R.id.action_emoji_art:

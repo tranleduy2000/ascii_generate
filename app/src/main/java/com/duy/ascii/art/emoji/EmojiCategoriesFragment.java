@@ -18,10 +18,10 @@ package com.duy.ascii.art.emoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -35,18 +35,15 @@ import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.emoji.model.EmojiCategory;
 import com.duy.ascii.art.emoji.model.EmojiItem;
+import com.duy.ascii.art.emoji.model.EmojiReader;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
-import com.duy.ascii.art.utils.FileUtil;
 import com.duy.ascii.art.utils.ShareUtil;
 import com.duy.ascii.art.view.ViewPager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -55,7 +52,7 @@ import static android.support.v4.view.ViewPager.OnPageChangeListener;
  * Created by Duy on 9/27/2017.
  */
 
-public class CategoriesEmojiFragment extends SimpleFragment implements OnPageChangeListener,
+public class EmojiCategoriesFragment extends SimpleFragment implements OnPageChangeListener,
         View.OnClickListener {
     private static final String TAG = "CategoriesEmojiFragment";
     @Nullable
@@ -64,11 +61,11 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
     private EditText mEditInput;
     private DatabasePresenter mDatabasePresenter;
 
-    public static CategoriesEmojiFragment newInstance() {
+    public static EmojiCategoriesFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        CategoriesEmojiFragment fragment = new CategoriesEmojiFragment();
+        EmojiCategoriesFragment fragment = new EmojiCategoriesFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,7 +76,7 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDatabasePresenter = new DatabasePresenter(getContext(), null);
 
@@ -181,7 +178,7 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
         @Override
         protected ArrayList<EmojiCategory> doInBackground(Void... voids) {
             try {
-                return readData();
+                return EmojiReader.readData(getContext());
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -197,29 +194,6 @@ public class CategoriesEmojiFragment extends SimpleFragment implements OnPageCha
             if (!isCancelled()) {
                 initView(pairs);
             }
-        }
-
-        private ArrayList<EmojiCategory> readData() throws IOException, JSONException {
-            ArrayList<EmojiCategory> emojis = new ArrayList<>();
-            AssetManager assets = getContext().getAssets();
-            String[] fileNames = assets.list("emoji");
-            for (String fileName : fileNames) {
-                InputStream stream = assets.open("emoji/" + fileName);
-                String jsonStr = FileUtil.streamToString(stream);
-                JSONObject jsonObject = new JSONObject(jsonStr);
-                String title = jsonObject.getString(EmojiCategory.TITLE);
-                String desc = jsonObject.getString(EmojiCategory.DESCRIPTION);
-                EmojiCategory category = new EmojiCategory(title, desc);
-
-                JSONArray jsonArray = jsonObject.getJSONArray(EmojiCategory.DATA);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject emoji = jsonArray.getJSONObject(i);
-                    String emojiChar = emoji.getString(EmojiItem.CHARACTER);
-                    String emojiDesc = emoji.getString(EmojiItem.DESCRIPTION);
-                    category.add(new EmojiItem(emojiChar, emojiDesc));
-                }
-            }
-            return emojis;
         }
     }
 

@@ -60,19 +60,20 @@
                 android:id="@+id/img_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:foreground="?selectableItemBackground"
+                android:foreground="?selectableBackground"
                 android:padding="8dp"
                 android:src="@drawable/ic_favorite_border_black_24dp"
                 android:tint="?colorAccent" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            app:fastScrollThumbColor="?colorAccent">
 
-        </android.support.v7.widget.RecyclerView>
+        </com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView>
     </LinearLayout>
 
 </LinearLayout>

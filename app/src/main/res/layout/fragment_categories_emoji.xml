@@ -64,7 +64,7 @@
                 android:id="@+id/img_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:foreground="?selectableItemBackground"
+                android:foreground="?selectableBackground"
                 android:padding="8dp"
                 android:src="@drawable/ic_favorite_border_black_24dp"
                 android:tint="?colorAccent" />
