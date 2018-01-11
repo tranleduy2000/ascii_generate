@@ -24,7 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.io.PrintStream;
 
 /**
  * Created by Duy on 1/11/2018.
@@ -35,7 +35,7 @@ public class BigFontGeneratorTest {
     @Before
     public void loadData() throws IOException {
         System.out.println("BigFontGeneratorTest.loadData");
-        File file = new File("C:\\github\\ascii_generate\\app\\src\\main\\assets\\bigtext");
+        File file = new File("C:\\github\\ascii_generate\\app\\src\\main\\assets\\bigtext_json");
         File[] files = file.listFiles();
         InputStream[] streams = new InputStream[files.length];
         for (int i = 0; i < files.length; i++) {
@@ -49,13 +49,15 @@ public class BigFontGeneratorTest {
 
     @Test
     public void convert() throws Exception {
-        String convert = mBigFontGenerator.convert("hello", 2);
-
-        FileOutputStream stream = new FileOutputStream("C:\\github\\ascii_generate\\app\\src\\test\\java\\com\\duy\\ascii\\art\\bigtext\\out.txt");
-        stream.write(convert.getBytes(Charset.forName("UTF-8")));
+        String path = "C:\\github\\ascii_generate\\app\\src\\test\\java\\com\\duy\\ascii\\art\\bigtext\\out.txt";
+        PrintStream stream = new PrintStream(new FileOutputStream(path));
+        for (int i = 0; i < mBigFontGenerator.getSize(); i++) {
+            String convert = mBigFontGenerator.convert("hello", i);
+            stream.println(convert);
+            System.out.println(convert);
+        }
+        stream.flush();
         stream.close();
-
-        System.out.println( convert);
     }
 
 }

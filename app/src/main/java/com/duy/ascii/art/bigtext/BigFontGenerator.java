@@ -16,19 +16,22 @@
 
 package com.duy.ascii.art.bigtext;
 
-import com.duy.ascii.art.utils.FileUtil;
+import com.duy.ascii.art.database.JsonBridge;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
 
 /**
  * Created by Duy on 07-Jul-17.
  */
 
 public class BigFontGenerator {
+    private static final String LATIN_CHAR = "ABCDEF";
     private boolean loaded = false;
     private ArrayList<HashMap<Character, String>> fonts;
 
@@ -41,29 +44,18 @@ public class BigFontGenerator {
     }
 
     public void load(InputStream[] inputStream) {
-        for (int i1 = 0; i1 < inputStream.length; i1++) {
-            InputStream stream = inputStream[i1];
+        for (int i = 0; i < inputStream.length; i++) {
+            InputStream stream = inputStream[i];
             try {
-                Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
-                HashMap<Character, String> font = new HashMap<>();
-                for (int i = 'A'; i <= 'Z' && matcher.find(); i++) {
-                    font.put((char) i, matcher.group(2));
+                JSONObject json = JsonBridge.getJson(stream);
+                HashMap<Character, String> map = new HashMap<>();
+                for (char smallText = 'A'; smallText <= 'Z'; smallText++) {
+                    String bigText = json.getString(String.valueOf(smallText));
+                    map.put(smallText, bigText);
                 }
-                if (matcher.find()) {
-                    font.put(' ', matcher.group(2));
-                }
-              /*  File file = new File("C:\\github\\ascii_generate\\app\\src\\main\\assets\\bigtext2\\" + "font" + i1 + ".json");
-                file.createNewFile();
-                JSONObject jsonObject = new JSONObject(font);
-                FileOutputStream fos = new FileOutputStream(file);
-                try {
-                    fos.write(jsonObject.toString(2).getBytes());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                fos.flush();
-                fos.close();*/
-                fonts.add(font);
+                fonts.add(map);
+            } catch (JSONException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

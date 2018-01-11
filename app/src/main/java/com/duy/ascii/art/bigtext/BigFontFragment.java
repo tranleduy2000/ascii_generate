@@ -149,11 +149,11 @@ public class BigFontFragment extends Fragment implements BigFontContract.View {
         if (mPresenter != null) return;
         try {
             AssetManager assets = getContext().getAssets();
-            String[] names = assets.list("bigtext");
+            String[] names = assets.list("bigtext_json");
             InputStream[] inputStreams = new InputStream[names.length];
             for (int i = 0; i < names.length; i++) {
                 String name = names[i];
-                inputStreams[i] = assets.open("bigtext/" + name);
+                inputStreams[i] = assets.open("bigtext_json/" + name);
             }
             mPresenter = new BigFontPresenter(inputStreams, this);
         } catch (Exception e) {

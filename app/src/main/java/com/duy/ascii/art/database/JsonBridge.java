@@ -31,9 +31,14 @@ import java.io.InputStream;
  */
 
 public class JsonBridge {
+    private static final char key = 10;
+
     public static JSONObject getJson(AssetManager assetManager, String path) throws JSONException, IOException {
         InputStream stream = assetManager.open(path);
+        return getJson(stream);
+    }
 
+    public static JSONObject getJson(InputStream stream) throws JSONException, IOException {
         byte[] data = IOUtils.toByteArray(stream);
         byte[] decode = decode(data);
         String content = new String(decode);
@@ -49,4 +54,5 @@ public class JsonBridge {
     public static byte[] encode(String content) {
         return Base64.encode(content.getBytes(), Base64.DEFAULT);
     }
+
 }

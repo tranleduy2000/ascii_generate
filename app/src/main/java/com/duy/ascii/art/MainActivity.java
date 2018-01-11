@@ -66,13 +66,14 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setTitle(R.string.app_name);
+
         bindView();
 
-        /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, EmojiCategoriesFragment.newInstance())
+                .replace(R.id.content, AsciiArtFragment.newInstance())
                 .commit();
-        loadAdView();*/
+        loadAdView();
 
 
         showDialogRate();

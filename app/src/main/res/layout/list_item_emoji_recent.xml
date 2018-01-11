@@ -74,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:textColor="?android:textColorPrimary"
             tools:text="asdhasdasdasdahsdasdghj" />
 
     </LinearLayout>
@@ -90,6 +91,7 @@
             android:gravity="top|start"
             android:minHeight="50dp"
             android:padding="8dp"
+            android:textColor="?android:textColorPrimary"
             tools:text="asdhasdasdasdahsdasdghj" />
     </FrameLayout>
 
