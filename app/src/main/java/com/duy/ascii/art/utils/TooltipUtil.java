@@ -18,6 +18,8 @@ package com.duy.ascii.art.utils;
 
 import android.view.View;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
+
 /**
  * Created by Duy on 1/11/2018.
  */
@@ -25,9 +27,9 @@ import android.view.View;
 public class TooltipUtil {
 
     public static void bottomToolTipDialogBox(View view, String description) {
-        it.sephiroth.android.library.tooltip.Tooltip.Builder builder = new it.sephiroth.android.library.tooltip.Tooltip.Builder(101)
-                .anchor(view, it.sephiroth.android.library.tooltip.Tooltip.Gravity.BOTTOM)
-                .closePolicy(new it.sephiroth.android.library.tooltip.Tooltip.ClosePolicy()
+        Tooltip.Builder builder = new Tooltip.Builder(101)
+                .anchor(view, Tooltip.Gravity.BOTTOM)
+                .closePolicy(new Tooltip.ClosePolicy()
                         .insidePolicy(true, false)
                         .outsidePolicy(true, false), 4000)
                 .activateDelay(900)
@@ -36,7 +38,7 @@ public class TooltipUtil {
                 .maxWidth(600)
                 .withArrow(true)
                 .withOverlay(true);
-        it.sephiroth.android.library.tooltip.Tooltip.make(view.getContext(), builder.build()).show();
+        Tooltip.make(view.getContext(), builder.build()).show();
     }
 
 }
