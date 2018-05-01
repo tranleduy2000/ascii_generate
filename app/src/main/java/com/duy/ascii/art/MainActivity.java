@@ -31,7 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.duy.ascii.art.asciiart.AsciiArtFragment;
+import com.duy.ascii.art.asciiart.TextArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
 import com.duy.ascii.art.emoji.EmojiCategoriesFragment;
 import com.duy.ascii.art.emojiart.fragments.RecentFragment;
@@ -71,7 +71,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .replace(R.id.content, AsciiArtFragment.newInstance())
+                .replace(R.id.content, TextArtFragment.newInstance())
                 .commit();
         loadAdView();
 
@@ -182,7 +182,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_ascii_art:
-                transaction.replace(R.id.content, AsciiArtFragment.newInstance()).commit();
+                transaction.replace(R.id.content, TextArtFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.ascii_art);
                 break;
             case R.id.action_big_text:

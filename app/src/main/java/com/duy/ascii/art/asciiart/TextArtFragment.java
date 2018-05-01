@@ -33,18 +33,18 @@ import java.util.ArrayList;
  * Created by Duy on 9/27/2017.
  */
 
-public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract.View {
+public class TextArtFragment extends SimpleFragment implements TextArtContract.View {
     public static final int INDEX = 2;
-    protected AsciiArtContract.Presenter mPresenter;
+    protected TextArtContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
-    protected AsciiArtAdapter mAdapter;
+    protected TextArtAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
-    public static AsciiArtFragment newInstance() {
+    public static TextArtFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        AsciiArtFragment fragment = new AsciiArtFragment();
+        TextArtFragment fragment = new TextArtFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +62,7 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        mAdapter = new AsciiArtAdapter(getContext());
+        mAdapter = new TextArtAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
@@ -86,7 +86,7 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
     }
 
     @Override
-    public void setPresenter(AsciiArtContract.Presenter presenter) {
+    public void setPresenter(TextArtContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 

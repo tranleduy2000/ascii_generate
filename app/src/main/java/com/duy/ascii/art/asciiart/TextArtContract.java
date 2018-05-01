@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by Duy on 03-Jul-17.
  */
-class AsciiArtContract {
+class TextArtContract {
     public interface View {
         void showProgress();
 

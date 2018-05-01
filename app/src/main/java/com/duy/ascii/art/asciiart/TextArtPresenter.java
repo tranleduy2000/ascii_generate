@@ -30,12 +30,12 @@ import java.util.regex.Matcher;
 /**
  * Created by Duy on 03-Jul-17.
  */
-class TextArtPresenter implements AsciiArtContract.Presenter {
+class TextArtPresenter implements TextArtContract.Presenter {
     private final Context context;
-    private final AsciiArtContract.View mView;
+    private final TextArtContract.View mView;
     private AsyncTask<String, String, ArrayList<String>> mLoadDataTask;
 
-    TextArtPresenter(Context context, AsciiArtContract.View view) {
+    TextArtPresenter(Context context, TextArtContract.View view) {
         this.context = context;
         this.mView = view;
     }
@@ -64,21 +64,20 @@ class TextArtPresenter implements AsciiArtContract.Presenter {
     }
 
     private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
-        private Context mContext;
         private Callback mCallback;
-        private AsciiArtContract.View mView;
+        private TextArtContract.View mView;
+        private AssetManager mAssetManager;
 
-        LoadDataTask(Context context, Callback callback, AsciiArtContract.View view) {
-            this.mContext = context;
+        LoadDataTask(Context context, Callback callback, TextArtContract.View view) {
             this.mCallback = callback;
             this.mView = view;
+            this.mAssetManager = context.getAssets();
         }
 
         @Override
         protected ArrayList<String> doInBackground(String... params) {
-            AssetManager assets = mContext.getAssets();
             try {
-                InputStream stream = assets.open(params[0]);
+                InputStream stream = mAssetManager.open(params[0]);
                 String string = FileUtil.streamToString(stream);
                 Matcher matcher = FileUtil.PATTERN_SLIP.matcher(string);
                 ArrayList<String> result = new ArrayList<>();

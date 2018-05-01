@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * Created by Duy on 06-May-17.
  */
 
-public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHolder> {
+public class TextArtAdapter extends RecyclerView.Adapter<TextArtAdapter.ViewHolder> {
     private static final String TAG = "ResultAdapter";
     private final ArrayList<String> objects = new ArrayList<>();
     protected LayoutInflater mInflater;
@@ -48,7 +48,7 @@ public class AsciiArtAdapter extends RecyclerView.Adapter<AsciiArtAdapter.ViewHo
     private DatabasePresenter mDatabasePresenter;
 
 
-    public AsciiArtAdapter(@NonNull Context context) {
+    public TextArtAdapter(@NonNull Context context) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.clipboardManagerCompat = ClipboardManagerCompatFactory.getManager(context);
