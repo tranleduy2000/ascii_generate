@@ -47,7 +47,7 @@ public class JsonEncoder {
         for (int i1 = 0; i1 < inputStream.length; i1++) {
             InputStream stream = inputStream[i1];
             try {
-                Matcher matcher = FileUtil.PATTERN_SLIP.matcher(FileUtil.streamToString(stream));
+                Matcher matcher = FileUtil.PATTERN_SPLIT.matcher(FileUtil.streamToString(stream));
                 HashMap<Character, String> font = new HashMap<>();
                 for (int i = 'A'; i <= 'Z' && matcher.find(); i++) {
                     font.put((char) i, matcher.group(2));

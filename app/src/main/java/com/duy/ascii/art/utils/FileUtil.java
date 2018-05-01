@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  */
 
 public class FileUtil {
-    public static final Pattern PATTERN_SLIP = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
+    public static final Pattern PATTERN_SPLIT = Pattern.compile("(\")(.*?)(\")", Pattern.DOTALL);
     private static final String TAG = "FileUtil";
     private static final String IMAGE_FOLDER_NAME = "Image";
 

@@ -23,6 +23,7 @@ import java.io.Serializable;
  */
 
 public class TextArt implements Serializable, Cloneable {
+    public static final String KEY_ROOT = "ascii_art";
     public int category;
     public long time;
     public String content;

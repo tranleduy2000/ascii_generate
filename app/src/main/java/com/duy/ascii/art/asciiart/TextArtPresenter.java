@@ -17,26 +17,30 @@
 package com.duy.ascii.art.asciiart;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 
-import com.duy.ascii.art.utils.FileUtil;
+import com.duy.ascii.art.asciiart.model.TextArt;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 /**
  * Created by Duy on 03-Jul-17.
  */
 class TextArtPresenter implements TextArtContract.Presenter {
-    private final Context context;
+    private final Context mContext;
     private final TextArtContract.View mView;
-    private AsyncTask<String, String, ArrayList<String>> mLoadDataTask;
+    private LoadDataTask mLoadDataTask;
 
     TextArtPresenter(Context context, TextArtContract.View view) {
-        this.context = context;
+        this.mContext = context;
         this.mView = view;
     }
 
@@ -48,12 +52,16 @@ class TextArtPresenter implements TextArtContract.Presenter {
         }
         LoadDataTask.Callback callback = new LoadDataTask.Callback() {
             @Override
-            public void onResult(ArrayList<String> list) {
+            public void onResult(ArrayList<TextArt> list) {
                 mView.hideProgress();
             }
         };
-        mLoadDataTask = new LoadDataTask(context, callback, mView);
-        mLoadDataTask.execute("image.txt");
+        mLoadDataTask = new LoadDataTask(callback, mView);
+        try {
+            mLoadDataTask.execute(mContext.getAssets().open("new_ascii_art.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -63,42 +71,63 @@ class TextArtPresenter implements TextArtContract.Presenter {
         }
     }
 
-    private static class LoadDataTask extends AsyncTask<String, String, ArrayList<String>> {
+    private static class LoadDataTask extends AsyncTask<InputStream, TextArt, ArrayList<TextArt>> {
         private Callback mCallback;
         private TextArtContract.View mView;
-        private AssetManager mAssetManager;
 
-        LoadDataTask(Context context, Callback callback, TextArtContract.View view) {
+        LoadDataTask(Callback callback, TextArtContract.View view) {
             this.mCallback = callback;
             this.mView = view;
-            this.mAssetManager = context.getAssets();
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected ArrayList<TextArt> doInBackground(InputStream... params) {
             try {
-                InputStream stream = mAssetManager.open(params[0]);
-                String string = FileUtil.streamToString(stream);
-                Matcher matcher = FileUtil.PATTERN_SLIP.matcher(string);
-                ArrayList<String> result = new ArrayList<>();
-                while (matcher.find() && !isCancelled()) {
-                    publishProgress(matcher.group(2));
+                InputStream in = params[0];
+                String content = IOUtils.toString(in);
+                JSONObject jsonObject = new JSONObject(content);
+                JSONArray array = jsonObject.getJSONArray(TextArt.KEY_ROOT);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject item = array.getJSONObject(i);
+                    TextArt textArt = new TextArt();
+                    if (item.has("category")) {
+                        textArt.setCategory(item.getInt("category"));
+                    }
+                    if (item.has("time")) {
+                        textArt.setTime(item.getLong("time"));
+                    }
+                    if (item.has("name")) {
+                        textArt.setName(item.getString("name"));
+                    }
+                    textArt.setContent(item.getString("content"));
+                    if (item.has("star")) {
+                        textArt.setStar(item.getInt("star"));
+                    }
+                    publishProgress(textArt);
                 }
-                return result;
+//                Matcher matcher = FileUtil.PATTERN_SPLIT.matcher(string);
+//                ArrayList<T> result = new ArrayList<>();
+//                while (matcher.find() && !isCancelled()) {
+//                    publishProgress(matcher.group(2));
+//                }
+//                return result;
+                return null;
             } catch (IOException e) {
                 e.printStackTrace();
-                return new ArrayList<>();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
+        protected void onProgressUpdate(TextArt... values) {
             super.onProgressUpdate(values);
             mView.append(values[0]);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> list) {
+        protected void onPostExecute(ArrayList<TextArt> list) {
             super.onPostExecute(list);
             if (!isCancelled()) {
                 mCallback.onResult(list);
@@ -106,7 +135,7 @@ class TextArtPresenter implements TextArtContract.Presenter {
         }
 
         interface Callback {
-            void onResult(ArrayList<String> list);
+            void onResult(@Nullable ArrayList<TextArt> list);
         }
     }
 }
