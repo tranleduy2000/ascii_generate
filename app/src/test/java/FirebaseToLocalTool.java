@@ -16,13 +16,34 @@
 
 import junit.framework.TestCase;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 /**
  * Created by Duy on 01-May-18.
  */
 
 public class FirebaseToLocalTool extends TestCase {
 
-    public void test() {
-
+    public void test() throws IOException, JSONException {
+//        File file = new File("./app/src/main/assets/asciiart.json");
+//        String content = IOUtils.toString(new FileInputStream(file));
+//        JSONObject oldData = new JSONObject(content).getJSONObject("ascii_art");
+//        Iterator<String> keys = oldData.keys();
+//
+//
+//        JSONObject newData = new JSONObject();
+//        JSONArray array = new JSONArray();
+//        newData.put("ascii_art", array);
+//        while (keys.hasNext()) {
+//            String next = keys.next();
+//            JSONObject jsonObject = oldData.getJSONObject(next);
+//            array.put(jsonObject);
+//        }
+//        content = newData.toString(2);
+//        FileOutputStream fileOutputStream = new FileOutputStream(new File(file.getParent(), "new_ascii_art.json"));
+//        fileOutputStream.write(content.getBytes());
+//        System.out.println();
     }
 }
