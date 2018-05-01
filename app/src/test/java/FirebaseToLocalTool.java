@@ -95,10 +95,10 @@ public class FirebaseToLocalTool extends TestCase {
                 array.remove(i);
             } else if (item.getString("content").length() <= 5) {
                 array.remove(i);
-            } else if (contents.contains(item.getString("content"))) {
+            } else if (contents.contains(item.getString("content").trim())) {
                 array.remove(i);
             } else {
-                contents.add(item.getString("content"));
+                contents.add(item.getString("content").trim());
             }
             i++;
         }
