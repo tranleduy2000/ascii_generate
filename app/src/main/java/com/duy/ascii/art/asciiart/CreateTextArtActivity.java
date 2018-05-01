@@ -50,7 +50,6 @@ public class CreateTextArtActivity extends BaseActivity {
         mSubmit = findViewById(R.id.btn_submit);
         mInput = findViewById(R.id.edit_input);
         mName = findViewById(R.id.edit_name);
-
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

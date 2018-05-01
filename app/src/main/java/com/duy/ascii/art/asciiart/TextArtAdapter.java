@@ -68,11 +68,12 @@ public class TextArtAdapter extends RecyclerView.Adapter<TextArtAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final String text = mTextArts.get(position).getContent();
-        final TextArt textArt = mTextArts.get(position);
+        TextArt item = mTextArts.get(position);
+        final String text = item.getContent();
+        final TextArt textArt = item;
 
         holder.txtContent.setText(text);
-        holder.txtName.setText(mTextArts.get(position).getName());
+        holder.txtName.setText(item.getName() + " " + item.getTime());
         holder.imgCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
