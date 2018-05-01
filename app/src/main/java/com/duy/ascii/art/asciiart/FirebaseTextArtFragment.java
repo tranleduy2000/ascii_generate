@@ -31,6 +31,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.duy.ascii.art.BuildConfig;
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.asciiart.database.FirebaseHelper;
@@ -128,6 +129,15 @@ public class FirebaseTextArtFragment extends SimpleFragment {
                 startActivity(new Intent(getContext(), CreateTextArtActivity.class));
             }
         });
+
+        if (BuildConfig.DEBUG) {
+            mTextArtAdapter.setListener(new TextArtAdapter.OnItemClickListener() {
+                @Override
+                public void onDelete(TextArt textArt) {
+                    mDatabase.delete(textArt);
+                }
+            });
+        }
     }
 
     private void loadAll(boolean force) {

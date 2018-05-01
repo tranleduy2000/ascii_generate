@@ -27,10 +27,9 @@ import android.widget.Toast;
 
 import com.duy.ascii.art.BuildConfig;
 import com.duy.ascii.art.R;
+import com.duy.ascii.art.asciiart.model.TextArt;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
-import com.duy.ascii.art.asciiart.database.FirebaseHelper;
-import com.duy.ascii.art.asciiart.model.TextArt;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
 import com.duy.ascii.art.utils.ShareUtil;
@@ -46,20 +45,19 @@ import java.util.List;
 
 public class TextArtAdapter extends RecyclerView.Adapter<TextArtAdapter.ViewHolder> {
     private final Context mContext;
-    private LayoutInflater miInflater;
     private final ArrayList<TextArt> mTextArts = new ArrayList<>();
+    private LayoutInflater miInflater;
     private ClipboardManagerCompat mClipboard;
     private DatabasePresenter mDatabasePresenter;
-    private FirebaseHelper mFirebaseHelper;
+    private OnItemClickListener listener;
+
 
     public TextArtAdapter(Context context) {
         this.mContext = context;
         this.miInflater = LayoutInflater.from(context);
         this.mClipboard = ClipboardManagerCompatFactory.getManager(context);
         this.mDatabasePresenter = new DatabasePresenter(context, null);
-        this.mFirebaseHelper = new FirebaseHelper(context);
     }
-
 
     @NonNull
     @Override
@@ -111,7 +109,9 @@ public class TextArtAdapter extends RecyclerView.Adapter<TextArtAdapter.ViewHold
     }
 
     private void delete(TextArt textArt) {
-        mFirebaseHelper.delete(textArt);
+        if (listener != null) {
+            listener.onDelete(textArt);
+        }
         int index = mTextArts.indexOf(textArt);
         if (index >= 0) {
             mTextArts.remove(index);
@@ -152,6 +152,14 @@ public class TextArtAdapter extends RecyclerView.Adapter<TextArtAdapter.ViewHold
     public void clearAll() {
         mTextArts.clear();
         notifyDataSetChanged();
+    }
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onDelete(TextArt textArt);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
