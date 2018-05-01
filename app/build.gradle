@@ -18,12 +18,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.duy.asciiart"
-        minSdkVersion 14
-        targetSdkVersion 27
+
         versionCode 404
         versionName "4.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
