@@ -89,4 +89,4 @@
 }
 
 -keep class com.duy.ascii.art.image.converter.** {*; }
--keep class com.duy.ascii.art.emojiart.model.** {*; }
+-keep class com.duy.ascii.art.asciiart.model.** {*; }

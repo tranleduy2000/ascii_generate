@@ -34,7 +34,7 @@ import android.view.ViewGroup;
 import com.duy.ascii.art.asciiart.TextArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
 import com.duy.ascii.art.emoji.EmojiCategoriesFragment;
-import com.duy.ascii.art.emojiart.fragments.RecentFragment;
+import com.duy.ascii.art.asciiart.RecentFragment;
 import com.duy.ascii.art.emoticons.EmoticonsFragment;
 import com.duy.ascii.art.favorite.FavoriteActivity;
 import com.duy.ascii.art.figlet.FigletFragment;

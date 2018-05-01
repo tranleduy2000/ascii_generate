@@ -46,7 +46,7 @@
             android:name="com.duy.ascii.art.image.gallery.GalleryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.duy.ascii.art.emojiart.activities.CreateEmojiActivity"
+            android:name=".asciiart.CreateTextArtActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.duy.ascii.art.favorite.FavoriteActivity"

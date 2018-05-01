@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emojiart.database;
+package com.duy.ascii.art.asciiart.database;
 
 /**
  * Created by Duy on 9/27/2017.

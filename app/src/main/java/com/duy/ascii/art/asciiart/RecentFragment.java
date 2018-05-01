@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 by Tran Le Duy
+ * Copyright (c) 2018 by Tran Le Duy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emojiart.fragments;
+package com.duy.ascii.art.asciiart;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,10 +34,8 @@ import android.widget.Toast;
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.database.JavaSerialObject;
-import com.duy.ascii.art.emojiart.activities.CreateEmojiActivity;
-import com.duy.ascii.art.emojiart.adapters.RecentAdapter;
-import com.duy.ascii.art.emojiart.database.FirebaseHelper;
-import com.duy.ascii.art.emojiart.model.TextArt;
+import com.duy.ascii.art.asciiart.database.FirebaseHelper;
+import com.duy.ascii.art.asciiart.model.TextArt;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -60,7 +58,7 @@ public class RecentFragment extends SimpleFragment {
     private static final String EXTRA_LAST_TIME = "pref_key_last_time_load_data";
     private static final String LOCAL_FILE = "emojiart_local";
     private RecyclerView mRecyclerView;
-    private RecentAdapter mRecentAdapter;
+    private TextArtAdapter mTextArtAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FirebaseHelper mDatabase;
     private FloatingActionButton mFab;
@@ -94,12 +92,12 @@ public class RecentFragment extends SimpleFragment {
     }
 
     private void bindView() {
-        mRecentAdapter = new RecentAdapter(getContext());
+        mTextArtAdapter = new TextArtAdapter(getContext());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mRecentAdapter);
+        mRecyclerView.setAdapter(mTextArtAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -131,7 +129,7 @@ public class RecentFragment extends SimpleFragment {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), CreateEmojiActivity.class));
+                startActivity(new Intent(getContext(), CreateTextArtActivity.class));
             }
         });
     }
@@ -231,9 +229,9 @@ public class RecentFragment extends SimpleFragment {
     }
 
     private void setData(ArrayList<TextArt> textArts) {
-        mRecentAdapter.clearAll();
-        mRecentAdapter.addAll(textArts);
-        if (mRecentAdapter.getItemCount() > 0) {
+        mTextArtAdapter.clearAll();
+        mTextArtAdapter.addAll(textArts);
+        if (mTextArtAdapter.getItemCount() > 0) {
             mRecyclerView.scrollToPosition(0);
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 by Tran Le Duy
+ * Copyright (c) 2018 by Tran Le Duy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emojiart.activities;
+package com.duy.ascii.art.asciiart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,14 +25,14 @@ import android.widget.EditText;
 
 import com.duy.ascii.art.BaseActivity;
 import com.duy.ascii.art.R;
-import com.duy.ascii.art.emojiart.database.FirebaseHelper;
-import com.duy.ascii.art.emojiart.model.TextArt;
+import com.duy.ascii.art.asciiart.database.FirebaseHelper;
+import com.duy.ascii.art.asciiart.model.TextArt;
 
 /**
  * Created by Duy on 9/27/2017.
  */
 
-public class CreateEmojiActivity extends BaseActivity {
+public class CreateTextArtActivity extends BaseActivity {
     private Button mSubmit;
     private EditText mInput, mName;
     private FirebaseHelper mFirebaseHelper;

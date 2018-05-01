@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emojiart.database;
+package com.duy.ascii.art.asciiart.database;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.duy.ascii.art.emojiart.model.TextArt;
+import com.duy.ascii.art.asciiart.model.TextArt;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duy.ascii.art.emojiart.model;
+package com.duy.ascii.art.asciiart.model;
 
 import java.io.Serializable;
 
