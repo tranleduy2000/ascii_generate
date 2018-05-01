@@ -17,6 +17,7 @@
 package com.duy.ascii.art.asciiart;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,8 +25,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.duy.ascii.art.SimpleFragment;
 import com.duy.ascii.art.R;
+import com.duy.ascii.art.SimpleFragment;
+import com.duy.ascii.art.asciiart.model.TextArt;
 
 import java.util.ArrayList;
 
@@ -34,16 +36,13 @@ import java.util.ArrayList;
  */
 
 public class TextArtFragment extends SimpleFragment implements TextArtContract.View {
-    public static final int INDEX = 2;
     protected TextArtContract.Presenter mPresenter;
     protected RecyclerView mRecyclerView;
     protected TextArtAdapter mAdapter;
     protected ContentLoadingProgressBar mProgressBar;
 
     public static TextArtFragment newInstance() {
-
         Bundle args = new Bundle();
-
         TextArtFragment fragment = new TextArtFragment();
         fragment.setArguments(args);
         return fragment;
@@ -54,8 +53,9 @@ public class TextArtFragment extends SimpleFragment implements TextArtContract.V
         return R.layout.fragment_ascii_art;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
@@ -80,8 +80,8 @@ public class TextArtFragment extends SimpleFragment implements TextArtContract.V
     }
 
     @Override
-    public void display(ArrayList<String> list) {
-        mAdapter.clear();
+    public void display(ArrayList<TextArt> list) {
+        mAdapter.clearAll();
         mAdapter.addAll(list);
     }
 
@@ -91,7 +91,7 @@ public class TextArtFragment extends SimpleFragment implements TextArtContract.V
     }
 
     @Override
-    public void append(String value) {
+    public void append(TextArt value) {
         mAdapter.add(value);
     }
 

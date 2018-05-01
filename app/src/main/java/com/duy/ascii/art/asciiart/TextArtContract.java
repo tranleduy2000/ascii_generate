@@ -16,6 +16,8 @@
 
 package com.duy.ascii.art.asciiart;
 
+import com.duy.ascii.art.asciiart.model.TextArt;
+
 import java.util.ArrayList;
 
 /**
@@ -27,11 +29,11 @@ class TextArtContract {
 
         void hideProgress();
 
-        void display(ArrayList<String> list);
+        void display(ArrayList<TextArt> list);
 
         void setPresenter(Presenter presenter);
 
-        void append(String value);
+        void append(TextArt value);
     }
 
     public interface Presenter {
