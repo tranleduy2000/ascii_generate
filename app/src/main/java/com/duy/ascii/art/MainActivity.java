@@ -34,7 +34,7 @@ import android.view.ViewGroup;
 import com.duy.ascii.art.asciiart.TextArtFragment;
 import com.duy.ascii.art.bigtext.BigFontFragment;
 import com.duy.ascii.art.emoji.EmojiCategoriesFragment;
-import com.duy.ascii.art.asciiart.RecentFragment;
+import com.duy.ascii.art.asciiart.FirebaseTextArtFragment;
 import com.duy.ascii.art.emoticons.EmoticonsFragment;
 import com.duy.ascii.art.favorite.FavoriteActivity;
 import com.duy.ascii.art.figlet.FigletFragment;
@@ -199,7 +199,7 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
                 break;
             case R.id.action_emoji_art:
                 mToolbar.setSubtitle(R.string.emoji_art);
-                transaction.replace(R.id.content, RecentFragment.newInstance()).commit();
+                transaction.replace(R.id.content, FirebaseTextArtFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
                 transaction.replace(R.id.content, EmoticonsFragment.newInstance()).commit();

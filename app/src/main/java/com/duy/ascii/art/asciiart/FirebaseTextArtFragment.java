@@ -33,9 +33,9 @@ import android.widget.Toast;
 
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.SimpleFragment;
-import com.duy.ascii.art.database.JavaSerialObject;
 import com.duy.ascii.art.asciiart.database.FirebaseHelper;
 import com.duy.ascii.art.asciiart.model.TextArt;
+import com.duy.ascii.art.database.JavaSerialObject;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -51,11 +51,9 @@ import static com.duy.ascii.art.database.JavaSerialObject.readObject;
  * Created by Duy on 9/27/2017.
  */
 
-public class RecentFragment extends SimpleFragment {
+public class FirebaseTextArtFragment extends SimpleFragment {
 
-    private static final String TAG = "RecentFragment";
-    private static final int COUNT_PER_LOAD = 10;
-    private static final String EXTRA_LAST_TIME = "pref_key_last_time_load_data";
+    private static final String KEY_LAST_TIME = "pref_key_last_time_load_data";
     private static final String LOCAL_FILE = "emojiart_local";
     private RecyclerView mRecyclerView;
     private TextArtAdapter mTextArtAdapter;
@@ -63,11 +61,9 @@ public class RecentFragment extends SimpleFragment {
     private FirebaseHelper mDatabase;
     private FloatingActionButton mFab;
 
-    public static RecentFragment newInstance() {
-
+    public static FirebaseTextArtFragment newInstance() {
         Bundle args = new Bundle();
-
-        RecentFragment fragment = new RecentFragment();
+        FirebaseTextArtFragment fragment = new FirebaseTextArtFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,9 +87,9 @@ public class RecentFragment extends SimpleFragment {
         loadAll(false);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void bindView() {
         mTextArtAdapter = new TextArtAdapter(getContext());
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -160,7 +156,7 @@ public class RecentFragment extends SimpleFragment {
         });
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void loadFromLocal() {
         try {
             FileInputStream inputStream = getContext().openFileInput(LOCAL_FILE);
@@ -193,12 +189,12 @@ public class RecentFragment extends SimpleFragment {
 
     private long getLastTimeLoadData() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return pref.getLong(EXTRA_LAST_TIME, 0);
+        return pref.getLong(KEY_LAST_TIME, 0);
     }
 
     private void setLastTimeLoadData(long timeMillis) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        pref.edit().putLong(EXTRA_LAST_TIME, timeMillis).apply();
+        pref.edit().putLong(KEY_LAST_TIME, timeMillis).apply();
     }
 
 
@@ -219,6 +215,7 @@ public class RecentFragment extends SimpleFragment {
         setData(textArts);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void saveData(ArrayList<TextArt> textArts) {
         try {
             FileOutputStream stream = getContext().openFileOutput(LOCAL_FILE, Context.MODE_PRIVATE);
