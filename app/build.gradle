@@ -1,0 +1,121 @@
+/*
+ * Copyright (c) 2017 by Tran Le Duy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        applicationId "com.duy.asciiart"
+
+        versionCode 404
+        versionName "4.0.4"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    signingConfigs {
+        proRelease {
+        }
+        freeRelease {
+        }
+    }
+    flavorDimensions "applicationId"
+    productFlavors {
+        free {
+            signingConfig signingConfigs.freeRelease
+            applicationId "com.duy.asciiart"
+
+        }
+        pro {
+            signingConfig signingConfigs.proRelease
+            applicationId "com.duy.asciigenerator.pro"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+}
+
+def Properties props = new Properties()
+def propFile = new File('common/signing.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+    android.signingConfigs.proRelease.storeFile = file(props['PRO_RELEASE_STORE_FILE'])
+    android.signingConfigs.proRelease.storePassword = props['PRO_RELEASE_STORE_PASSWORD']
+    android.signingConfigs.proRelease.keyAlias = props['PRO_RELEASE_KEY_ALIAS']
+    android.signingConfigs.proRelease.keyPassword = props['PRO_RELEASE_KEY_PASSWORD']
+
+    android.signingConfigs.freeRelease.storeFile = file(props['RELEASE_STORE_FILE'])
+    android.signingConfigs.freeRelease.storePassword = props['RELEASE_STORE_PASSWORD']
+    android.signingConfigs.freeRelease.keyAlias = props['RELEASE_KEY_ALIAS']
+    android.signingConfigs.freeRelease.keyPassword = props['RELEASE_KEY_PASSWORD']
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
+    throw new GradleException('signing.properties not found')
+}
+
+repositories {
+    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.json:json:20140107'
+    implementation project(':common')
+
+    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.google.firebase:firebase-database:15.0.0'
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'me.grantland:autofittextview:0.2.1'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
+    implementation 'io.github.kobakei:ratethisapp:1.2.0'
+    implementation 'it.sephiroth.android.library.targettooltip:target-tooltip-library:1.3.15'
+    debugImplementation 'org.jsoup:jsoup:1.11.2'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+
+}
+apply plugin: 'com.google.gms.google-services'

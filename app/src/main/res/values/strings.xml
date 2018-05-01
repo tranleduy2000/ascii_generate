@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright (c) 2017 by Tran Le Duy
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Ascii Art</string>
+
+    <string name="type_your_text">Type your text …</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="please_enter_your_text_and_wait">Please enter your text and wait…</string>
+    <string name="copied">Copied</string>
+    <string name="rate_app">Rate app</string>
+    <string name="more_app_from_dev">More app from N Studio</string>
+    <string name="select_file">Select file</string>
+    <string name="emoticons">Emoticons</string>
+    <string name="figlet_msg">!! You can not copy/paste with this tool because it is only supported for fixed width font.</string>
+    <string name="figlet">Figlet</string>
+    <string name="big_text">Big text</string>
+    <string name="null_uri">Please select file and convert to image!</string>
+    <string name="share_app">Share this app</string>
+    <string name="image_to_ascii">Image to ascii</string>
+    <string name="save">Save</string>
+    <string name="gallery">Gallery</string>
+    <string name="delete">Delete</string>
+    <string name="text_art">Text art</string>
+    <string name="latin_characters">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
+    <string name="latin_number_characters">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "</string>
+    <string name="emoji">Emoji</string>
+
+    <string name="cool_symbol">Cool symbol</string>
+    <string name="favorite">Favorite</string>
+    <string name="added_to_favorite">Added to favorite</string>
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+    <string name="online_text_art">Online Text art</string>
+
+    <string name="ad_unit_main">ca-app-pub-9351804859208340/8950125006</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="bg_color">Background color</string>
+    <string name="text_color">Text color</string>
+</resources>
