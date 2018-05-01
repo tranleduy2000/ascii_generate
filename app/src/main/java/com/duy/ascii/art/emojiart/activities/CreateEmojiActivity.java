@@ -26,7 +26,7 @@ import android.widget.EditText;
 import com.duy.ascii.art.BaseActivity;
 import com.duy.ascii.art.R;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
-import com.duy.ascii.art.emojiart.model.EmojiItem;
+import com.duy.ascii.art.emojiart.model.TextArt;
 
 /**
  * Created by Duy on 9/27/2017.
@@ -66,7 +66,7 @@ public class CreateEmojiActivity extends BaseActivity {
             return;
         }
         String name = mName.getText().toString();
-        mFirebaseHelper.add(new EmojiItem(text, name));
+        mFirebaseHelper.add(new TextArt(text, name));
         finish();
     }
 }

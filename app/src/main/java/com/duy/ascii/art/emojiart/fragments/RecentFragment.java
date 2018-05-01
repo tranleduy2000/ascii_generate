@@ -37,7 +37,7 @@ import com.duy.ascii.art.database.JavaSerialObject;
 import com.duy.ascii.art.emojiart.activities.CreateEmojiActivity;
 import com.duy.ascii.art.emojiart.adapters.RecentAdapter;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
-import com.duy.ascii.art.emojiart.model.EmojiItem;
+import com.duy.ascii.art.emojiart.model.TextArt;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -166,7 +166,7 @@ public class RecentFragment extends SimpleFragment {
     private void loadFromLocal() {
         try {
             FileInputStream inputStream = getContext().openFileInput(LOCAL_FILE);
-            ArrayList<EmojiItem> object = (ArrayList<EmojiItem>) readObject(inputStream);
+            ArrayList<TextArt> object = (ArrayList<TextArt>) readObject(inputStream);
             if (object == null) {
                 loadFromFirebase();
                 return;
@@ -208,31 +208,31 @@ public class RecentFragment extends SimpleFragment {
         if (dataSnapshot == null || dataSnapshot.getChildrenCount() == 0) {
             return;
         }
-        ArrayList<EmojiItem> emojiItems = new ArrayList<>();
+        ArrayList<TextArt> textArts = new ArrayList<>();
         for (DataSnapshot item : dataSnapshot.getChildren()) {
             try {
-                EmojiItem value = item.getValue(EmojiItem.class);
-                emojiItems.add(value);
+                TextArt value = item.getValue(TextArt.class);
+                textArts.add(value);
             } catch (Exception ignored) {
             }
         }
         setLastTimeLoadData(System.currentTimeMillis());
-        saveData(emojiItems);
-        setData(emojiItems);
+        saveData(textArts);
+        setData(textArts);
     }
 
-    private void saveData(ArrayList<EmojiItem> emojiItems) {
+    private void saveData(ArrayList<TextArt> textArts) {
         try {
             FileOutputStream stream = getContext().openFileOutput(LOCAL_FILE, Context.MODE_PRIVATE);
-            JavaSerialObject.writeObject(emojiItems, stream);
+            JavaSerialObject.writeObject(textArts, stream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void setData(ArrayList<EmojiItem> emojiItems) {
+    private void setData(ArrayList<TextArt> textArts) {
         mRecentAdapter.clearAll();
-        mRecentAdapter.addAll(emojiItems);
+        mRecentAdapter.addAll(textArts);
         if (mRecentAdapter.getItemCount() > 0) {
             mRecyclerView.scrollToPosition(0);
         }

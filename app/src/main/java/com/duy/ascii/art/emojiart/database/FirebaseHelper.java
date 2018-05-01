@@ -19,7 +19,7 @@ package com.duy.ascii.art.emojiart.database;
 import android.content.Context;
 import android.util.Log;
 
-import com.duy.ascii.art.emojiart.model.EmojiItem;
+import com.duy.ascii.art.emojiart.model.TextArt;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -91,23 +91,23 @@ public class FirebaseHelper {
         query.addListenerForSingleValueEvent(callback);
     }
 
-    public void add(EmojiItem emojiItem) {
-        Log.d(TAG, "add() called with: emojiItem = [" + emojiItem + "]");
+    public void add(TextArt textArt) {
+        Log.d(TAG, "add() called with: emojiItem = [" + textArt + "]");
         DatabaseReference reference = mFirebaseDatabase.getReference();
         DatabaseReference recent = reference.child(Constants.ROOT);
-        recent.push().setValue(emojiItem);
+        recent.push().setValue(textArt);
     }
 
-    public ArrayList<EmojiItem> getPopular() {
+    public ArrayList<TextArt> getPopular() {
         return null;
     }
 
-    public void delete(EmojiItem emojiItem) {
+    public void delete(TextArt textArt) {
         DatabaseReference ref = mFirebaseDatabase.getReference();
         final DatabaseReference database = ref.child(Constants.ROOT);
         Query query = database
                 .orderByChild("time")
-                .equalTo(emojiItem.getTime());
+                .equalTo(textArt.getTime());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -29,7 +29,7 @@ import com.duy.ascii.art.R;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompat;
 import com.duy.ascii.art.clipboard.ClipboardManagerCompatFactory;
 import com.duy.ascii.art.emojiart.database.FirebaseHelper;
-import com.duy.ascii.art.emojiart.model.EmojiItem;
+import com.duy.ascii.art.emojiart.model.TextArt;
 import com.duy.ascii.art.favorite.localdata.DatabasePresenter;
 import com.duy.ascii.art.favorite.localdata.TextItem;
 import com.duy.ascii.art.utils.ShareUtil;
@@ -47,7 +47,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     private static final String TAG = "RecentAdapter";
     private final Context mContext;
     private LayoutInflater miInflater;
-    private ArrayList<EmojiItem> mEmojiItems = new ArrayList<>();
+    private ArrayList<TextArt> mTextArts = new ArrayList<>();
     private ClipboardManagerCompat mClipboard;
     private DatabasePresenter mDatabasePresenter;
     private FirebaseHelper mFirebaseHelper;
@@ -69,11 +69,11 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final String text = mEmojiItems.get(position).getContent();
-        final EmojiItem emojiItem = mEmojiItems.get(position);
+        final String text = mTextArts.get(position).getContent();
+        final TextArt textArt = mTextArts.get(position);
 
         holder.txtContent.setText(text);
-        holder.txtName.setText(mEmojiItems.get(position).getName());
+        holder.txtName.setText(mTextArts.get(position).getName());
         holder.imgCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +100,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             holder.btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    delete(emojiItem);
+                    delete(textArt);
                 }
             });
         } else {
@@ -109,47 +109,47 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         }
     }
 
-    private void delete(EmojiItem emojiItem) {
-        mFirebaseHelper.delete(emojiItem);
-        int index = mEmojiItems.indexOf(emojiItem);
+    private void delete(TextArt textArt) {
+        mFirebaseHelper.delete(textArt);
+        int index = mTextArts.indexOf(textArt);
         if (index >= 0) {
-            mEmojiItems.remove(index);
+            mTextArts.remove(index);
             notifyItemRemoved(index);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mEmojiItems.size();
+        return mTextArts.size();
     }
 
-    public void add(EmojiItem value) {
-        mEmojiItems.add(value);
-        notifyItemInserted(mEmojiItems.size() - 1);
+    public void add(TextArt value) {
+        mTextArts.add(value);
+        notifyItemInserted(mTextArts.size() - 1);
     }
 
-    public EmojiItem getLastItem() {
-        return mEmojiItems.get(mEmojiItems.size() - 1);
+    public TextArt getLastItem() {
+        return mTextArts.get(mTextArts.size() - 1);
     }
 
-    public EmojiItem getFirstItem() {
-        return mEmojiItems.get(0);
+    public TextArt getFirstItem() {
+        return mTextArts.get(0);
     }
 
-    public void addAll(List<EmojiItem> emojiItems) {
+    public void addAll(List<TextArt> textArts) {
         //sort decrease
-        Collections.sort(emojiItems, new Comparator<EmojiItem>() {
+        Collections.sort(textArts, new Comparator<TextArt>() {
             @Override
-            public int compare(EmojiItem emojiItem, EmojiItem t1) {
-                return -emojiItem.getTime().compareTo(t1.getTime());
+            public int compare(TextArt textArt, TextArt t1) {
+                return -textArt.getTime().compareTo(t1.getTime());
             }
         });
-        mEmojiItems.addAll( emojiItems);
+        mTextArts.addAll(textArts);
         notifyDataSetChanged();
     }
 
     public void clearAll() {
-        mEmojiItems.clear();
+        mTextArts.clear();
         notifyDataSetChanged();
     }
 
