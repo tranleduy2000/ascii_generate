@@ -87,6 +87,7 @@ public class FirebaseToLocalTool extends TestCase {
         final FileInputStream in = new FileInputStream(new File(file.getParent(), "new_ascii_art.json"));
         JSONObject jsonObject = new JSONObject(IOUtils.toString(in));
         JSONArray array = jsonObject.getJSONArray(TextArt.KEY_ROOT);
+        ArrayList<String> contents = new ArrayList<>();
         int i = 0;
         while (i < array.length()) {
             JSONObject item = array.getJSONObject(i);
@@ -94,6 +95,10 @@ public class FirebaseToLocalTool extends TestCase {
                 array.remove(i);
             } else if (item.getString("content").length() <= 5) {
                 array.remove(i);
+            } else if (contents.contains(item.getString("content"))) {
+                array.remove(i);
+            } else {
+                contents.add(item.getString("content"));
             }
             i++;
         }
