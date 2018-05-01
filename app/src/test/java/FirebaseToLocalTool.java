@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 /**
@@ -65,7 +64,6 @@ public class FirebaseToLocalTool extends TestCase {
         JSONArray array = jsonObject.getJSONArray(TextArt.KEY_ROOT);
 
         Matcher matcher = FileUtil.PATTERN_SPLIT.matcher(IOUtils.toString(new FileInputStream("./app/src/main/assets/image.txt")));
-        ArrayList<TextArt> result = new ArrayList<>();
         while (matcher.find()) {
             String value = matcher.group(2);
             JSONObject item = new JSONObject();
@@ -83,28 +81,28 @@ public class FirebaseToLocalTool extends TestCase {
     }
 
     public void testClean() throws IOException, JSONException {
-        final File file = new File("./app/src/main/assets/asciiart.json");
-        final FileInputStream in = new FileInputStream(new File(file.getParent(), "new_ascii_art.json"));
-        JSONObject jsonObject = new JSONObject(IOUtils.toString(in));
-        JSONArray array = jsonObject.getJSONArray(TextArt.KEY_ROOT);
-        ArrayList<String> contents = new ArrayList<>();
-        int i = 0;
-        while (i < array.length()) {
-            JSONObject item = array.getJSONObject(i);
-            if (item.getString("content").matches("[\\w]{1,20}")) {
-                array.remove(i);
-            } else if (item.getString("content").length() <= 5) {
-                array.remove(i);
-            } else if (contents.contains(item.getString("content").trim())) {
-                array.remove(i);
-            } else {
-                contents.add(item.getString("content").trim());
-            }
-            i++;
-        }
-
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(file.getParent(), "new_ascii_art4.json"));
-        String content = jsonObject.toString(1);
-        fileOutputStream.write(content.getBytes());
+//        final File file = new File("./app/src/main/assets/asciiart.json");
+//        final FileInputStream in = new FileInputStream(new File(file.getParent(), "new_ascii_art.json"));
+//        JSONObject jsonObject = new JSONObject(IOUtils.toString(in));
+//        JSONArray array = jsonObject.getJSONArray(TextArt.KEY_ROOT);
+//        ArrayList<String> contents = new ArrayList<>();
+//        int i = 0;
+//        while (i < array.length()) {
+//            JSONObject item = array.getJSONObject(i);
+//            if (item.getString("content").matches("[\\w]{1,20}")) {
+//                array.remove(i);
+//            } else if (item.getString("content").length() <= 5) {
+//                array.remove(i);
+//            } else if (contents.contains(item.getString("content").trim())) {
+//                array.remove(i);
+//            } else {
+//                contents.add(item.getString("content").trim());
+//            }
+//            i++;
+//        }
+//
+//        FileOutputStream fileOutputStream = new FileOutputStream(new File(file.getParent(), "new_ascii_art4.json"));
+//        String content = jsonObject.toString(1);
+//        fileOutputStream.write(content.getBytes());
     }
 }

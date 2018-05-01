@@ -26,14 +26,14 @@
             android:id="@+id/action_big_text"
             android:title="@string/big_text" />
         <item
-            android:id="@+id/action_ascii_art"
-            android:title="@string/ascii_art" />
+            android:id="@+id/action_text_art"
+            android:title="@string/text_art" />
         <item
             android:id="@+id/action_emoji"
             android:title="@string/emoji" />
         <item
-            android:id="@+id/action_emoji_art"
-            android:title="@string/emoji_art" />
+            android:id="@+id/action_online_text_art"
+            android:title="@string/online_text_art" />
         <item
             android:id="@+id/action_emoticon"
             android:title="@string/emoticons" />

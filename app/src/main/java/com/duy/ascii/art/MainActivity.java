@@ -181,9 +181,9 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
         mDrawerLayout.closeDrawers();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
-            case R.id.action_ascii_art:
+            case R.id.action_text_art:
                 transaction.replace(R.id.content, TextArtFragment.newInstance()).commit();
-                mToolbar.setSubtitle(R.string.ascii_art);
+                mToolbar.setSubtitle(R.string.text_art);
                 break;
             case R.id.action_big_text:
                 transaction.replace(R.id.content, BigFontFragment.newInstance()).commit();
@@ -197,8 +197,8 @@ public class MainActivity extends InAppPurchaseActivity implements View.OnClickL
                 transaction.replace(R.id.content, EmojiCategoriesFragment.newInstance()).commit();
                 mToolbar.setSubtitle(R.string.emoji);
                 break;
-            case R.id.action_emoji_art:
-                mToolbar.setSubtitle(R.string.emoji_art);
+            case R.id.action_online_text_art:
+                mToolbar.setSubtitle(R.string.online_text_art);
                 transaction.replace(R.id.content, FirebaseTextArtFragment.newInstance()).commit();
                 break;
             case R.id.action_emoticon:
