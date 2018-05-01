@@ -66,7 +66,7 @@ public class AsciiArtFragment extends SimpleFragment implements AsciiArtContract
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.progress_bar);
-        mPresenter = new AsciiArtPresenter(getContext(), this);
+        mPresenter = new TextArtPresenter(getContext(), this);
     }
 
     @Override

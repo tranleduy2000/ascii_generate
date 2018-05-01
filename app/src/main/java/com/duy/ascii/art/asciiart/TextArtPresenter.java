@@ -30,12 +30,12 @@ import java.util.regex.Matcher;
 /**
  * Created by Duy on 03-Jul-17.
  */
-class AsciiArtPresenter implements AsciiArtContract.Presenter {
+class TextArtPresenter implements AsciiArtContract.Presenter {
     private final Context context;
     private final AsciiArtContract.View mView;
     private AsyncTask<String, String, ArrayList<String>> mLoadDataTask;
 
-    AsciiArtPresenter(Context context, AsciiArtContract.View view) {
+    TextArtPresenter(Context context, AsciiArtContract.View view) {
         this.context = context;
         this.mView = view;
     }
