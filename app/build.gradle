@@ -18,14 +18,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.duy.asciiart"
         minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 403
-        versionName "4.0.3"
+        targetSdkVersion 27
+        versionCode 404
+        versionName "4.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -96,24 +96,24 @@ repositories {
     mavenCentral() // jcenter() works as well because it pulls from Maven Central
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.json:json:20140107'
-    compile project(':common')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.json:json:20140107'
+    implementation project(':common')
 
-    compile 'com.github.QuadFlask:colorpicker:0.0.13'
-    compile 'com.github.chrisbanes:PhotoView:2.0.0'
-    compile 'com.google.firebase:firebase-database:11.8.0'
+    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.google.firebase:firebase-database:15.0.0'
 
-    compile 'com.sothree.slidinguppanel:library:3.3.1'
-    compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
-    compile 'io.github.kobakei:ratethisapp:1.2.0'
-    compile 'it.sephiroth.android.library.targettooltip:target-tooltip-library:1.3.15'
-    debugCompile 'org.jsoup:jsoup:1.11.2'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'me.grantland:autofittextview:0.2.1'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
+    implementation 'io.github.kobakei:ratethisapp:1.2.0'
+    implementation 'it.sephiroth.android.library.targettooltip:target-tooltip-library:1.3.15'
+    debugImplementation 'org.jsoup:jsoup:1.11.2'
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
 
 }
 apply plugin: 'com.google.gms.google-services'
